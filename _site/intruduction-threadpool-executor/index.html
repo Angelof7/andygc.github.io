@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="andygc" />
+    <title>ThreadPoolExecutor应用简析</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="andygc" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css" />
+    <link rel="stylesheet" href="/media/css/highlight.css" />
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="top-bar"></div>
+
+    <a href="https://github.com/angelof7"><img style="position: absolute; top: 0; right: 0; border: 0;" src="../album/forkme_dark.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>ThreadPoolExecutor应用简析</h1>
+        </header>
+        <nav>
+        <span><a title="网站首页" class="" href="/">首页</a></span>
+        <span><a title="文章分类" class="" href="/categories/">分类</a></span>
+        <span><a title="标签索引" class="" href="/tags/">标签</a></span>
+        <span><a title="豆瓣书单" class="" href="/books/">书单</a></span>
+        <span><a title="关于站长" class="" href="/about/">关于</a></span>
+        <span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+        <!--<span><a title="种子订阅" class="" href="/feed/" target="_blank">订阅</a></span>-->
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-08-27">2014-08-27</time>
+</span>
+
+ | 
+<span class="categories">
+  分类
+  
+  <a href="/categories/#java" title="java">java</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  标签
+  
+  <a href="/tags/#Concurrent" title="Concurrent">Concurrent</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>在JDK1.5之后，直接使用Thread类并不被提倡，而Executor成为主要角色,主要原因有：</p>
+
+<ul>
+<li>可复用。线程创建和销毁都需要资源，Executor中可以复用线程，降低了线程维护成本，效率提升。</li>
+<li>线程数据统计。多线程执行的一下数据，线程池进行维护，方便开发。</li>
+<li>资源限制和管理。看完本文你就明白了。</li>
+</ul>
+
+
+<p>本文代码基于JDK1.7, 首先看一下ThreadPoolExecutor最复杂最重要的一个构造方法：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">ThreadPoolExecutor</span><span class="o">(</span><span class="kt">int</span> <span class="n">corePoolSize</span><span class="o">,</span>
+                              <span class="kt">int</span> <span class="n">maximumPoolSize</span><span class="o">,</span>
+                              <span class="kt">long</span> <span class="n">keepAliveTime</span><span class="o">,</span>
+                              <span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">,</span>
+                              <span class="n">BlockingQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span> <span class="n">workQueue</span><span class="o">,</span>
+                              <span class="n">ThreadFactory</span> <span class="n">threadFactory</span><span class="o">,</span>
+                              <span class="n">RejectedExecutionHandler</span> <span class="n">handler</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">corePoolSize</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span>
+            <span class="n">maximumPoolSize</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span>
+            <span class="n">maximumPoolSize</span> <span class="o">&lt;</span> <span class="n">corePoolSize</span> <span class="o">||</span>
+            <span class="n">keepAliveTime</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">workQueue</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">threadFactory</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">handler</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">NullPointerException</span><span class="o">();</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">corePoolSize</span> <span class="o">=</span> <span class="n">corePoolSize</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">maximumPoolSize</span> <span class="o">=</span> <span class="n">maximumPoolSize</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">workQueue</span> <span class="o">=</span> <span class="n">workQueue</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">keepAliveTime</span> <span class="o">=</span> <span class="n">unit</span><span class="o">.</span><span class="na">toNanos</span><span class="o">(</span><span class="n">keepAliveTime</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">threadFactory</span> <span class="o">=</span> <span class="n">threadFactory</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">handler</span> <span class="o">=</span> <span class="n">handler</span><span class="o">;</span>
+    <span class="o">}</span></code></pre></div>
+
+
+<p>参数说明：</p>
+
+<ul>
+<li>corePoolSize 是线程池的核心线程数，通常线程池会维持这个线程数</li>
+<li>maximumPoolSize 是线程池所能维持的最大线程数</li>
+<li>keepAliveTime 和 unit 则分别是超额线程的空闲存活时间数和时间单位</li>
+<li>workQueue 是提交任务到线程池的入队列</li>
+<li>threadFactory 是线程池创建新线程的线程构造器</li>
+<li>handler 是当线程池不能接受提交任务的时候的处理策略</li>
+</ul>
+
+
+<p><strong>任务处理流程</strong></p>
+
+<p>一个新任务被submit到ThreadPoolExecutor的处理流程如下：
+<img src="http://stackvoid.qiniudn.com/2014-08-230_12917139691L3R.gif" alt="ThreadPoolExecutor" /></p>
+
+<ul>
+<li><p>当前线程池中线程的数目小于corePoolSize，则新建线程，并处理请求（直接抄家伙运行）</p></li>
+<li><p>当池子大小等于corePoolSize，把请求放入workQueue中，池子里的空闲线程就去从workQueue中取任务并处理，不添加新线程</p></li>
+<li><p>当workQueue已满放不下新入的任务时，新建线程入池，并处理请求，如果池子大小撑到了maximumPoolSize就用RejectedExecutionHandler来做拒绝处理</p></li>
+<li><p>当池子的线程数大于corePoolSize的时候，多余的线程会等待keepAliveTime长的时间，如果无请求可处理就自行销毁</p></li>
+</ul>
+
+
+<p>线程池执行器也提供了提前创建初始化线程的方法：</p>
+
+<ul>
+<li>public boolean prestartCoreThread()</li>
+<li>public int prestartAllCoreThreads()</li>
+</ul>
+
+
+<p>分别是预先创建一个线程和预先创建线程直到线程数到达核心线程数corePoolSize。</p>
+
+<p><strong>Executors类中的BlockingQueue</strong></p>
+
+<p>只是一个接口，它所表达的是当队列为空或者已满的时候，需要阻塞以等待生产者/消费者协同操作并唤醒线程。</p>
+
+<p>按照Executors类中的几个工厂方法，分别使用的是：</p>
+
+<ul>
+<li>无界队列：LinkedBlockingQueue。CachedThreadPool使用的是这个BlockingQueue，队列长度是无界的，适合用于提交任务相互独立无依赖的场景。有FixedThreadPool和SingleThreadPool使用。</li>
+<li>直接提交：SynchronousQueue，SynchronousQueue是无界的，也就是说他存数任务的能力是没有限制的，但是由于该Queue本身的特性，在某次添加元素后必须等待其他线程取走后才能继续添加。 所以在使用SynchronousQueue通常要求maximumPoolSize是无界的。 CachedThreadPool使用的是这个BlockingQueue，通常要求线程池不设定最大的线程数，以保证提交的任务有机会执行而不被丢掉。通常这个适合任务间有依赖的场景。</li>
+</ul>
+
+
+<p>也可以定制ThreadPoolExecutor时使用ArrayBlockingQueue有界队列。这个是最为复杂的使用，所以JDK不推荐使用也有些道理。与上面的相比，最大的特点便是可以防止资源耗尽的情况发生。</p>
+
+<p><strong>RejectedExecutionHandler</strong></p>
+
+<p>对于任务丢弃，ThreadPoolExecutor以内部类的形式实现了4个策略。分别是：</p>
+
+<ul>
+<li>CallerRunsPolicy：提交任务的线程自己负责执行这个任务。</li>
+<li>AbortPolicy：使Executor抛出异常，通过异常做处理。</li>
+<li>DiscardPolicy：丢弃提交的任务。</li>
+<li>DiscardOldestPolicy：丢弃掉队列中最早加入的任务。</li>
+</ul>
+
+
+<p>在调用构造方法时，参数中未指定RejectedExecutionHandler情况下，默认采用AbortPolicy。</p>
+
+<p><a href="">近期工作繁忙，稍微空闲，将会详细分析ThreadPoolExecutor生命周期和源码</a></p>
+
+<h3>More</h3>
+
+<ol>
+<li><a href="http://www.cnblogs.com/xiaoxuetu/archive/2013/05/11/3070344.html">分析ThreadPoolExecutor源码</a></li>
+<li><a href="http://dongxuan.iteye.com/blog/901689">详解ThreadPoolExecutor</a></li>
+</ol>
+
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/Java-Object-lifecycle/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/lock-optimization-in-JVM/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<div class="ds-thread" />
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"andygc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2013 - 2015 <a href="/about/">andygc</a>
+
+             | <a href="http://www.miibeian.gov.cn" target="_blank">苏ICP备1500846</a>
+
+
+             | <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255174608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255174608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+         </small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

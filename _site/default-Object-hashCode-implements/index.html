@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="andygc" />
+    <title>Object类默认hashCode方法解析</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="andygc" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css" />
+    <link rel="stylesheet" href="/media/css/highlight.css" />
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="top-bar"></div>
+
+    <a href="https://github.com/angelof7"><img style="position: absolute; top: 0; right: 0; border: 0;" src="../album/forkme_dark.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>Object类默认hashCode方法解析</h1>
+        </header>
+        <nav>
+        <span><a title="网站首页" class="" href="/">首页</a></span>
+        <span><a title="文章分类" class="" href="/categories/">分类</a></span>
+        <span><a title="标签索引" class="" href="/tags/">标签</a></span>
+        <span><a title="豆瓣书单" class="" href="/books/">书单</a></span>
+        <span><a title="关于站长" class="" href="/about/">关于</a></span>
+        <span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+        <!--<span><a title="种子订阅" class="" href="/feed/" target="_blank">订阅</a></span>-->
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-06-16">2014-06-16</time>
+</span>
+
+ | 
+<span class="categories">
+  分类
+  
+  <a href="/categories/#java" title="java">java</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  标签
+  
+  <a href="/tags/#JVM" title="JVM">JVM</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>在Java中，计算对象默认的hash值的方法在<a href="http://hg.openjdk.java.net/jdk7u/jdk7u/hotspot/file/74d14a44c398/src/share/vm/runtime/synchronizer.cpp">synchronizer.cpp</a>文件中。对象的hash是在第一次使用时，即首次调用hashCode方法时进行计算，并将hash值存储在对象的Mark Word中。</p>
+
+<p>类java.lang.Object#hashCode() 方法是native，最终调用到ObjectSynchronizer::FastHashCode函数获取hash值，下图为获取对象hash值的基本流程。</p>
+
+<p><img src="http://stackvoid.qiniudn.com/2014-06-16-HashCode%20in%20Hotspot%20.png" alt="FastHashCode函数" /></p>
+
+<p>结合此流程图和代码注释读FastHashCode函数，应该很容易看懂，本文暂不详细讲解。</p>
+
+<p>FastHashCode在计算hash值时，有两个核心计算hash值的函数，一个是get_next_hash()函数，一个是hash()函数.</p>
+
+<p>synchronizer.cpp中的get_next_hash方法用于计算新的hash值。</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="kr">inline</span> <span class="kt">intptr_t</span> <span class="nf">get_next_hash</span><span class="p">(</span><span class="n">Thread</span> <span class="o">*</span> <span class="n">Self</span><span class="p">,</span> <span class="n">oop</span> <span class="n">obj</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">intptr_t</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">hashCode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">value</span> <span class="o">=</span> <span class="n">os</span><span class="o">::</span><span class="n">random</span><span class="p">()</span> <span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">hashCode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+     <span class="kt">intptr_t</span> <span class="n">addrBits</span> <span class="o">=</span> <span class="kt">intptr_t</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span> <span class="p">;</span>
+     <span class="n">value</span> <span class="o">=</span> <span class="n">addrBits</span> <span class="o">^</span> <span class="p">(</span><span class="n">addrBits</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">^</span> <span class="n">GVars</span><span class="p">.</span><span class="n">stwRandom</span> <span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">hashCode</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">value</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">;</span>            <span class="c1">// for sensitivity testing</span>
+  <span class="p">}</span> <span class="k">else</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">hashCode</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">value</span> <span class="o">=</span> <span class="o">++</span><span class="n">GVars</span><span class="p">.</span><span class="n">hcSequence</span> <span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">hashCode</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">value</span> <span class="o">=</span> <span class="kt">intptr_t</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+     <span class="kt">unsigned</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Self</span><span class="o">-&gt;</span><span class="n">_hashStateX</span> <span class="p">;</span>
+     <span class="n">t</span> <span class="o">^=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&lt;&lt;</span> <span class="mi">11</span><span class="p">)</span> <span class="p">;</span>
+     <span class="n">Self</span><span class="o">-&gt;</span><span class="n">_hashStateX</span> <span class="o">=</span> <span class="n">Self</span><span class="o">-&gt;</span><span class="n">_hashStateY</span> <span class="p">;</span>
+     <span class="n">Self</span><span class="o">-&gt;</span><span class="n">_hashStateY</span> <span class="o">=</span> <span class="n">Self</span><span class="o">-&gt;</span><span class="n">_hashStateZ</span> <span class="p">;</span>
+     <span class="n">Self</span><span class="o">-&gt;</span><span class="n">_hashStateZ</span> <span class="o">=</span> <span class="n">Self</span><span class="o">-&gt;</span><span class="n">_hashStateW</span> <span class="p">;</span>
+     <span class="kt">unsigned</span> <span class="n">v</span> <span class="o">=</span> <span class="n">Self</span><span class="o">-&gt;</span><span class="n">_hashStateW</span> <span class="p">;</span>
+     <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span> <span class="o">^</span> <span class="p">(</span><span class="n">v</span> <span class="o">&gt;&gt;</span> <span class="mi">19</span><span class="p">))</span> <span class="o">^</span> <span class="p">(</span><span class="n">t</span> <span class="o">^</span> <span class="p">(</span><span class="n">t</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">))</span> <span class="p">;</span>
+     <span class="n">Self</span><span class="o">-&gt;</span><span class="n">_hashStateW</span> <span class="o">=</span> <span class="n">v</span> <span class="p">;</span>
+     <span class="n">value</span> <span class="o">=</span> <span class="n">v</span> <span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">value</span> <span class="o">&amp;=</span> <span class="n">markOopDesc</span><span class="o">::</span><span class="n">hash_mask</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="n">value</span> <span class="o">=</span> <span class="mh">0xBAD</span> <span class="p">;</span>
+  <span class="n">assert</span> <span class="p">(</span><span class="n">value</span> <span class="o">!=</span> <span class="n">markOopDesc</span><span class="o">::</span><span class="n">no_hash</span><span class="p">,</span> <span class="s">&quot;invariant&quot;</span><span class="p">)</span> <span class="p">;</span>
+  <span class="n">TEVENT</span> <span class="p">(</span><span class="nl">hashCode</span><span class="p">:</span> <span class="n">GENERATE</span><span class="p">)</span> <span class="p">;</span>
+  <span class="k">return</span> <span class="n">value</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>get_next_hash函数会根据传给JVM的参数-XX:hashCode=n来选择使用哪种方法生成对象的hashcode：</p>
+
+<ol>
+<li>hashCode=0，hash值为系统生成的随机数</li>
+<li>hashCode=1，hash值为对对象地址做移位和异或操作</li>
+<li>hashCode=2，所有的hash值都等于1</li>
+<li>hashCode=3，hash的值为一个自增序列的值</li>
+<li>hashCode=4，hash值为此对象地址</li>
+<li>hashCode=others, 使用<a href="http://en.wikipedia.org/wiki/Xorshift">Xorshift随机数生成器</a>，Xorshift随机数生成器总体性能非常好。<a href="http://www.jstatsoft.org/v08/i14/paper">Xorshift原理</a></li>
+</ol>
+
+
+<p>另外一种是hash()函数。其先获取该对象的Mark Word，然后对Mark Word对象的的地址做位移和逻辑与操作，以结果作为hash值。</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">intptr_t</span> <span class="nf">hash</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">mask_bits</span><span class="p">(</span><span class="n">value</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">hash_shift</span><span class="p">,</span> <span class="n">hash_mask</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">uintptr_t</span> <span class="n">value</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> 
+    <span class="k">return</span> <span class="p">(</span><span class="kt">uintptr_t</span><span class="p">)</span> <span class="n">this</span><span class="p">;</span> 
+<span class="p">}</span>
+
+<span class="kr">inline</span> <span class="kt">intptr_t</span> <span class="n">mask_bits</span> <span class="p">(</span><span class="kt">intptr_t</span>  <span class="n">x</span><span class="p">,</span> <span class="kt">intptr_t</span> <span class="n">m</span><span class="p">)</span> <span class="p">{</span> 
+    <span class="k">return</span> <span class="n">x</span> <span class="o">&amp;</span> <span class="n">m</span><span class="p">;</span> 
+<span class="p">}</span></code></pre></div>
+
+
+
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/HashCode-in-Java/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/Introduce-to-G1/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<div class="ds-thread" />
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"andygc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2013 - 2015 <a href="/about/">andygc</a>
+
+             | <a href="http://www.miibeian.gov.cn" target="_blank">苏ICP备1500846</a>
+
+
+             | <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255174608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255174608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+         </small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

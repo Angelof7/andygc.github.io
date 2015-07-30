@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="andygc" />
+    <title>Understanding hashCode() in Java</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="andygc" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css" />
+    <link rel="stylesheet" href="/media/css/highlight.css" />
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="top-bar"></div>
+
+    <a href="https://github.com/angelof7"><img style="position: absolute; top: 0; right: 0; border: 0;" src="../album/forkme_dark.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>Understanding hashCode() in Java</h1>
+        </header>
+        <nav>
+        <span><a title="网站首页" class="" href="/">首页</a></span>
+        <span><a title="文章分类" class="" href="/categories/">分类</a></span>
+        <span><a title="标签索引" class="" href="/tags/">标签</a></span>
+        <span><a title="豆瓣书单" class="" href="/books/">书单</a></span>
+        <span><a title="关于站长" class="" href="/about/">关于</a></span>
+        <span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+        <!--<span><a title="种子订阅" class="" href="/feed/" target="_blank">订阅</a></span>-->
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-06-15">2014-06-15</time>
+</span>
+
+ | 
+<span class="categories">
+  分类
+  
+  <a href="/categories/#java" title="java">java</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  标签
+  
+  <a href="/tags/#JVM" title="JVM">JVM</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>Java.lang.Object 有一个hashCode()和一个equals()方法，这两个方法在软件设计中扮演着举足轻重的角色。在一些类中覆写这两个方法以完成某些重要功能。本文描述了为什么要用hashCode(), 如何使用，以及其他的一些扩展。阅读本文需要有基本的hash算法知识以及基本的Java集合知识，本文属于菜鸟入门级讲解，大神读至此请点击右上角的X，以免浪费您的时间^_^。</p>
+
+<p><font color='purple' style='font-size:14pt'>WHY hashCode()?</font></p>
+
+<p>集合Set中的元素是无序不可重复的，那判断两个元素是否重复的依据是什么呢？
+“比较对象是否相等当然用Object.equal()了”，某猿如是说。但是，Set中存在大量对象，后添加到集合Set中的对象元素比较次数会逐渐增多，大大降低了程序运行效率。
+Java中采用哈希算法(也叫散列算法)来解决这个问题，将对象(或数据)依特定算法直接映射到一个地址上，对象的存取效率大大提高。这样一来，当含有海量元素的集合Set需要添加某元素(对象)时，先调用这个元素的hashCode()，就能一下子定位到此元素实际存储位置，如果这个位置没有元素，说明此对象时第一次存储到集合Set, 直接将此对象存储在此位置上；若此位置有对象存在，调用equal()看看这两个对象是否相等，相等就舍弃此元素不存，不等则散列到其他地址。</p>
+
+<p><font color='purple' style='font-size:14pt'>HOW use hashCode()?</font></p>
+
+<p>Java语言对猿设计equal()有五个必须遵循的要求。</p>
+
+<ol>
+<li>对称性。若 a.equal(b) 返回"true", 则 b.equal(a) 也必须返回 "true".</li>
+<li>反射性。a.equal(a) 必须返回"true".</li>
+<li>传递性。若a.equal(b) 返回 "true", 且 b.equal(c)返回 "true", 则c.equal(a)必返回"true".</li>
+<li>一致性。若a.equal(b) 返回"true", 只要a, b内容不变，不管重复多少次a.equal(b)必须返回"true".</li>
+<li>任何情况下，a.equals(null)，永远返回是“false”；a.equals(和a不同类型的对象)永远返回是“false”.</li>
+</ol>
+
+
+<p>hashCode()的返回值和equals()的关系.</p>
+
+<ol>
+<li>如果a.equals(b)返回“true”，那么a和b的hashCode()必须相等。</li>
+<li>如果a.equals(b)返回“false”，那么a和b的hashCode()有可能相等，也有可能不等。</li>
+</ol>
+
+
+<p>下面是一个例子。在实际的软件开发中，最好重写这两个方法。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="kt">int</span>        <span class="n">employeeId</span><span class="o">;</span>
+    <span class="n">String</span>     <span class="n">name</span><span class="o">;</span>
+ 
+    <span class="c1">// other methods would be in here </span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">obj</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">obj</span><span class="o">==</span><span class="k">this</span><span class="o">)</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="n">Employee</span> <span class="n">emp</span><span class="o">=(</span><span class="n">Employee</span><span class="o">)</span><span class="n">obj</span><span class="o">;</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">employeeId</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">emp</span><span class="o">.</span><span class="na">getEmployeeId</span><span class="o">())</span> <span class="o">&amp;&amp;</span> <span class="n">name</span><span class="o">==</span><span class="n">emp</span><span class="o">.</span><span class="na">getName</span><span class="o">())</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">hash</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">hash</span> <span class="o">=</span> <span class="n">hash</span> <span class="o">*</span> <span class="mi">17</span> <span class="o">+</span> <span class="n">employeeId</span><span class="o">;</span>
+        <span class="n">hash</span> <span class="o">=</span> <span class="n">hash</span> <span class="o">*</span> <span class="mi">31</span> <span class="o">+</span> <span class="n">name</span><span class="o">.</span><span class="na">hashCode</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">hash</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+<p>下面着重介绍一下常用类的hashCode()实现方法。</p>
+
+<p><strong>String类的hasCode()</strong></p>
+
+<p>Java代码</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">h</span> <span class="o">=</span> <span class="n">hash</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">h</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">off</span> <span class="o">=</span> <span class="n">offset</span><span class="o">;</span>
+        <span class="kt">char</span> <span class="n">val</span><span class="o">[]</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">count</span><span class="o">;</span>
+
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="mi">31</span><span class="o">*</span><span class="n">h</span> <span class="o">+</span> <span class="n">val</span><span class="o">[</span><span class="n">off</span><span class="o">++];</span>
+            <span class="o">}</span>
+            <span class="n">hash</span> <span class="o">=</span> <span class="n">h</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">h</span><span class="o">;</span>
+    <span class="o">}</span></code></pre></div>
+
+
+<p>这段代码最有意思的还是hash的实现方法了。最终计算的hash值为：</p>
+
+<blockquote><p>s[0]<em>31<sup>n-1</sup> + s[1]</em>31<sup>n-2</sup> + ... + s[n-1]</p></blockquote>
+
+<p>s[i]是string的第i个字符，n是String的长度。那为什么这里用31，而不是其它数呢?</p>
+
+<p>31是个奇素数，如果乘数是偶数，并且乘法溢出的话，信息就会丢失，因为与2相乘等价于移位运算。使用素数的好处并不是很明显，但是习惯上都使用素数来计算散列结果。31有个很好的特性，就是用移位和减法来代替乘法，可以得到更好的性能：31*i==(i&lt;&lt;5)-i。现在的VM可以自动完成这种优化。(From Effective Java)</p>
+
+<p><strong>Object类的hasCode()</strong></p>
+
+<p>Object类中hashCode()是一个Native方法。<a href="http://stackvoid.com/cn/2014/05/JNI-usage1/">Native方法如何调用?</a></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">native</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">();</span></code></pre></div>
+
+
+<p>Object类的Native方法类可在<a href="http://hg.openjdk.java.net/jdk7/jdk7/jdk/file/9b8c96f96a0f/src/share/native/java/lang/Object.c">这里</a>找到。 深入分析请看<a href="http://stackvoid.com/cn/2014/06/default-Object-hashCode-implements/">另外一篇博客</a></p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">JNINativeMethod</span> <span class="n">methods</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span><span class="s">&quot;hashCode&quot;</span><span class="p">,</span>    <span class="s">&quot;()I&quot;</span><span class="p">,</span>                    <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_IHashCode</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;wait&quot;</span><span class="p">,</span>        <span class="s">&quot;(J)V&quot;</span><span class="p">,</span>                   <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_MonitorWait</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;notify&quot;</span><span class="p">,</span>      <span class="s">&quot;()V&quot;</span><span class="p">,</span>                    <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_MonitorNotify</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;notifyAll&quot;</span><span class="p">,</span>   <span class="s">&quot;()V&quot;</span><span class="p">,</span>                    <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_MonitorNotifyAll</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;clone&quot;</span><span class="p">,</span>       <span class="s">&quot;()Ljava/lang/Object;&quot;</span><span class="p">,</span>   <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_Clone</span><span class="p">},</span>
+<span class="p">};</span></code></pre></div>
+
+
+<p>源代码包括getClass()(See line58)等, hashCode()(See line43)被定义为一个指向JVM_IHashCode指针。</p>
+
+<p><a href="http://hg.openjdk.java.net/jdk7/jdk7/hotspot/file/tip/src/share/vm/prims/jvm.cpp">jvm.cpp</a>中定义了JVM_IHashCode(line 504)函数, 此函数里调用ObjectSynchronizer::FastHashCode，其定在<a href="http://hg.openjdk.java.net/jdk7/jdk7/hotspot/file/tip/src/share/vm/runtime/synchronizer.cpp"> synchronizer.cpp</a>, 可参考576行的FastHashCode 和 530行的 get_next_hash 的实现。</p>
+
+<p><font color='purple' style='font-size:14pt'>Reference</font></p>
+
+<ol>
+<li><a href="http://blogs.tedneward.com/CommentView,guid,eca26c5e-307c-4b7c-931b-2eaf5b176e98.aspx">Object.hashCode implementation</a></li>
+<li><a href="http://stackoverflow.com/questions/13602501/whats-the-implementation-of-hashcode-in-java-object">What's the implementation of hashCode in java Object? </a></li>
+<li><a href="http://stackoverflow.com/questions/17977495/java-object-hashcode-algorithm">Object.hashCode() algorithm</a></li>
+<li><a href="http://www.ibm.com/developerworks/library/j-jtp05273/">Java theory and practice: Hashing it out</a></li>
+<li><a href="http://www.cnblogs.com/batys/archive/2011/10/25/2223942.html">java的HashCode方法</a></li>
+</ol>
+
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/build-jdk-by-myself/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/default-Object-hashCode-implements/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<div class="ds-thread" />
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"andygc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2013 - 2015 <a href="/about/">andygc</a>
+
+             | <a href="http://www.miibeian.gov.cn" target="_blank">苏ICP备1500846</a>
+
+
+             | <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255174608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255174608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+         </small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

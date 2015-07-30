@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="andygc" />
+    <title>在CentOS服务器中创建Git仓库并同步网站</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="andygc" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css" />
+    <link rel="stylesheet" href="/media/css/highlight.css" />
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="top-bar"></div>
+
+    <a href="https://github.com/angelof7"><img style="position: absolute; top: 0; right: 0; border: 0;" src="../album/forkme_dark.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>在CentOS服务器中创建Git仓库并同步网站</h1>
+        </header>
+        <nav>
+        <span><a title="网站首页" class="" href="/">首页</a></span>
+        <span><a title="文章分类" class="" href="/categories/">分类</a></span>
+        <span><a title="标签索引" class="" href="/tags/">标签</a></span>
+        <span><a title="豆瓣书单" class="" href="/books/">书单</a></span>
+        <span><a title="关于站长" class="" href="/about/">关于</a></span>
+        <span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+        <!--<span><a title="种子订阅" class="" href="/feed/" target="_blank">订阅</a></span>-->
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2015-05-26">2015-05-26</time>
+</span>
+
+ | 
+<span class="categories">
+  分类
+  
+  <a href="/categories/#server" title="server">server</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  标签
+  
+  <a href="/tags/#CentOS" title="CentOS">CentOS</a>&nbsp;
+  
+  <a href="/tags/#Git" title="Git">Git</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本篇博客记录在CentOS服务器中部署Git仓库，并同步apache中的网站目录的过程</p>
+
+<h3>搭建Git服务器</h3>
+
+<hr />
+
+<ol>
+<li><p>安装git</p></li>
+<li><p>创建一个git用户:</p>
+
+<blockquote><p>sudo adduser git</p></blockquote></li>
+<li><p>创建证书登陆:
+收集所有需要登录的用户的公钥（id_rsa.pub），把所有公钥导入到~/.ssh/authorized_keys文件中，一行一个</p></li>
+<li><p>初始化git仓库:</p>
+
+<blockquote><p>sudo git init --bare test.git</p></blockquote></li>
+</ol>
+
+
+<blockquote><p>sudo chown -R git:git test.git</p></blockquote>
+
+<ol>
+<li>禁用git用户的Shell登陆:
+修改/etc/passwd中的
+
+<blockquote><p>git:x:1001:1001:,,,:/home/git:/bin/bash</p></blockquote></li>
+</ol>
+
+
+<p>改为：</p>
+
+<blockquote><p>git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</p></blockquote>
+
+<ol>
+<li>构建Hook:
+
+<blockquote><p>cd test.git</p></blockquote></li>
+</ol>
+
+
+<blockquote><p>cat > hooks/post-receive</p></blockquote>
+
+<p>#!/bin/bash</p>
+
+<p>GIT_WORK_TREE=/var/www/blog git checkout -f</p>
+
+<blockquote><p>chmod +x hooks/post-receive</p></blockquote>
+
+<h3>本地clone并推送</h3>
+
+<hr />
+
+<ol>
+<li><p>cd work</p></li>
+<li><p>git clone git@server_address:/root/test/test.git</p></li>
+<li><p>cd test</p></li>
+<li><p>touch README.md</p></li>
+<li><p>git add .</p></li>
+<li><p>git commit -m "initial commit"</p></li>
+<li><p>git push origin master</p></li>
+</ol>
+
+
+<h3>二级域名</h3>
+
+<hr />
+
+<ol>
+<li><p><a href="http://jingyan.baidu.com/article/b24f6c82db5ecc86bfe5dae7.html">万网设置</a></p></li>
+<li><p>Apache设置</p></li>
+</ol>
+
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">NamevirtualHost *:80
+
+<span class="nt">&lt;VirtualHost</span> <span class="err">*:80</span><span class="nt">&gt;</span>
+    ServerName a.com
+    DocumentRoot /var/www/site
+<span class="nt">&lt;/VirtualHost&gt;</span>
+
+<span class="nt">&lt;VirtualHost</span> <span class="err">*:80</span><span class="nt">&gt;</span>
+    ServerName bbs.a.com
+    DocumentRoot /var/www/bbs
+<span class="nt">&lt;/VirtualHost&gt;</span></code></pre></div>
+
+
+
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/permutation-array/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/linux-shell-system/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<div class="ds-thread" />
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"andygc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2013 - 2015 <a href="/about/">andygc</a>
+
+             | <a href="http://www.miibeian.gov.cn" target="_blank">苏ICP备1500846</a>
+
+
+             | <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255174608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255174608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+         </small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

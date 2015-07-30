@@ -1,0 +1,1462 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <rss version="2.0"
+        xmlns:content="http://purl.org/rss/1.0/modules/content/"
+        xmlns:atom="http://www.w3.org/2005/Atom"
+  >
+  <channel>
+    <title>AndyStack</title>
+    <link href="http://andygc.com/feed/" rel="self" />
+    <link href="http://andygc.com" />
+    <lastBuildDate>2015-07-30T21:52:27+08:00</lastBuildDate>
+    <webMaster>cgao886@163.com</webMaster>
+    
+    <item>
+      <title>Apache Maven 使用指南</title>
+      <link href="http://andygc.com/maven-practice/"/>
+      <pubDate>2015-07-27T00:00:00+08:00</pubDate>
+      <author>andygc</author>
+      <guid>http://andygc.com/maven-practice</guid>
+      <content:encoded><![CDATA[<h3>Apache Maven:</h3>
+
+<hr />
+
+<p>Maven 是一个项目管理和构建自动化工具。但是对于我们程序员来说，我们最关心的是它的项目构建功能。所以这里我们介绍的就是怎样用 maven 来满足我们项目的日常需要。
+Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所有的项目都有如下的结构:</p>
+
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${basedir}</td>
+<td>存放 pom.xml和所有的子目录</td>
+</tr>
+<tr>
+<td>${basedir}/src/main/java</td>
+<td>项目的 java源代码</td>
+</tr>
+<tr>
+<td>${basedir}/src/main/resources</td>
+<td>项目的资源，比如说 property文件</td>
+</tr>
+<tr>
+<td>${basedir}/src/test/java</td>
+<td>项目的测试类，比如说 JUnit代码</td>
+</tr>
+<tr>
+<td>${basedir}/src/test/resources</td>
+<td>测试使用的资源</td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>Maven 的安装:</h3>
+
+<p><a href="http://maven.apache.org/download.html">maven下载安装</a><br/>
+<code>$ mvn -v</code></p>
+
+<h3>Maven 的使用:</h3>
+
+<ol>
+<li>archetype</li>
+</ol>
+
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>mvn archetype:generate 
+-DgroupId<span class="o">=</span>com.mycompany.helloworld 
+-DartifactId<span class="o">=</span>helloworld 
+-Dpackage<span class="o">=</span>com.mycompany.helloworld 
+-Dversion<span class="o">=</span>1.0-SNAPSHOT</code></pre></div>
+
+
+<ol>
+<li>构建</li>
+</ol>
+
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>mvn clean compile   
+<span class="nv">$ </span>mvn clean <span class="nb">test</span>   
+<span class="nv">$ </span>mvn clean package  
+<span class="nv">$ </span>mvn clean install</code></pre></div>
+
+
+<ol>
+<li>POM</li>
+</ol>
+
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+     <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span> 
+
+     <span class="nt">&lt;groupId&gt;</span>com.mycompany.helloworld<span class="nt">&lt;/groupId&gt;</span> 
+     <span class="nt">&lt;artifactId&gt;</span>helloworld<span class="nt">&lt;/artifactId&gt;</span> 
+     <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span> 
+     <span class="nt">&lt;packaging&gt;</span>jar<span class="nt">&lt;/packaging&gt;</span> 
+
+     <span class="nt">&lt;name&gt;</span>helloworld<span class="nt">&lt;/name&gt;</span> 
+     <span class="nt">&lt;url&gt;</span>http://maven.apache.org<span class="nt">&lt;/url&gt;</span> 
+
+     <span class="nt">&lt;properties&gt;</span> 
+       <span class="nt">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.build.sourceEncoding&gt;</span> 
+     <span class="nt">&lt;/properties&gt;</span> 
+
+     <span class="nt">&lt;dependencies&gt;</span>
+       <span class="nt">&lt;dependency&gt;</span> 
+         <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span> 
+         <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span> 
+         <span class="nt">&lt;version&gt;</span>3.8.1<span class="nt">&lt;/version&gt;</span> 
+         <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span> 
+       <span class="nt">&lt;/dependency&gt;</span> 
+     <span class="nt">&lt;/dependencies&gt;</span> 
+    <span class="nt">&lt;/project&gt;</span></code></pre></div>
+
+
+<p>在 POM 中，groupId, artifactId, packaging, version 叫作 maven 坐标，它能唯一的确定一个项目。有了 maven 坐标，我们就可以用它来指定我们的项目所依赖的其他项目，插件，或者父项目。一般 maven 坐标写成如下的格式：<br/>
+<code>groupId:artifactId:packaging:version</code><br/>
+像我们的例子就会写成：<br/>
+<code>com.mycompany.helloworld: helloworld: jar: 1.0-SNAPSHOT</code></p>
+
+<p>我们的 helloworld 示例很简单，但是大项目一般会分成几个子项目。在这种情况下，每个子项目就会有自己的 POM 文件，然后它们会有一个共同的父项目。这样只要构建父项目就能够构建所有的子项目了。子项目的 POM 会继承父项目的 POM。</p>
+
+<ol>
+<li>scope</li>
+<li>compile (默认)</li>
+<li>test</li>
+<li>provided (servlet-api)</li>
+<li>runtime (JDBC Driver)</li>
+<li>system</li>
+<li><p>import</p></li>
+<li><p>聚合和继承</p></li>
+<li><p>反应堆</p></li>
+<li><p>常用命令</p></li>
+</ol>
+
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>监控远程服务器JVM</title>
+      <link href="http://andygc.com/jvm-monitor-remote/"/>
+      <pubDate>2015-07-20T00:00:00+08:00</pubDate>
+      <author>andygc</author>
+      <guid>http://andygc.com/jvm-monitor-remote</guid>
+      <content:encoded><![CDATA[<h3>远程服务器配置:</h3>
+
+<hr />
+
+<p>在tomcat中的bin/catalina.sh中添加:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">&quot;$JAVA_OPTS  </span>
+<span class="s2"> -Djava.rmi.server.hostname=nts3.photo.163.org  </span>
+<span class="s2"> -Dcom.sun.management.jmxremote.port=8950  </span>
+<span class="s2"> -Dcom.sun.management.jmxremote.authenticate=false  </span>
+<span class="s2"> -Dcom.sun.management.jmxremote.ssl=false&quot;</span></code></pre></div>
+
+
+<h3>JConsole</h3>
+
+<hr />
+
+<p><img src="/album/2015/jconsole.png" alt="jconsole.png" /></p>
+
+<h3>VisualVM</h3>
+
+<hr />
+
+<p><img src="/album/2015/jvisualvm.png" alt="jvisualvm.png" /></p>
+
+<h3>参考</h3>
+
+<p><a href="http://docs.oracle.com/javase/1.5.0/docs/guide/management/agent.html">Monitoring and Management Using JMX</a></p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>git协同工作流程</title>
+      <link href="http://andygc.com/work-with-git-branch/"/>
+      <pubDate>2015-07-15T00:00:00+08:00</pubDate>
+      <author>andygc</author>
+      <guid>http://andygc.com/work-with-git-branch</guid>
+      <content:encoded><![CDATA[<p>本篇博客记录使用git协作的一般过程</p>
+
+<h3>git工作流程</h3>
+
+<hr />
+
+<ol>
+<li><p>clone远程仓库:</p>
+
+<blockquote><p>$ git clone ...</p></blockquote></li>
+<li><p>去自己的分支工作:</p>
+
+<blockquote><p>$ git checkout work</p></blockquote></li>
+<li><p>工作:</p>
+
+<blockquote><p>working ....</p></blockquote></li>
+<li><p>提交工作分支的修改:</p>
+
+<blockquote><p>$ git add .<br/>
+$ git commit -a</p></blockquote></li>
+<li><p>回到主分支:</p>
+
+<blockquote><p>$ git checkout master</p></blockquote></li>
+<li><p>获取最新的修改:</p>
+
+<blockquote><p>$ git pull origin master</p></blockquote></li>
+<li><p>回到工作分支:</p>
+
+<blockquote><p>$ git checkout work</p></blockquote></li>
+<li><p>合并主分支,并修改冲突:</p>
+
+<blockquote><p>$ git rebase master</p></blockquote></li>
+<li><p>回到主分支:</p>
+
+<blockquote><p>$ git checkout master</p></blockquote></li>
+<li><p>合并工作分支的修改,此时不会发生冲突了:</p>
+
+<blockquote><p>$ git merge work</p></blockquote></li>
+<li><p>提交到远程:</p>
+
+<blockquote><p>$ git push origin master</p></blockquote></li>
+</ol>
+
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>LinkedHashMap源码分析与LRU实现</title>
+      <link href="http://andygc.com/implementation-of-LinkedHashMap-and-LRU-implementation/"/>
+      <pubDate>2015-07-13T00:00:00+08:00</pubDate>
+      <author>andygc</author>
+      <guid>http://andygc.com/implementation-of-LinkedHashMap-and-LRU-implementation</guid>
+      <content:encoded><![CDATA[<p>LinkedHashMap可认为是哈希表和链接列表综合实现，并允许使用null值和null键。LinkedHashMap实现与HashMap的不同之处在于，LinkedHashMap维护着一个运行于所有条目的双重链接列表。此链接列表定义了迭代顺序，该迭代顺序可以是插入顺序或者是访问顺序。
+LinkedHashMap的实现不是同步的。如果多个线程同时访问LinkedHashMap，而其中至少一个线程从结构上修改了该映射，则它必须
+保持外部同步。</p>
+
+<h2>1.LinkedHashMap的存储结构</h2>
+
+<p><img src="http://stackvoid.qiniudn.com/20140805-LinkedHashMapDataStructure01.png" alt="LinkedHashMap01" />
+LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMap中的Entry按照插入的先后顺序（accessOrder标志位默认为false）依次加入到以head为头结点的双向循环链表的尾部。</p>
+
+<p>LinkedHashMap实际上就是HashMap和LinkedList两个集合类的存储结构的结合。在LinkedHashMapMap中，所有put进来的Entry都保存在
+如图所示的哈希表中，但它又额外定义了一个以head为头结点的空的双向循环链表，每次put进来Entry，除了将其保存到对哈希表中对应的位置上外，还要将其插入到双向循环链表的尾部。</p>
+
+<p>下面我们来分析LinkedHashMap的源代码。</p>
+
+<h2>2.LinkedHashMap成员变量</h2>
+
+<p>LinkedHashMap采用的hash算法和HashMap相同，但它重新定义了数组中保存的元素Entry，该Entry除了保存当前对象的引用外，还保
+存了其上一个元素before和下一个元素after的引用，从而在哈希表的基础上又构成了双向链接列表。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//双向循环链表的头结点，整个LinkedHashMap中只有一个header，</span>
+<span class="c1">//（此链表不同于HashMap里面的那个next链表）</span>
+<span class="c1">//它将哈希表中所有的Entry贯穿起来，header中不保存key-value对，只保存前后节点的引用</span>
+   <span class="kd">private</span> <span class="kd">transient</span> <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">header</span><span class="o">;</span>
+
+<span class="c1">//双向链表中元素排序规则的标志位。</span>
+<span class="c1">//accessOrder为false，表示按插入顺序排序</span>
+<span class="c1">//accessOrder为true，表示按访问顺序排序</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">boolean</span> <span class="n">accessOrder</span><span class="o">;</span>
+
+
+ <span class="cm">/** </span>
+<span class="cm"> * LinkedHashMap的Entry元素。 </span>
+<span class="cm"> * 继承HashMap的Entry元素，又保存了其上一个元素before和下一个元素after的引用。 </span>
+<span class="cm"> */</span>  
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">HashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="o">{</span>  
+    <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">before</span><span class="o">,</span> <span class="n">after</span><span class="o">;</span>  
+    <span class="err">……</span>  <span class="c1">//Entry类涉及到的方法，下面会继续分析</span>
+<span class="o">}</span></code></pre></div>
+
+
+<h2>3.构造函数</h2>
+
+<p>LinkedList一共提供了五个构造方法。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 构造方法1，构造一个指定初始容量和加载因子的、按照插入顺序的LinkedList</span>
+<span class="c1">//加载因子取默认的0.75f  </span>
+
+<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="o">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">,</span> <span class="kt">float</span> <span class="n">loadFactor</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">initialCapacity</span><span class="o">,</span> <span class="n">loadFactor</span><span class="o">);</span>
+    <span class="n">accessOrder</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// 构造方法2，构造一个指定初始容量的LinkedHashMap，取得键值对的顺序是插入顺序</span>
+<span class="c1">//加载因子取默认的0.75f  </span>
+
+<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="o">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">initialCapacity</span><span class="o">);</span>
+    <span class="n">accessOrder</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// 构造方法3，用默认的初始化容量和加载因子创建一个LinkedHashMap，取得键值对的顺序是插入顺序</span>
+<span class="c1">//加载因子取默认的0.75f  </span>
+
+<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">();</span>
+    <span class="n">accessOrder</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// 构造方法4，通过传入的map创建一个LinkedHashMap，容量为默认容量（16）和</span>
+<span class="c1">//(map.zise()/DEFAULT_LOAD_FACTORY)+1的较大者，加载因子为默认值0.75</span>
+
+<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">K</span><span class="o">,</span> <span class="o">?</span> <span class="kd">extends</span> <span class="n">V</span><span class="o">&gt;</span> <span class="n">m</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
+    <span class="n">accessOrder</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// 构造方法5，根据指定容量、加载因子和指定链表中的元素排序的规则  创建一个LinkedHashMap</span>
+<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="o">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">,</span>
+             <span class="kt">float</span> <span class="n">loadFactor</span><span class="o">,</span>
+                         <span class="kt">boolean</span> <span class="n">accessOrder</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">initialCapacity</span><span class="o">,</span> <span class="n">loadFactor</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">accessOrder</span> <span class="o">=</span> <span class="n">accessOrder</span><span class="o">;</span>
+<span class="o">}</span></code></pre></div>
+
+
+<p>我们已经知道LinkedHashMap的Entry元素继承HashMap的Entry，提供了双向链表的功能。在HashMap的构造器中，最后会调用init()方法，进行相关的初始化，这个方法在HashMap的实现中是空方法(感叹模板模式的精妙！)，只是提供给子类实现相关的初始化调用。LinkedHashMap重写了init()方法，在调用父类的构造方法完成构造后，进一步实现了对其元素Entry的初始化操作。分析init()方法，的确是对header进行了初始化，并构造成一个双向循环链表（和LinkedList的存储结构是一样的）。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;(-</span><span class="mi">1</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+    <span class="n">header</span><span class="o">.</span><span class="na">before</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="n">header</span><span class="o">;</span>
+<span class="o">}</span></code></pre></div>
+
+
+<h2>4.元素存储</h2>
+
+<p>   LinkedHashMap重写了父类HashMap的put方法调用的<strong>子方法void addEntry(int hash, K key, V value, int bucketIndex) 和void createEntry(int hash, K key, V value, int bucketIndex)</strong>，提供了自己特有的双向链接列表的实现。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//覆写HashMap中的addEntry方法，LinkedHashmap并没有覆写HashMap中的put方法，</span>
+    <span class="c1">//而是覆写了put方法所调用的addEntry方法和recordAccess方法，</span>
+    <span class="c1">//put方法在插入的key已存在的情况下，会调用recordAccess方法，</span>
+    <span class="c1">//在插入的key不存在的情况下，要调用addEntry插入新的Entry</span>
+<span class="kt">void</span> <span class="nf">addEntry</span><span class="o">(</span><span class="kt">int</span> <span class="n">hash</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span> <span class="n">bucketIndex</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//创建新的Entry，并插入到LinkedHashMap中</span>
+    <span class="n">createEntry</span><span class="o">(</span><span class="n">hash</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">bucketIndex</span><span class="o">);</span>
+
+    <span class="c1">//双向链表的第一个有效节点（header后的那个节点）为近期最少使用的节点</span>
+    <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">eldest</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="na">after</span><span class="o">;</span>
+    <span class="c1">//如果有必要，则删除掉该近期最少使用的节点，</span>
+    <span class="c1">//这要看对removeEldestEntry的覆写,由于默认为false，因此默认是不做任何处理的。</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">removeEldestEntry</span><span class="o">(</span><span class="n">eldest</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">removeEntryForKey</span><span class="o">(</span><span class="n">eldest</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="c1">//超过阈值，扩容到原来的2倍</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="o">)</span>
+            <span class="n">resize</span><span class="o">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">table</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">createEntry</span><span class="o">(</span><span class="kt">int</span> <span class="n">hash</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span> <span class="n">bucketIndex</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">HashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">old</span> <span class="o">=</span> <span class="n">table</span><span class="o">[</span><span class="n">bucketIndex</span><span class="o">];</span>
+    <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;(</span><span class="n">hash</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">old</span><span class="o">);</span>
+    <span class="n">table</span><span class="o">[</span><span class="n">bucketIndex</span><span class="o">]</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
+    <span class="c1">// 调用元素的addBrefore方法，将元素加入到哈希、双向链接列表。</span>
+    <span class="c1">//每次插入Entry时，都将其移到双向链表的尾部，</span>
+    <span class="c1">//这便会按照Entry插入LinkedHashMap的先后顺序来迭代元素，</span>
+    <span class="c1">//同时，新put进来的Entry是最近访问的Entry，把其放在链表末尾，符合LRU算法的实现</span>
+    <span class="n">e</span><span class="o">.</span><span class="na">addBefore</span><span class="o">(</span><span class="n">header</span><span class="o">);</span>
+    <span class="n">size</span><span class="o">++;</span>
+<span class="o">}</span>
+<span class="c1">//双向循环立链表中，将当前的Entry插入到existingEntry的前面</span>
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">addBefore</span><span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">existingEntry</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">after</span>  <span class="o">=</span> <span class="n">existingEntry</span><span class="o">;</span>
+    <span class="n">before</span> <span class="o">=</span> <span class="n">existingEntry</span><span class="o">.</span><span class="na">before</span><span class="o">;</span>
+    <span class="n">before</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+    <span class="n">after</span><span class="o">.</span><span class="na">before</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">//该方法默认返回false，我们一般在用LinkedHashMap实现LRU算法时，</span>
+<span class="c1">//要覆写该方法，一般的实现是，当设定的内存（这里指节点个数）达到最大值时，返回true，</span>
+<span class="c1">//这样put新的Entry（该Entry的key在哈希表中没有已经存在）时，</span>
+<span class="c1">//就会调用removeEntryForKey方法，将最近最少使用的节点删除（head后面的那个节点，实际上是最近没有使用）。</span>
+    <span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">removeEldestEntry</span><span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">eldest</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+<h2>5.元素读取</h2>
+
+<p>LinkedHashMap重写了父类HashMap的get方法。由于的链表的增加、删除操作是常量级的，性能不会带来较大损失。LinkedHashMap
+最牛逼的地方在于<strong>recordAccess()</strong>方法</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//覆写HashMap中的get方法，通过getEntry方法获取Entry对象。</span>
+    <span class="c1">//注意这里的recordAccess方法，</span>
+    <span class="c1">//如果链表中元素的排序规则是按照插入的先后顺序排序的话，该方法什么也不做，</span>
+    <span class="c1">//如果链表中元素的排序规则是按照访问的先后顺序排序的话，则将e移到链表的末尾处。</span>
+<span class="kd">public</span> <span class="n">V</span> <span class="nf">get</span><span class="o">(</span><span class="n">Object</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 调用父类HashMap的getEntry()方法，取得要查找的元素。</span>
+    <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;)</span><span class="n">getEntry</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">e</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="c1">// 记录访问顺序。</span>
+    <span class="n">e</span><span class="o">.</span><span class="na">recordAccess</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">e</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="c1">//覆写HashMap中的recordAccess方法（HashMap中该方法为空），</span>
+<span class="c1">//当调用父类的put方法，在发现插入的key已经存在时，会调用该方法，</span>
+<span class="c1">//调用LinkedHashmap覆写的get方法时，也会调用到该方法，</span>
+<span class="c1">//该方法提供了LRU算法的实现，它将最近使用的Entry放到双向循环链表的尾部，</span>
+<span class="c1">//accessOrder为true时，get方法会调用recordAccess方法</span>
+<span class="c1">//put方法在覆盖key-value对时也会调用recordAccess方法</span>
+<span class="c1">//它们导致Entry最近使用，因此将其移到双向链表的末尾</span>
+<span class="kt">void</span> <span class="nf">recordAccess</span><span class="o">(</span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">m</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">lm</span> <span class="o">=</span> <span class="o">(</span><span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;)</span><span class="n">m</span><span class="o">;</span>
+    <span class="c1">//如果链表中元素按照访问顺序排序，则将当前访问的Entry移到双向循环链表的尾部，</span>
+    <span class="c1">//如果是按照插入的先后顺序排序，则不做任何事情。</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">lm</span><span class="o">.</span><span class="na">accessOrder</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">lm</span><span class="o">.</span><span class="na">modCount</span><span class="o">++;</span>
+        <span class="n">remove</span><span class="o">();</span><span class="c1">//移除当前访问的Entry</span>
+        <span class="n">addBefore</span><span class="o">(</span><span class="n">lm</span><span class="o">.</span><span class="na">header</span><span class="o">);</span><span class="c1">//将当前访问的Entry插入到链表的尾部</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+<h2>6.元素删除</h2>
+
+<p>LinkedHashMap没有重写remove(Object key)方法，重写了被remove调用的recordRemoval方法，再一次感叹模板方法模式的精妙！<br/>
+HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移除之后（就已经完成工作了，所以HashMap里面recordRemoval是空的实现调用了此方法<br/>
+但在LinkedHashMap里面，还需要移除header链表里面Entry的after和before关系。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 继承了HashMap.Entry  </span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">HashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="o">{</span>  
+ 
+    <span class="kt">void</span> <span class="nf">recordRemoval</span><span class="o">(</span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="n">m</span><span class="o">)</span> <span class="o">{</span>  
+        <span class="n">remove</span><span class="o">();</span>  
+    <span class="o">}</span>  
+      
+    <span class="c1">//让当前Entry从header链表中消失  </span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">()</span> <span class="o">{</span>  
+        <span class="n">before</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="n">after</span><span class="o">;</span>  
+        <span class="n">after</span><span class="o">.</span><span class="na">before</span> <span class="o">=</span> <span class="n">before</span><span class="o">;</span>  
+    <span class="o">}</span>  
+<span class="o">}</span></code></pre></div>
+
+
+<h2>7.元素遍历</h2>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//迭代器</span>
+    <span class="kd">private</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">LinkedHashIterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+        <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">nextEntry</span>    <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="na">after</span><span class="o">;</span>
+        <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">lastReturned</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+        <span class="cm">/**</span>
+<span class="cm">         * The modCount value that the iterator believes that the backing</span>
+<span class="cm">         * List should have.  If this expectation is violated, the iterator</span>
+<span class="cm">         * has detected concurrent modification.</span>
+<span class="cm">         */</span>
+        <span class="kt">int</span> <span class="n">expectedModCount</span> <span class="o">=</span> <span class="n">modCount</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">hasNext</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">nextEntry</span> <span class="o">!=</span> <span class="n">header</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">lastReturned</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">modCount</span> <span class="o">!=</span> <span class="n">expectedModCount</span><span class="o">)</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">ConcurrentModificationException</span><span class="o">();</span>
+
+            <span class="n">LinkedHashMap</span><span class="o">.</span><span class="na">this</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">lastReturned</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+            <span class="n">lastReturned</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="n">expectedModCount</span> <span class="o">=</span> <span class="n">modCount</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">//从head的下一个节点开始迭代</span>
+        <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="nf">nextEntry</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">modCount</span> <span class="o">!=</span> <span class="n">expectedModCount</span><span class="o">)</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">ConcurrentModificationException</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">nextEntry</span> <span class="o">==</span> <span class="n">header</span><span class="o">)</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">NoSuchElementException</span><span class="o">();</span>
+
+            <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">lastReturned</span> <span class="o">=</span> <span class="n">nextEntry</span><span class="o">;</span>
+            <span class="n">nextEntry</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">after</span><span class="o">;</span>
+            <span class="k">return</span> <span class="n">e</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="c1">//key迭代器</span>
+    <span class="c1">//看出这三个类都很简单，只有一个next()方法，next()方法也只是去调用LinkedHashIterator类中相应的方法</span>
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">KeyIterator</span> <span class="kd">extends</span> <span class="n">LinkedHashIterator</span><span class="o">&lt;</span><span class="n">K</span><span class="o">&gt;</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="n">K</span> <span class="nf">next</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="nf">nextEntry</span><span class="o">().</span><span class="na">getKey</span><span class="o">();</span> <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="c1">//value迭代器</span>
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">ValueIterator</span> <span class="kd">extends</span> <span class="n">LinkedHashIterator</span><span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="n">V</span> <span class="nf">next</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="nf">nextEntry</span><span class="o">().</span><span class="na">value</span><span class="o">;</span> <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="c1">//Entry迭代器</span>
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">EntryIterator</span> <span class="kd">extends</span> <span class="n">LinkedHashIterator</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="nf">next</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="nf">nextEntry</span><span class="o">();</span> <span class="o">}</span>
+    <span class="o">}</span></code></pre></div>
+
+
+<h2>8.基于LinkedHashMap实现LRU Cache</h2>
+
+<p>用LinkedHashmap实现LRU算法，就要覆写方法removeEldestEntry。该方法默认返回false，我们一般在用LinkedHashMap实现LRU算法时，要覆写该方法，一般的实现是，当设定的内存（这里指节点个数）达到最大值时，返回true，这样put新的Entry（该Entry的key在哈希表中没有已经存在）时，就会调用removeEntryForKey方法，将最近最少使用的节点删除（head后面的那个节点，实际上是最近没有使用）。</p>
+
+<p>LinkedHashMap是如何实现LRU的。首先，当accessOrder为true时，才会开启按访问顺序排序的模式，才能用来实现LRU算法。我们
+可以看到，无论是put方法还是get方法，都会导致目标Entry成为最近访问的Entry，因此便把该Entry加入到了双向链表的末尾（
+get方法通过调用recordAccess方法来实现，put方法在覆盖已有key的情况下，也是通过调用recordAccess方法来实现，在插入新的Entry时，则是通过createEntry中的addBefore方法来实现），这样便把最近使用了的Entry放入到了双向链表的后面，多次操作后，
+双向链表前面的Entry便是最近没有使用的，这样当节点个数满的时候，删除的最前面的Entry(head后面的那个Entry)便是最近最少使用的Entry。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/*LRU是Least Recently Used 近期最少使用算法。</span>
+<span class="cm"> *通过HashLiekedMap实现LRU的算法的关键是，如果map里面的元素个数大于了缓存最大容量，则删除链表头元素</span>
+<span class="cm"> */</span>
+
+<span class="cm">/*public LinkedHashMap(int initialCapacity,float loadFactor,boolean accessOrder)</span>
+<span class="cm"> *LRU参数参数：</span>
+<span class="cm"> *initialCapacity - 初始容量。</span>
+<span class="cm"> *loadFactor - 加载因子（需要是按该因子扩充容量）。</span>
+<span class="cm"> *accessOrder - 排序模式( true) - 对于访问顺序（get一个元素后，这个元素被加到最后，使用了LRU  最近最少被使用的调度算法），对于插入顺序，则为 false,可以不断加入元素。</span>
+<span class="cm"> */</span>
+
+ <span class="cm">/*相关思路介绍：</span>
+<span class="cm">  * 当有一个新的元素加入到链表里面时，程序会调用LinkedHahMap类中Entry的addEntry方法，</span>
+<span class="cm">  *而该方法又会 会调用removeEldestEntry方法，这里就是实现LRU元素过期机制的地方，</span>
+<span class="cm">  * 默认的情况下removeEldestEntry方法只返回false，表示可以一直表链表里面增加元素，在这个里  *修改一下就好了。 </span>
+<span class="cm">  *</span>
+<span class="cm">  */</span>
+ 
+<span class="cm">/*</span>
+<span class="cm">测试数据：</span>
+<span class="cm">11</span>
+<span class="cm">7 0 7 1 0 1 2 1 2 6</span>
+<span class="cm">*/</span>
+
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LRULinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;{</span>     
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">capacity</span><span class="o">;</span>                     <span class="c1">//初始内存容量</span>
+    
+    <span class="n">LRULinkedHashMap</span><span class="o">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="o">){</span>          <span class="c1">//构造方法，传入一个参数</span>
+        <span class="kd">super</span><span class="o">(</span><span class="mi">16</span><span class="o">,</span><span class="mf">0.75f</span><span class="o">,</span><span class="kc">true</span><span class="o">);</span>               <span class="c1">//调用LinkedHashMap，传入参数    </span>
+        <span class="k">this</span><span class="o">.</span><span class="na">capacity</span><span class="o">=</span><span class="n">capacity</span><span class="o">;</span>             <span class="c1">//传递指定的最大内存容量</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">removeEldestEntry</span><span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="n">eldest</span><span class="o">){</span>     
+        <span class="c1">//，每加入一个元素，就判断是size是否超过了已定的容量</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;此时的size大小=&quot;</span><span class="o">+</span><span class="n">size</span><span class="o">());</span>
+        <span class="k">if</span><span class="o">((</span><span class="n">size</span><span class="o">()&gt;</span><span class="n">capacity</span><span class="o">))</span>
+        <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;超出已定的内存容量，把链表顶端元素移除：&quot;</span><span class="o">+</span><span class="n">eldest</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nf">size</span><span class="o">()&gt;</span><span class="n">capacity</span><span class="o">;</span>        
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span><span class="c1">//方便实例，直接将异常抛出</span>
+        <span class="n">Scanner</span> <span class="n">cin</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+        
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;请输入总共内存页面数： &quot;</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">cin</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">map</span><span class="o">=</span><span class="k">new</span> <span class="n">LRULinkedHashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;(</span><span class="n">n</span><span class="o">);</span>
+        
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;请输入按顺序输入要访问内存的总共页面数： &quot;</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">cin</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+        
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;请输入按顺序输入访问内存的页面序列： &quot;</span><span class="o">);</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">y</span><span class="o">;</span><span class="n">i</span><span class="o">++)</span>
+        <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">cin</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+            <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">x</span><span class="o">,</span>  <span class="n">x</span><span class="o">);</span>  
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;此时内存中包含的页面数是有:&quot;</span><span class="o">);</span>
+        <span class="c1">//遍历此时内存中的页面并输出</span>
+        <span class="k">for</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="nl">entry:</span> <span class="n">map</span><span class="o">.</span><span class="na">entrySet</span><span class="o">()){</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+<h2>9.总结</h2>
+
+<ol>
+<li><p>LinkedHashMap继承自HashMap，具有HashMap的大部分特性，比如支持null键和值，默认容量为16，装载因子为0.75，非线程安全等等；</p></li>
+<li><p>LinkedHashMap通过设置accessOrder控制遍历顺序是按照插入顺序还是按照访问顺序。当accessOrder为true时，可以利用其完成LRU缓存的功能；</p></li>
+<li><p>LinkedHashMap内部维护了一个双向循环链表，并且其迭代操作时通过链表完成的，而不是去遍历hash表。</p></li>
+</ol>
+
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Mac &amp; Ubuntu 配置openvpn客户端</title>
+      <link href="http://andygc.com/mac-ubuntu-openvpn/"/>
+      <pubDate>2015-07-02T00:00:00+08:00</pubDate>
+      <author>andygc</author>
+      <guid>http://andygc.com/mac-ubuntu-openvpn</guid>
+      <content:encoded><![CDATA[<h2>Mac</h2>
+
+<hr />
+
+<p><strong>tunnelblick</strong></p>
+
+<h2>Ubuntu</h2>
+
+<hr />
+
+<ol>
+<li><blockquote><p># sudo apt-get install openvpn</p></blockquote></li>
+<li><blockquote><p># cd /etc/openvpn</p></blockquote></li>
+<li><blockquote><p># cp ~/Downloads/client.ovpn .</p></blockquote></li>
+<li><blockquote><p># sudo openvpn /etc/openvpn/client.ovpn</p></blockquote></li>
+<li><p>后台连接:</p>
+
+<blockquote><p># sudo openvpn /etc/openvpn/client.ovpn > /dev/null &amp;</p></blockquote></li>
+<li><p>开机启动:<br/>
+将上述命令加入:</p>
+
+<blockquote><p>/etc/rc.local</p></blockquote></li>
+</ol>
+
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>git clone后没有代码</title>
+      <link href="http://andygc.com/git-clone-empty/"/>
+      <pubDate>2015-06-24T00:00:00+08:00</pubDate>
+      <author>andygc</author>
+      <guid>http://andygc.com/git-clone-empty</guid>
+      <content:encoded><![CDATA[<p>用git clone 下载项目后，目录中只有.git目录</p>
+
+<h2>原因</h2>
+
+<hr />
+
+<p>这个repository中存在多个分支下载的这个分支是个bare repository</p>
+
+<h2>解决方法</h2>
+
+<hr />
+
+<ol>
+<li><p>查看远程分支：</p>
+
+<blockquote><p>git branch -r -a</p></blockquote></li>
+<li><p>checkout：</p>
+
+<blockquote><p>git checkout branch_name</p></blockquote></li>
+</ol>
+
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Linux中常用系统管理shell命令</title>
+      <link href="http://andygc.com/linux-shell-system/"/>
+      <pubDate>2015-05-30T00:00:00+08:00</pubDate>
+      <author>andygc</author>
+      <guid>http://andygc.com/linux-shell-system</guid>
+      <content:encoded><![CDATA[<p>本篇博客记录常用的Linux系统管理shell</p>
+
+<h3>ps</h3>
+
+<hr />
+
+<ol>
+<li>ps 的参数说明
+ l       长格式输出；
+ u       按用户名和启动时间的顺序来显示进程；
+ j       用任务格式来显示进程；
+ f       用树形格式来显示进程；
+ a       显示所有用户的所有进程（包括其它用户）；<br/>
+ x       显示无控制终端的进程；<br/>
+ r       显示运行中的进程；<br/>
+ ww      避免详细参数被截断；<br/>
+<em>我们常用的选项是组合是aux -ef 输出的解释；</em>  <br/>
+ USER    进程的属主；<br/>
+ PID     进程的ID；<br/>
+ PPID    父进程；<br/>
+ %CPU    进程占用的CPU百分比；<br/>
+ %MEM    占用内存的百分比；<br/>
+ NI      进程的NICE值，数值大，表示较少占用CPU时间；<br/>
+ VSZ     进程虚拟大小；<br/>
+ RSS     驻留中页的数量；<br/>
+ WCHAN   正在等待的进程资源 <br/>
+ TTY     终端ID  <br/>
+ STAT    进程状态 <br/>
+ START   启动进程的时间；
+ TIME    进程消耗CPU的时间；<br/>
+ COMMAND 命令的名称和参数；<br/>
+<em>实例</em>
+
+<blockquote><p>ps -aux | more<br/>
+ps -aux > ps001.txt<br/>
+ps aux | grep httpd <br/>
+ps auxf |grep httpd<br/>
+pgrep 是通过程序的名字来查询进程的工具，一般是用来判断程序是否正在运行: <br/>
+常用参数:<br/>
+ -l      列出程序名和进程ID；<br/>
+ -o      进程起始的ID；<br/>
+ -n      进程终止的ID；<br/>
+pgrep -l httpd</p></blockquote></li>
+</ol>
+
+
+<h3>kill</h3>
+
+<hr />
+
+<h4>kill</h4>
+
+<p>kill的应用是和ps 或pgrep 命令结合在一起使用的；<br/>
+<em>用法</em>  <br/>
+kill ［信号代码］   进程ID<br/>
+注：信号代码可以省略；我们常用的信号代码是 -9 ，表示强制终止；</p>
+
+<h4>killall</h4>
+
+<p>killall 通过程序的名字，直接杀死所有进程，咱们简单说一下就行了。<br/>
+<em>用法</em><br/>
+killall 正在运行的程序名  <br/>
+killall 也和ps或pgrep 结合使用，比较方便；通过ps或pgrep 来查看哪些程序在运行；<br/>
+<em>举例</em></p>
+
+<blockquote><p> [root@localhost beinan]# pgrep -l gaim<br/>
+ 2979 gaim<br/>
+ [root@localhost beinan]# killall gaim</p></blockquote>
+
+<h4>pkill</h4>
+
+<p>pkill 和killall 应用方法差不多，也是直接杀死运行中的程序；如果您想杀掉单个进程，请用kill 来杀掉。<br/>
+<em>用法</em><br/>
+pkill 正在运行的程序名<br/>
+<em>举例</em></p>
+
+<blockquote><p> [root@localhost beinan]# pgrep -l gaim</p>
+
+<p> 2979 gaim</p>
+
+<p> [root@localhost beinan]# pkill gaim</p></blockquote>
+
+<h4>xkill</h4>
+
+<p>xkill 是在桌面用的杀死图形界面的程序。比如当firefox 出现崩溃不能退出时，点鼠标就能杀死firefox 。当xkill运行时出来和个人脑骨的图标，哪个图形程序崩溃一点就OK了。如果您想终止xkill ，就按右键取消；
+<em>用法</em></p>
+
+<blockquote><p> [root@localhost ~]# xkill</p></blockquote>
+
+<h3>top</h3>
+
+<hr />
+
+<p>TOP是一个动态显示过程,即可以通过用户按键来不断刷新当前状态.如果在前台执行该命令,它将独占前台,直到用户终止该程序为止.比较准确的说,top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式命令或者在个人定制文件中进行设定.</p>
+
+<p>total 进程总数<br/>
+running 正在运行的进程数<br/>
+sleeping 睡眠的进程数<br/>
+stopped 停止的进程数<br/>
+zombie 僵尸进程数<br/>
+Cpu(s): <br/>
+0.3% us 用户空间占用CPU百分比<br/>
+1.0% sy 内核空间占用CPU百分比<br/>
+0.0% ni 用户进程空间内改变过优先级的进程占用CPU百分比<br/>
+98.7% id 空闲CPU百分比<br/>
+0.0% wa 等待输入输出的CPU时间百分比<br/>
+0.0%hi：硬件CPU中断占用百分比<br/>
+0.0%si：软中断占用百分比<br/>
+0.0%st：虚拟机占用百分比</p>
+
+<p>Mem:<br/>
+191272k total    物理内存总量<br/>
+173656k used    使用的物理内存总量<br/>
+17616k free    空闲内存总量<br/>
+22052k buffers    用作内核缓存的内存量<br/>
+Swap: <br/>
+192772k total    交换区总量<br/>
+0k used    使用的交换区总量<br/>
+192772k free    空闲交换区总量<br/>
+123988k cached    缓冲的交换区总量,内存中的内容被换出到交换区，而后又被换入到内存，但使用过的交换区尚未被覆盖，该数值即为这些内容已存在于内存中的交换区的大小,相应的内存再次被换出时可不必再对交换区写入。</p>
+
+<p>序号  列名    含义<br/>
+a    PID     进程id<br/>
+b    PPID    父进程id<br/>
+c    RUSER   Real user name<br/>
+d    UID     进程所有者的用户id<br/>
+e    USER    进程所有者的用户名<br/>
+f    GROUP   进程所有者的组名<br/>
+g    TTY     启动进程的终端名。不是从终端启动的进程则显示为 ?<br/>
+h    PR      优先级<br/>
+i    NI      nice值。负值表示高优先级，正值表示低优先级<br/>
+j    P       最后使用的CPU，仅在多CPU环境下有意义<br/>
+k    %CPU    上次更新到现在的CPU时间占用百分比<br/>
+l    TIME    进程使用的CPU时间总计，单位秒<br/>
+m    TIME+   进程使用的CPU时间总计，单位1/100秒<br/>
+n    %MEM    进程使用的物理内存百分比<br/>
+o    VIRT    进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES<br/>
+p    SWAP    进程使用的虚拟内存中，被换出的大小，单位kb。<br/>
+q    RES     进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA<br/>
+r    CODE    可执行代码占用的物理内存大小，单位kb<br/>
+s    DATA    可执行代码以外的部分(数据段+栈)占用的物理内存大小，单位kb<br/>
+t    SHR     共享内存大小，单位kb<br/>
+u    nFLT    页面错误次数<br/>
+v    nDRT    最后一次写入到现在，被修改过的页面数。<br/>
+w    S       进程状态(D=不可中断的睡眠状态,R=运行,S=睡眠,T=跟踪/停止,Z=僵尸进程)<br/>
+x    COMMAND 命令名/命令行<br/>
+y    WCHAN   若该进程在睡眠，则显示睡眠中的系统函数名<br/>
+z    Flags   任务标志，参考 sched.h</p>
+
+<h4>top使用格式:</h4>
+
+<blockquote><p> top [-] [d] [p] [q] [c] [C] [S] [s]  [n]</p></blockquote>
+
+<p>d 指定每两次屏幕信息刷新之间的时间间隔。当然用户可以使用s交互命令来改变之。
+p 通过指定监控进程ID来仅仅监控某个进程的状态。
+q 该选项将使top没有任何延迟的进行刷新。如果调用程序有超级用户权限，那么top将以尽可能高的优先级运行。
+S 指定累计模式
+s 使top命令在安全模式中运行。这将去除交互命令所带来的潜在危险。
+i 使top不显示任何闲置或者僵死进程。
+c 显示整个命令行而不只是显示命令名</p>
+
+<p>Ctrl+L 擦除并且重写屏幕。</p>
+
+<p>h或者? 显示帮助画面，给出一些简短的命令总结说明。</p>
+
+<p>k 终止一个进程。系统将提示用户输入需要终止的进程PID，以及需要发送给该进程什么样的信号。一般的终止进程可以使用15信号；如果不能正常结束那就使用信号9强制结束该进程。默认值是信号15。在安全模式中此命令被屏蔽。</p>
+
+<p>i 忽略闲置和僵死进程。这是一个开关式命令。</p>
+
+<p>q 退出程序。</p>
+
+<p>r 重新安排一个进程的优先级别。系统提示用户输入需要改变的进程PID以及需要设置的进程优先级值。输入一个正值将使优先级降低，反之则可以使该进程拥有更高的优先权。默认值是10。</p>
+
+<p>S 切换到累计模式。</p>
+
+<p>s 改变两次刷新之间的延迟时间。系统将提示用户输入新的时间，单位为s。如果有小数，就换算成m s。输入0值则系统将不断刷新，默认值是5 s。需要注意的是如果设置太小的时间，很可能会引起不断刷新，从而根本来不及看清显示的情况，而且系统负载也会大大增加。</p>
+
+<p>f或者F 从当前显示中添加或者删除项目。</p>
+
+<p>o或者O 改变显示项目的顺序。</p>
+
+<p>l 切换显示平均负载和启动时间信息。</p>
+
+<p>m 切换显示内存信息。</p>
+
+<p>t 切换显示进程和CPU状态信息。</p>
+
+<p>c 切换显示命令名称和完整命令行。</p>
+
+<p>M 根据驻留内存大小进行排序。</p>
+
+<p>P 根据CPU使用百分比大小进行排序。</p>
+
+<p>T 根据时间/累计时间进行排序。</p>
+
+<p>W 将当前设置写入~/.toprc文件中。这是写top配置文件的推荐方法。</p>
+
+<h3>free</h3>
+
+<hr />
+
+<p>free命令由procps.*.rpm提供（在Redhat系列的OS上）。free命令的所有输出值都是从/proc/meminfo中读出的。</p>
+
+<h3>系统</h3>
+
+<hr />
+
+<pre><code># uname -a # 查看内核/操作系统/CPU信息  
+# head -n 1 /etc/issue # 查看操作系统版本  
+# cat /proc/cpuinfo # 查看CPU信息    
+# hostname # 查看计算机名  
+# lspci -tv # 列出所有PCI设备  
+# lsusb -tv # 列出所有USB设备  
+# lsmod # 列出加载的内核模块  
+# env # 查看环境变量  
+</code></pre>
+
+<h3>资源</h3>
+
+<hr />
+
+<pre><code># free -m # 查看内存使用量和交换区使用量  
+# df -h # 查看各分区使用情况   
+# du -sh &lt;目录名&gt; # 查看指定目录的大小  
+# grep MemTotal /proc/meminfo # 查看内存总量  
+# grep MemFree /proc/meminfo # 查看空闲内存量  
+# uptime # 查看系统运行时间、用户数、负载  
+# cat /proc/loadavg # 查看系统负载  
+</code></pre>
+
+<h3>磁盘和分区</h3>
+
+<hr />
+
+<pre><code># mount | column -t # 查看挂接的分区状态  
+# fdisk -l # 查看所有分区  
+# swapon -s # 查看所有交换分区  
+# hdparm -i /dev/hda # 查看磁盘参数（仅适用于IDE设备）  
+# dmesg | grep IDE # 查看启动时IDE设备检测状况  
+</code></pre>
+
+<h3>网络</h3>
+
+<hr />
+
+<pre><code># ifconfig # 查看所有网络接口的属性  
+# iptables -L # 查看防火墙设置  
+# route -n # 查看路由表  
+# netstat -lntp # 查看所有监听端口  
+# netstat -antp # 查看所有已经建立的连接  
+# netstat -s # 查看网络统计信息  
+</code></pre>
+
+<h3>进程</h3>
+
+<hr />
+
+<pre><code># ps -ef # 查看所有进程  
+# top # 实时显示进程状态  
+</code></pre>
+
+<h3>用户</h3>
+
+<hr />
+
+<pre><code># w # 查看活动用户  
+# id &lt;用户名&gt; # 查看指定用户信息  
+# last # 查看用户登录日志  
+# cut -d: -f1 /etc/passwd # 查看系统所有用户  
+# cut -d: -f1 /etc/group # 查看系统所有组  
+# crontab -l # 查看当前用户的计划任务  
+</code></pre>
+
+<h3>服务</h3>
+
+<hr />
+
+<pre><code># chkconfig --list # 列出所有系统服务  
+# chkconfig --list | grep on # 列出所有启动的系统服务  
+</code></pre>
+
+<h3>程序</h3>
+
+<hr />
+
+<pre><code># rpm -qa # 查看所有安装的软件包  
+</code></pre>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>在CentOS服务器中创建Git仓库并同步网站</title>
+      <link href="http://andygc.com/CentOS-git-hooks/"/>
+      <pubDate>2015-05-26T00:00:00+08:00</pubDate>
+      <author>andygc</author>
+      <guid>http://andygc.com/CentOS-git-hooks</guid>
+      <content:encoded><![CDATA[<p>本篇博客记录在CentOS服务器中部署Git仓库，并同步apache中的网站目录的过程</p>
+
+<h3>搭建Git服务器</h3>
+
+<hr />
+
+<ol>
+<li><p>安装git</p></li>
+<li><p>创建一个git用户:</p>
+
+<blockquote><p>sudo adduser git</p></blockquote></li>
+<li><p>创建证书登陆:
+收集所有需要登录的用户的公钥（id_rsa.pub），把所有公钥导入到~/.ssh/authorized_keys文件中，一行一个</p></li>
+<li><p>初始化git仓库:</p>
+
+<blockquote><p>sudo git init --bare test.git</p></blockquote></li>
+</ol>
+
+
+<blockquote><p>sudo chown -R git:git test.git</p></blockquote>
+
+<ol>
+<li>禁用git用户的Shell登陆:
+修改/etc/passwd中的
+
+<blockquote><p>git:x:1001:1001:,,,:/home/git:/bin/bash</p></blockquote></li>
+</ol>
+
+
+<p>改为：</p>
+
+<blockquote><p>git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</p></blockquote>
+
+<ol>
+<li>构建Hook:
+
+<blockquote><p>cd test.git</p></blockquote></li>
+</ol>
+
+
+<blockquote><p>cat > hooks/post-receive</p></blockquote>
+
+<p>#!/bin/bash</p>
+
+<p>GIT_WORK_TREE=/var/www/blog git checkout -f</p>
+
+<blockquote><p>chmod +x hooks/post-receive</p></blockquote>
+
+<h3>本地clone并推送</h3>
+
+<hr />
+
+<ol>
+<li><p>cd work</p></li>
+<li><p>git clone git@server_address:/root/test/test.git</p></li>
+<li><p>cd test</p></li>
+<li><p>touch README.md</p></li>
+<li><p>git add .</p></li>
+<li><p>git commit -m "initial commit"</p></li>
+<li><p>git push origin master</p></li>
+</ol>
+
+
+<h3>二级域名</h3>
+
+<hr />
+
+<ol>
+<li><p><a href="http://jingyan.baidu.com/article/b24f6c82db5ecc86bfe5dae7.html">万网设置</a></p></li>
+<li><p>Apache设置</p></li>
+</ol>
+
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">NamevirtualHost *:80
+
+<span class="nt">&lt;VirtualHost</span> <span class="err">*:80</span><span class="nt">&gt;</span>
+    ServerName a.com
+    DocumentRoot /var/www/site
+<span class="nt">&lt;/VirtualHost&gt;</span>
+
+<span class="nt">&lt;VirtualHost</span> <span class="err">*:80</span><span class="nt">&gt;</span>
+    ServerName bbs.a.com
+    DocumentRoot /var/www/bbs
+<span class="nt">&lt;/VirtualHost&gt;</span></code></pre></div>
+
+
+
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>全排列算法（Java实现）</title>
+      <link href="http://andygc.com/permutation-array/"/>
+      <pubDate>2015-04-29T00:00:00+08:00</pubDate>
+      <author>andygc</author>
+      <guid>http://andygc.com/permutation-array</guid>
+      <content:encoded><![CDATA[<p>设一组数p = {r1, r2, r3, ... ,rn}, 全排列为perm(p)，pn = p - {rn}。</p>
+
+<p>因此perm(p) = r1perm(p1), r2perm(p2), r3perm(p3), ... , rnperm(pn)。当n = 1时perm(p} = r1。</p>
+
+<p><strong>实现java代码如下：</strong></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Permutate</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">swap</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">str</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="n">String</span> <span class="n">temp</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">String</span><span class="o">();</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">str</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="n">str</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">str</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+            <span class="n">str</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">arrange</span> <span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">str</span><span class="o">,</span> <span class="kt">int</span> <span class="n">st</span><span class="o">,</span> <span class="kt">int</span> <span class="n">len</span><span class="o">)</span>
+        <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">st</span> <span class="o">==</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span>
+                <span class="o">{</span>
+                        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="o">;</span> <span class="n">i</span> <span class="o">++)</span>
+                        <span class="o">{</span>
+                                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">str</span><span class="o">[</span><span class="n">i</span><span class="o">]+</span> <span class="s">&quot;  &quot;</span><span class="o">);</span>
+                        <span class="o">}</span>
+                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+                        <span class="n">total</span><span class="o">++;</span>
+                <span class="o">}</span>
+                <span class="k">else</span>
+                <span class="o">{</span>
+                        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">st</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="o">;</span> <span class="n">i</span> <span class="o">++)</span>
+                        <span class="o">{</span>
+                                <span class="n">swap</span><span class="o">(</span><span class="n">str</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+                                <span class="n">arrange</span><span class="o">(</span><span class="n">str</span><span class="o">,</span> <span class="n">st</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="n">len</span><span class="o">);</span>
+                                <span class="n">swap</span><span class="o">(</span><span class="n">str</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+                        <span class="o">}</span>
+                <span class="o">}</span>
+        
+        <span class="o">}</span>
+    <span class="cm">/**</span>
+<span class="cm">    * @param args</span>
+<span class="cm">    */</span>
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">String</span> <span class="n">str</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;a&quot;</span><span class="o">,</span> <span class="s">&quot;b&quot;</span><span class="o">,</span> <span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="s">&quot;d&quot;</span><span class="o">,</span> <span class="s">&quot;e&quot;</span><span class="o">};</span>
+                <span class="n">arrange</span><span class="o">(</span><span class="n">str</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">str</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">total</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></pre></div>
+
+
+
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>八大排序算法总结</title>
+      <link href="http://andygc.com/eight-sort-algorithms/"/>
+      <pubDate>2015-04-29T00:00:00+08:00</pubDate>
+      <author>andygc</author>
+      <guid>http://andygc.com/eight-sort-algorithms</guid>
+      <content:encoded><![CDATA[<p>排序算法经过了很长时间的演变，产生了很多种不同的方法。对于初学者来说，对它们进行整理便于理解记忆显得很重要。每种算法都有它特定的使用场合，很难通用。因此，我们很有必要对所有常见的排序算法进行归纳。</p>
+
+<p><img src="/album/2015/04/4058612502.png" alt="Sort.png" /></p>
+
+<h2>一、直接插入排序(插入排序)</h2>
+
+<p> <strong>1. 思想</strong>
+每次选择一个元素K插入到之前已排好序的部分A[1…i]中，插入过程中K依次由后向前与A[1…i]中的元素进行比较。若发现发现A[x]>=K,则将K插入到A[x]的后面，插入前需要移动元素。</p>
+
+<p> <strong>2. 算法时间复杂度</strong>
+最好的情况下：正序有序(从小到大)，这样只需要比较n次，不需要移动。因此时间复杂度为O(n)<br/>
+最坏的情况下：逆序有序,这样每一个元素就需要比较n次，共有n个元素，因此实际复杂度为O(n­<sup>2</sup>)<br/>
+平均情况下：O(n­<sup>2</sup>)</p>
+
+<p> <strong>3. 稳定性</strong>
+<em>稳定性</em>，就是有两个相同的元素，排序先后的相对位置是否变化，主要用在排序时有多个排序规则的情况下。在插入排序中，K1是已排序部分中的元素，当K2和K1比较时，直接插到K1的后面(没有必要插到K1的前面，这样做还需要移动！！)，因此，插入排序是稳定的。</p>
+
+<p> <strong>4. 代码实现</strong></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">insertSort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+                <span class="k">while</span> <span class="o">(</span><span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">tmp</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">arr</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+                    <span class="n">j</span><span class="o">--;</span>
+                <span class="o">}</span>
+                <span class="n">arr</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span></code></pre></div>
+
+
+<h2>二、希尔排序(插入排序)</h2>
+
+<p> <strong>1. 思想</strong>
+希尔排序也是一种插入排序方法,实际上是一种分组插入方法。先取定一个小于n的整数d1作为第一个增量,把表的全部记录分成d1个组,所有距离为d1的倍数的记录放在同一个组中,在各组内进行直接插入排序；然后,取第二个增量d2(＜d1),重复上述的分组和排序,直至所取的增量dt=1(dt&lt;dt-1&lt;…&lt;d2&lt;d1),即所有记录放在同一组中进行直接插入排序为止。  <br/>
+<img src="/album/2015/04/3691571767.png" alt="0_1306225549IdX1.gif.png" /></p>
+
+<p> <strong>2. 算法时间复杂度</strong>
+<strong>最好情况</strong>：由于希尔排序的好坏和步长d的选择有很多关系，因此，目前还没有得出最好的步长如何选择(现在有些比较好的选择了，但不确定是否是最好的)。所以，不知道最好的情况下的算法时间复杂度。<br/>
+<strong>最坏情况</strong>：O(N<em>logN)，最坏的情况下和平均情况下差不多。<br/>
+<strong>平均情况</strong>：O(N</em>logN)</p>
+
+<p> <strong>3. 稳定性</strong>
+由于多次插入排序，我们知道一次插入排序是稳定的，不会改变相同元素的相对顺序，但在不同的插入排序过程中，相同的元素可能在各自的插入排序中移动，最后其稳定性就会被打乱，所以shell排序是不稳定的。(<em>一般来说，若存在不相邻元素间交换，则很可能是不稳定的排序</em>。)</p>
+
+<p> <strong>4. 代码实现</strong></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shellSort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span><span class="c1">// 初始步长为n/2</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">d</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">d</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">d</span><span class="o">;</span>
+                    <span class="k">while</span> <span class="o">(</span><span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="n">d</span><span class="o">])</span> <span class="o">{</span>
+                        <span class="c1">// 交换arr[j]和arr[j+d]的值</span>
+                        <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+                        <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="n">d</span><span class="o">];</span>
+                        <span class="n">arr</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="n">d</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+                        <span class="n">j</span> <span class="o">-=</span> <span class="n">d</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">d</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span></code></pre></div>
+
+
+<h2>三、冒泡排序(交换排序)</h2>
+
+<p> <strong>1. 思想</strong>
+通过无序区中相邻记录关键字间的比较和位置的交换,使关键字最小的记录如气泡一般逐渐往上“漂浮”直至“水面”。</p>
+
+<p> <strong>2. 算法时间复杂度</strong>
+最好情况下: 正序有序，则只需要比较n次。故，为O(n)<br/>
+最坏情况下: 逆序有序，则需要比较(n-1)+(n-2)+……+1，故，为O(n<sup>2</sup>)</p>
+
+<p> <strong>3. 稳定性</strong>
+排序过程中只交换相邻两个元素的位置。因此，当两个数相等时，是没必要交换两个数的位置的。所以，它们的相对位置并没有改变，冒泡排序算法是稳定的！</p>
+
+<p> <strong>4. 代码实现</strong></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">bubbleSort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">boolean</span> <span class="n">flag</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span><span class="c1">//如果一趟没有数据交换就退出循环</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">-</span> <span class="n">i</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">])</span> <span class="o">{</span>
+                        <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+                        <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
+                        <span class="n">arr</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+                        <span class="n">flag</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+                        <span class="o">}</span>
+                <span class="o">}</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">flag</span><span class="o">)</span>
+                    <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span></code></pre></div>
+
+
+<h2>四、快速排序(交换排序)</h2>
+
+<p> <strong>1. 思想</strong>
+它是由冒泡排序改进而来的。在待排序的n个记录中任取一个记录(通常取第一个记录),把该记录放入适当位置后,数据序列被此记录划分成两部分。所有关键字比该记录关键字小的记录放置在前一部分,所有比它大的记录放置在后一部分,并把该记录排在这两部分的中间(称为该记录归位),这个过程称作一趟快速排序。
+最核心的思想是将小的部分放在左边，大的部分放到右边，实现分割。</p>
+
+<p> <strong>2. 算法时间复杂度</strong>
+最好的情况下：因为每次都将序列分为两个部分(一般二分都复杂度都和logN相关)，故为 O(N<em>logN)<br/>
+最坏的情况下：基本有序时，退化为冒泡排序，几乎要比较N</em>N次，故为O(n<sup>2</sup>)</p>
+
+<p> <strong>3. 稳定性</strong>
+由于每次都需要和中轴元素交换，因此原来的顺序就可能被打乱。如序列为 5 3 3 4 3 8 9 10 11会将3的顺序打乱。所以说，快速排序是不稳定的！</p>
+
+<p> <strong>4. 代码实现</strong></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">quickSort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">,</span> <span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="kt">int</span> <span class="n">end</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">end</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="c1">// 从右向左找到第一个比tmp小的元素</span>
+                    <span class="k">while</span> <span class="o">(</span><span class="n">j</span> <span class="o">&gt;</span> <span class="n">i</span> <span class="o">&amp;&amp;</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">tmp</span><span class="o">)</span>
+                        <span class="n">j</span><span class="o">--;</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+                        <span class="n">i</span><span class="o">++;</span>
+                    <span class="o">}</span>
+                    <span class="c1">// 从左向右找到第一个比tmp大的元素</span>
+                    <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">j</span> <span class="o">&amp;&amp;</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">tmp</span><span class="o">)</span>
+                        <span class="n">i</span><span class="o">++;</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                        <span class="n">j</span><span class="o">--;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+                <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+                <span class="c1">// 递归快排左区间序列</span>
+                <span class="n">quickSort</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="n">start</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+                <span class="c1">// 递归快排右区间序列</span>
+                <span class="n">quickSort</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="n">end</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span></code></pre></div>
+
+
+<h2>五、直接选择排序(选择排序)</h2>
+
+<p> <strong>1. 思想</strong>
+首先在未排序序列中找到最小元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小元素，然后放到排序序列末尾。以此类推，直到所有元素均排序完毕。
+具体做法是：选择最小的元素与未排序部分的首部交换，使得序列的前面为有序。</p>
+
+<p> <strong>2. 算法时间复杂度</strong>
+最好情况下：交换0次，但是每次都要找到最小的元素，因此大约必须遍历N*N次，因此为O(n<sup>2</sup>)。减少了交换次数！
+最坏情况下，平均情况下：O(n<sup>2</sup>)</p>
+
+<p> <strong>3. 稳定性</strong>
+由于每次都是选取未排序序列A中的最小元素x与A中的第一个元素交换，因此跨距离了，很可能破坏了元素间的相对位置，因此选择排序是<em>不稳定</em>的！</p>
+
+<p> <strong>4. 代码实现</strong></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">selectSort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+                <span class="c1">//在［j－n］找到最小的值的index</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">[</span><span class="n">k</span><span class="o">])</span>
+                        <span class="n">k</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">k</span> <span class="o">!=</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                    <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">k</span><span class="o">];</span>
+                    <span class="n">arr</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span></code></pre></div>
+
+
+<h2>六、堆排序</h2>
+
+<p> <strong>1. 思想</strong>
+利用完全二叉树中双亲节点和孩子节点之间的内在关系，在当前无序区中选择关键字最大(或者最小)的记录。也就是说，以最小堆为例，根节点为最小元素，较大的节点偏向于分布在堆底附近。
+<img src="/album/2015/04/1100870601.png" alt="0_13062255659TRQ.gif.png" /></p>
+
+<p> <strong>2. 算法时间复杂度</strong>
+最坏情况下，接近于最差情况下：O(N*logN)，因此它是一种效果不错的排序算法。</p>
+
+<p> <strong>3. 稳定性</strong>
+堆排序需要不断地调整堆，在调整过程中有可能改变相同元素的初始相对位置，因此它是一种不稳定的排序！</p>
+
+<p> <strong>4. 代码实现</strong></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">heapSort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// 从最后一个非叶节点开始调整</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+                <span class="n">adjustHeap</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+                <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+                <span class="n">arr</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+                <span class="n">adjustHeap</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">adjustHeap</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">,</span> <span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="kt">int</span> <span class="n">end</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span><span class="c1">// i的左节点</span>
+            <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="n">end</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// j指向左右节点中较大的</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">end</span> <span class="o">&amp;&amp;</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">])</span>
+                    <span class="n">j</span><span class="o">++;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">tmp</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+                    <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
+                    <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+        <span class="o">}</span></code></pre></div>
+
+
+<h2>七、归并排序</h2>
+
+<p> <strong>1. 思想</strong>
+多次将两个或两个以上的有序表合并成一个新的有序表。
+缺点是，它需要O(n)的额外空间。但是很适合于<em>多链表排序</em>。
+<img src="/album/2015/04/4290075307.png" alt="0_1306225570mW6M.gif.png" /></p>
+
+<p> <strong>2. 算法时间复杂度</strong>
+最好的情况下：一趟归并需要n次，总共需要logN次，因此为O(N<em>logN)
+最坏的情况下，接近于平均情况下，为O(N</em>logN)
+<strong>说明</strong>：对长度为n的文件，需进行logN 趟二路归并，每趟归并的时间为O(n)，故其时间复杂度无论是在最好情况下还是在最坏情况下均是O(nlogn)。</p>
+
+<p> <strong>3. 稳定性</strong>
+ 归并排序最大的特色就是它是一种<strong>稳定</strong>的排序算法。归并过程中是不会改变元素的相对位置的。</p>
+
+<p> <strong>4. 代码实现</strong></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MergeSort</span> <span class="o">{</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">nums</span><span class="o">,</span> <span class="kt">int</span> <span class="n">low</span><span class="o">,</span> <span class="kt">int</span> <span class="n">high</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="o">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">low</span> <span class="o">&lt;</span> <span class="n">high</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="c1">// 左边</span>
+                    <span class="n">sort</span><span class="o">(</span><span class="n">nums</span><span class="o">,</span> <span class="n">low</span><span class="o">,</span> <span class="n">mid</span><span class="o">);</span>
+                    <span class="c1">// 右边</span>
+                    <span class="n">sort</span><span class="o">(</span><span class="n">nums</span><span class="o">,</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="n">high</span><span class="o">);</span>
+                    <span class="c1">// 左右归并</span>
+                    <span class="n">merge</span><span class="o">(</span><span class="n">nums</span><span class="o">,</span> <span class="n">low</span><span class="o">,</span> <span class="n">mid</span><span class="o">,</span> <span class="n">high</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">merge</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">nums</span><span class="o">,</span> <span class="kt">int</span> <span class="n">low</span><span class="o">,</span> <span class="kt">int</span> <span class="n">mid</span><span class="o">,</span> <span class="kt">int</span> <span class="n">high</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kt">int</span><span class="o">[]</span> <span class="n">temp</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">high</span> <span class="o">-</span> <span class="n">low</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
+                <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">low</span><span class="o">;</span><span class="c1">// 左指针</span>
+                <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span><span class="c1">// 右指针</span>
+                <span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+                <span class="c1">// 把较小的数先移到新数组中</span>
+                <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">mid</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">high</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">nums</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">nums</span><span class="o">[</span><span class="n">j</span><span class="o">])</span> <span class="o">{</span>
+                        <span class="n">temp</span><span class="o">[</span><span class="n">k</span><span class="o">++]</span> <span class="o">=</span> <span class="n">nums</span><span class="o">[</span><span class="n">i</span><span class="o">++];</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="n">temp</span><span class="o">[</span><span class="n">k</span><span class="o">++]</span> <span class="o">=</span> <span class="n">nums</span><span class="o">[</span><span class="n">j</span><span class="o">++];</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+
+                <span class="c1">// 把左边剩余的数移入数组</span>
+                <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">mid</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">temp</span><span class="o">[</span><span class="n">k</span><span class="o">++]</span> <span class="o">=</span> <span class="n">nums</span><span class="o">[</span><span class="n">i</span><span class="o">++];</span>
+                <span class="o">}</span>
+
+                <span class="c1">// 把右边边剩余的数移入数组</span>
+                <span class="k">while</span> <span class="o">(</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="n">high</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">temp</span><span class="o">[</span><span class="n">k</span><span class="o">++]</span> <span class="o">=</span> <span class="n">nums</span><span class="o">[</span><span class="n">j</span><span class="o">++];</span>
+                <span class="o">}</span>
+
+                <span class="c1">// 把新数组中的数覆盖nums数组</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">k2</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">k2</span> <span class="o">&lt;</span> <span class="n">temp</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">k2</span><span class="o">++)</span> <span class="o">{</span>
+                    <span class="n">nums</span><span class="o">[</span><span class="n">k2</span> <span class="o">+</span> <span class="n">low</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">[</span><span class="n">k2</span><span class="o">];</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+
+            <span class="c1">// 归并排序的实现</span>
+            <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">8</span><span class="o">,</span> <span class="mi">9</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">4</span> <span class="o">};</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">arr</span><span class="o">));</span>
+                <span class="k">new</span> <span class="nf">MergeSort</span><span class="o">().</span><span class="na">sort</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">arr</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">arr</span><span class="o">));</span>
+            <span class="o">}</span>
+            <span class="cm">/* Output:</span>
+<span class="cm">            * [3, 2, 8, 9, 1, 5, 4]</span>
+<span class="cm">                 * [1, 2, 3, 4, 5, 8, 9]</span>
+<span class="cm">                 */</span>
+            <span class="o">}</span></code></pre></div>
+
+
+<h2>八、基数排序</h2>
+
+<p> <strong>1. 思想</strong>
+它是一种非比较排序。它是根据位的高低进行排序的，也就是先按个位排序，然后依据十位排序……以此类推。示例如下：
+<img src="/album/2015/04/3842296812.png" alt="0_1306225575fKfh.gif.png" />
+<img src="/album/2015/04/3132708080.png" alt="0_13062255771KD1.gif.png" />
+如果有一个序列，知道数的范围(比如1～1000)，用快速排序或者堆排序，需要O(N<em>logN)，但是如果采用基数排序，则可以达到O(4</em>(n+10))=O(n)的时间复杂度。算是这种情况下排序最快的！！</p>
+
+<p> <strong>2. 算法时间复杂度</strong>
+分配需要O(n),收集为O(r),其中r为分配后链表的个数，以r=10为例，则有0～9这样10个链表来将原来的序列分类。而d，也就是位数(如最大的数是1234，位数是4，则d=4)，即"分配-收集"的趟数。因此时间复杂度为O(d*(n+r))。</p>
+
+<p> <strong>3. 稳定性</strong>
+基数排序过程中不改变元素的相对位置，因此是<strong>稳定</strong>的！</p>
+
+<p> <strong>4. 代码实现</strong></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RadixSort</span> <span class="o">{</span>
+            <span class="c1">// 基于计数排序的基数排序算法</span>
+            <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">radixSort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">array</span><span class="o">,</span> <span class="kt">int</span> <span class="n">radix</span><span class="o">,</span> <span class="kt">int</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// array为待排序数组</span>
+                <span class="c1">// radix，代表基数</span>
+                <span class="c1">// 代表排序元素的位数</span>
+                <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+                <span class="kt">int</span><span class="o">[]</span> <span class="n">temp</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">length</span><span class="o">];</span><span class="c1">// 用于暂存元素</span>
+                <span class="kt">int</span><span class="o">[]</span> <span class="n">count</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">radix</span><span class="o">];</span><span class="c1">// 用于计数排序</span>
+                <span class="kt">int</span> <span class="n">divide</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">distance</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                    <span class="n">System</span><span class="o">.</span><span class="na">arraycopy</span><span class="o">(</span><span class="n">array</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">temp</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">length</span><span class="o">);</span>
+                    <span class="n">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">count</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+
+                    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                        <span class="kt">int</span> <span class="n">tempKey</span> <span class="o">=</span> <span class="o">(</span><span class="n">temp</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">/</span> <span class="n">divide</span><span class="o">)</span> <span class="o">%</span> <span class="n">radix</span><span class="o">;</span>
+                        <span class="n">count</span><span class="o">[</span><span class="n">tempKey</span><span class="o">]++;</span>
+                    <span class="o">}</span>
+
+                    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">radix</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                        <span class="n">count</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">count</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">+</span> <span class="n">count</span><span class="o">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">];</span>
+                    <span class="o">}</span>
+
+                    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">--)</span> <span class="o">{</span>
+                        <span class="kt">int</span> <span class="n">tempKey</span> <span class="o">=</span> <span class="o">(</span><span class="n">temp</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">/</span> <span class="n">divide</span><span class="o">)</span> <span class="o">%</span> <span class="n">radix</span><span class="o">;</span>
+                        <span class="n">count</span><span class="o">[</span><span class="n">tempKey</span><span class="o">]--;</span>
+                        <span class="n">array</span><span class="o">[</span><span class="n">count</span><span class="o">[</span><span class="n">tempKey</span><span class="o">]]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+                    <span class="o">}</span>
+                    <span class="n">divide</span> <span class="o">=</span> <span class="n">divide</span> <span class="o">*</span> <span class="n">radix</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kt">int</span><span class="o">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">333</span><span class="o">,</span> <span class="mi">45566</span><span class="o">,</span> <span class="mi">2345678</span><span class="o">,</span> <span class="mi">78</span><span class="o">,</span> <span class="mi">990</span><span class="o">,</span> <span class="mi">12</span><span class="o">,</span> <span class="mi">432</span><span class="o">,</span> <span class="mi">56</span> <span class="o">};</span>
+                <span class="n">radixSort</span><span class="o">(</span><span class="n">array</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">7</span><span class="o">);</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">array</span><span class="o">));</span>
+            <span class="o">}</span>
+        <span class="o">}</span></code></pre></div>
+
+
+
+]]></content:encoded>
+    </item>
+    
+  </channel>
+</rss>

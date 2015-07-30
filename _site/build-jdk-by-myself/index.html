@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="andygc" />
+    <title>Ubuntu13.04下编译open-jdk7</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="andygc" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css" />
+    <link rel="stylesheet" href="/media/css/highlight.css" />
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="top-bar"></div>
+
+    <a href="https://github.com/angelof7"><img style="position: absolute; top: 0; right: 0; border: 0;" src="../album/forkme_dark.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>Ubuntu13.04下编译open-jdk7</h1>
+        </header>
+        <nav>
+        <span><a title="网站首页" class="" href="/">首页</a></span>
+        <span><a title="文章分类" class="" href="/categories/">分类</a></span>
+        <span><a title="标签索引" class="" href="/tags/">标签</a></span>
+        <span><a title="豆瓣书单" class="" href="/books/">书单</a></span>
+        <span><a title="关于站长" class="" href="/about/">关于</a></span>
+        <span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+        <!--<span><a title="种子订阅" class="" href="/feed/" target="_blank">订阅</a></span>-->
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-06-05">2014-06-05</time>
+</span>
+
+ | 
+<span class="categories">
+  分类
+  
+  <a href="/categories/#java" title="java">java</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  标签
+  
+  <a href="/tags/#JVM" title="JVM">JVM</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>最近在读<a href="http://book.douban.com/subject/6522893/">《深入理解Java虚拟机》</a>，第一章主要就是手动编译一个jdk。本文可能是史上最简编译jdk的方法。很多网上编译jdk的资料极度不靠谱。</p>
+
+<p>编译环境：Ubuntu13.04 64位。</p>
+
+<p><font color='purple' style='font-size:13pt'>1. 下载openjdk7源代码</font></p>
+
+<p>下载源代码有两种方式。</p>
+
+<p><strong>用Mercurial下载</strong></p>
+
+<p>Mercurial是一个轻量级分布式版本管理工具（类似git）。 <a href="http://blog.csdn.net/tony1130/article/details/3739695">安装方法。</a></p>
+
+<p>然后按照以下命令下载源代码。</p>
+
+<p>hg clone http://hg.openjdk.java.net/jdk7u/jdk7u6 YourOpenJDK
+cd YourOpenJDK
+sh ./get_source.sh</p>
+
+<p><strong>直接到官方下载</strong></p>
+
+<p>最好用<a href="http://openjdk.java.net/">官方</a>最新的包,以避免各种之前出现的Bug。</p>
+
+<p><font color='purple' style='font-size:13pt'>2. 下载编译所需要的包</font></p>
+
+<p>sudo aptitude build-dep openjdk-7</p>
+
+<p>sudo aptitude install openjdk-7-jdk</p>
+
+<p>没有aptitude命令，自行安装。</p>
+
+<p><font color='purple' style='font-size:13pt'>3. 编译</font></p>
+
+<p>进入openjdk的目录，用命令</p>
+
+<p>make sanity 检查是否在build前准备好环境。</p>
+
+<p><strong>编译脚本</strong></p>
+
+<p>建立sh脚本，注意脚本必须拥有可执行权限。编译脚本如下：</p>
+
+<p><font color='green' style='font-size:13pt'>
+export LANG=C</p>
+
+<p>export ANT_HOME=/usr/share/ant</p>
+
+<p>export ALT_BOOTDIR=/usr/lib/jvm/java-7-openjdk-amd64</p>
+
+<p>export DEBUG_NAME=debug</p>
+
+<p>export ALT_JDK_IMPORT_PATH=/usr/lib/jvm/java-7-openjdk-amd64</p>
+
+<p>unset JAVA_HOME</p>
+
+<p>unset CLASS_PATH</p>
+
+<p>make ARCH_DATA_MODEL=64 BUILD_JAXWS=false BUILD_JAXP=false
+</font></p>
+
+<p><font color='purple' style='font-size:13pt'>4. 编译成功</font></p>
+
+<p>经过漫长的编译，成功后会出现如下信息。</p>
+
+<p><img src="http://stackvoid.qiniudn.com/2014-05-062014-06-05-build-jdk-1.png" alt="编译成功picture" /></p>
+
+<p>在build目录下，有一个编译好的jdk。</p>
+
+<p><img src="http://stackvoid.qiniudn.com/2014-05-062014-06-05-build-jdk-2.png" alt="jdk" /></p>
+
+<p><font color='purple' style='font-size:13pt'>5. 一些有用的资料</font></p>
+
+<ol>
+<li><p><a href="http://blog.csdn.net/hengyunabc/article/details/16912775">Eclipse调试Hotspot</a></p></li>
+<li><p><a href="https://github.com/codefollower/OpenJDK-Research/blob/master/hotspot/my-docs/%E6%9E%84%E5%BB%BA%E4%B8%8E%E8%B0%83%E8%AF%95-Linux.md">调试Hotspot</a></p></li>
+</ol>
+
+
+<p><font color='blue' style='font-size:14pt'>真爱生命，远离百度。</font></p>
+
+<p>(完)</p>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/introduction-to-Sublime-Text/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/HashCode-in-Java/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<div class="ds-thread" />
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"andygc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2013 - 2015 <a href="/about/">andygc</a>
+
+             | <a href="http://www.miibeian.gov.cn" target="_blank">苏ICP备1500846</a>
+
+
+             | <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255174608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255174608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+         </small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

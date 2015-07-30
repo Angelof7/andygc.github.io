@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="andygc" />
+    <title>Linux中常用系统管理shell命令</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="andygc" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css" />
+    <link rel="stylesheet" href="/media/css/highlight.css" />
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="top-bar"></div>
+
+    <a href="https://github.com/angelof7"><img style="position: absolute; top: 0; right: 0; border: 0;" src="../album/forkme_dark.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>Linux中常用系统管理shell命令</h1>
+        </header>
+        <nav>
+        <span><a title="网站首页" class="" href="/">首页</a></span>
+        <span><a title="文章分类" class="" href="/categories/">分类</a></span>
+        <span><a title="标签索引" class="" href="/tags/">标签</a></span>
+        <span><a title="豆瓣书单" class="" href="/books/">书单</a></span>
+        <span><a title="关于站长" class="" href="/about/">关于</a></span>
+        <span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+        <!--<span><a title="种子订阅" class="" href="/feed/" target="_blank">订阅</a></span>-->
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2015-05-30">2015-05-30</time>
+</span>
+
+ | 
+<span class="categories">
+  分类
+  
+  <a href="/categories/#shell" title="shell">shell</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  标签
+  
+  <a href="/tags/#Shell" title="Shell">Shell</a>&nbsp;
+  
+  <a href="/tags/#Linux" title="Linux">Linux</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本篇博客记录常用的Linux系统管理shell</p>
+
+<h3>ps</h3>
+
+<hr />
+
+<ol>
+<li>ps 的参数说明
+ l       长格式输出；
+ u       按用户名和启动时间的顺序来显示进程；
+ j       用任务格式来显示进程；
+ f       用树形格式来显示进程；
+ a       显示所有用户的所有进程（包括其它用户）；<br/>
+ x       显示无控制终端的进程；<br/>
+ r       显示运行中的进程；<br/>
+ ww      避免详细参数被截断；<br/>
+<em>我们常用的选项是组合是aux -ef 输出的解释；</em>  <br/>
+ USER    进程的属主；<br/>
+ PID     进程的ID；<br/>
+ PPID    父进程；<br/>
+ %CPU    进程占用的CPU百分比；<br/>
+ %MEM    占用内存的百分比；<br/>
+ NI      进程的NICE值，数值大，表示较少占用CPU时间；<br/>
+ VSZ     进程虚拟大小；<br/>
+ RSS     驻留中页的数量；<br/>
+ WCHAN   正在等待的进程资源 <br/>
+ TTY     终端ID  <br/>
+ STAT    进程状态 <br/>
+ START   启动进程的时间；
+ TIME    进程消耗CPU的时间；<br/>
+ COMMAND 命令的名称和参数；<br/>
+<em>实例</em>
+
+<blockquote><p>ps -aux | more<br/>
+ps -aux > ps001.txt<br/>
+ps aux | grep httpd <br/>
+ps auxf |grep httpd<br/>
+pgrep 是通过程序的名字来查询进程的工具，一般是用来判断程序是否正在运行: <br/>
+常用参数:<br/>
+ -l      列出程序名和进程ID；<br/>
+ -o      进程起始的ID；<br/>
+ -n      进程终止的ID；<br/>
+pgrep -l httpd</p></blockquote></li>
+</ol>
+
+
+<h3>kill</h3>
+
+<hr />
+
+<h4>kill</h4>
+
+<p>kill的应用是和ps 或pgrep 命令结合在一起使用的；<br/>
+<em>用法</em>  <br/>
+kill ［信号代码］   进程ID<br/>
+注：信号代码可以省略；我们常用的信号代码是 -9 ，表示强制终止；</p>
+
+<h4>killall</h4>
+
+<p>killall 通过程序的名字，直接杀死所有进程，咱们简单说一下就行了。<br/>
+<em>用法</em><br/>
+killall 正在运行的程序名  <br/>
+killall 也和ps或pgrep 结合使用，比较方便；通过ps或pgrep 来查看哪些程序在运行；<br/>
+<em>举例</em></p>
+
+<blockquote><p> [root@localhost beinan]# pgrep -l gaim<br/>
+ 2979 gaim<br/>
+ [root@localhost beinan]# killall gaim</p></blockquote>
+
+<h4>pkill</h4>
+
+<p>pkill 和killall 应用方法差不多，也是直接杀死运行中的程序；如果您想杀掉单个进程，请用kill 来杀掉。<br/>
+<em>用法</em><br/>
+pkill 正在运行的程序名<br/>
+<em>举例</em></p>
+
+<blockquote><p> [root@localhost beinan]# pgrep -l gaim</p>
+
+<p> 2979 gaim</p>
+
+<p> [root@localhost beinan]# pkill gaim</p></blockquote>
+
+<h4>xkill</h4>
+
+<p>xkill 是在桌面用的杀死图形界面的程序。比如当firefox 出现崩溃不能退出时，点鼠标就能杀死firefox 。当xkill运行时出来和个人脑骨的图标，哪个图形程序崩溃一点就OK了。如果您想终止xkill ，就按右键取消；
+<em>用法</em></p>
+
+<blockquote><p> [root@localhost ~]# xkill</p></blockquote>
+
+<h3>top</h3>
+
+<hr />
+
+<p>TOP是一个动态显示过程,即可以通过用户按键来不断刷新当前状态.如果在前台执行该命令,它将独占前台,直到用户终止该程序为止.比较准确的说,top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式命令或者在个人定制文件中进行设定.</p>
+
+<p>total 进程总数<br/>
+running 正在运行的进程数<br/>
+sleeping 睡眠的进程数<br/>
+stopped 停止的进程数<br/>
+zombie 僵尸进程数<br/>
+Cpu(s): <br/>
+0.3% us 用户空间占用CPU百分比<br/>
+1.0% sy 内核空间占用CPU百分比<br/>
+0.0% ni 用户进程空间内改变过优先级的进程占用CPU百分比<br/>
+98.7% id 空闲CPU百分比<br/>
+0.0% wa 等待输入输出的CPU时间百分比<br/>
+0.0%hi：硬件CPU中断占用百分比<br/>
+0.0%si：软中断占用百分比<br/>
+0.0%st：虚拟机占用百分比</p>
+
+<p>Mem:<br/>
+191272k total    物理内存总量<br/>
+173656k used    使用的物理内存总量<br/>
+17616k free    空闲内存总量<br/>
+22052k buffers    用作内核缓存的内存量<br/>
+Swap: <br/>
+192772k total    交换区总量<br/>
+0k used    使用的交换区总量<br/>
+192772k free    空闲交换区总量<br/>
+123988k cached    缓冲的交换区总量,内存中的内容被换出到交换区，而后又被换入到内存，但使用过的交换区尚未被覆盖，该数值即为这些内容已存在于内存中的交换区的大小,相应的内存再次被换出时可不必再对交换区写入。</p>
+
+<p>序号  列名    含义<br/>
+a    PID     进程id<br/>
+b    PPID    父进程id<br/>
+c    RUSER   Real user name<br/>
+d    UID     进程所有者的用户id<br/>
+e    USER    进程所有者的用户名<br/>
+f    GROUP   进程所有者的组名<br/>
+g    TTY     启动进程的终端名。不是从终端启动的进程则显示为 ?<br/>
+h    PR      优先级<br/>
+i    NI      nice值。负值表示高优先级，正值表示低优先级<br/>
+j    P       最后使用的CPU，仅在多CPU环境下有意义<br/>
+k    %CPU    上次更新到现在的CPU时间占用百分比<br/>
+l    TIME    进程使用的CPU时间总计，单位秒<br/>
+m    TIME+   进程使用的CPU时间总计，单位1/100秒<br/>
+n    %MEM    进程使用的物理内存百分比<br/>
+o    VIRT    进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES<br/>
+p    SWAP    进程使用的虚拟内存中，被换出的大小，单位kb。<br/>
+q    RES     进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA<br/>
+r    CODE    可执行代码占用的物理内存大小，单位kb<br/>
+s    DATA    可执行代码以外的部分(数据段+栈)占用的物理内存大小，单位kb<br/>
+t    SHR     共享内存大小，单位kb<br/>
+u    nFLT    页面错误次数<br/>
+v    nDRT    最后一次写入到现在，被修改过的页面数。<br/>
+w    S       进程状态(D=不可中断的睡眠状态,R=运行,S=睡眠,T=跟踪/停止,Z=僵尸进程)<br/>
+x    COMMAND 命令名/命令行<br/>
+y    WCHAN   若该进程在睡眠，则显示睡眠中的系统函数名<br/>
+z    Flags   任务标志，参考 sched.h</p>
+
+<h4>top使用格式:</h4>
+
+<blockquote><p> top [-] [d] [p] [q] [c] [C] [S] [s]  [n]</p></blockquote>
+
+<p>d 指定每两次屏幕信息刷新之间的时间间隔。当然用户可以使用s交互命令来改变之。
+p 通过指定监控进程ID来仅仅监控某个进程的状态。
+q 该选项将使top没有任何延迟的进行刷新。如果调用程序有超级用户权限，那么top将以尽可能高的优先级运行。
+S 指定累计模式
+s 使top命令在安全模式中运行。这将去除交互命令所带来的潜在危险。
+i 使top不显示任何闲置或者僵死进程。
+c 显示整个命令行而不只是显示命令名</p>
+
+<p>Ctrl+L 擦除并且重写屏幕。</p>
+
+<p>h或者? 显示帮助画面，给出一些简短的命令总结说明。</p>
+
+<p>k 终止一个进程。系统将提示用户输入需要终止的进程PID，以及需要发送给该进程什么样的信号。一般的终止进程可以使用15信号；如果不能正常结束那就使用信号9强制结束该进程。默认值是信号15。在安全模式中此命令被屏蔽。</p>
+
+<p>i 忽略闲置和僵死进程。这是一个开关式命令。</p>
+
+<p>q 退出程序。</p>
+
+<p>r 重新安排一个进程的优先级别。系统提示用户输入需要改变的进程PID以及需要设置的进程优先级值。输入一个正值将使优先级降低，反之则可以使该进程拥有更高的优先权。默认值是10。</p>
+
+<p>S 切换到累计模式。</p>
+
+<p>s 改变两次刷新之间的延迟时间。系统将提示用户输入新的时间，单位为s。如果有小数，就换算成m s。输入0值则系统将不断刷新，默认值是5 s。需要注意的是如果设置太小的时间，很可能会引起不断刷新，从而根本来不及看清显示的情况，而且系统负载也会大大增加。</p>
+
+<p>f或者F 从当前显示中添加或者删除项目。</p>
+
+<p>o或者O 改变显示项目的顺序。</p>
+
+<p>l 切换显示平均负载和启动时间信息。</p>
+
+<p>m 切换显示内存信息。</p>
+
+<p>t 切换显示进程和CPU状态信息。</p>
+
+<p>c 切换显示命令名称和完整命令行。</p>
+
+<p>M 根据驻留内存大小进行排序。</p>
+
+<p>P 根据CPU使用百分比大小进行排序。</p>
+
+<p>T 根据时间/累计时间进行排序。</p>
+
+<p>W 将当前设置写入~/.toprc文件中。这是写top配置文件的推荐方法。</p>
+
+<h3>free</h3>
+
+<hr />
+
+<p>free命令由procps.*.rpm提供（在Redhat系列的OS上）。free命令的所有输出值都是从/proc/meminfo中读出的。</p>
+
+<h3>系统</h3>
+
+<hr />
+
+<pre><code># uname -a # 查看内核/操作系统/CPU信息  
+# head -n 1 /etc/issue # 查看操作系统版本  
+# cat /proc/cpuinfo # 查看CPU信息    
+# hostname # 查看计算机名  
+# lspci -tv # 列出所有PCI设备  
+# lsusb -tv # 列出所有USB设备  
+# lsmod # 列出加载的内核模块  
+# env # 查看环境变量  
+</code></pre>
+
+<h3>资源</h3>
+
+<hr />
+
+<pre><code># free -m # 查看内存使用量和交换区使用量  
+# df -h # 查看各分区使用情况   
+# du -sh &lt;目录名&gt; # 查看指定目录的大小  
+# grep MemTotal /proc/meminfo # 查看内存总量  
+# grep MemFree /proc/meminfo # 查看空闲内存量  
+# uptime # 查看系统运行时间、用户数、负载  
+# cat /proc/loadavg # 查看系统负载  
+</code></pre>
+
+<h3>磁盘和分区</h3>
+
+<hr />
+
+<pre><code># mount | column -t # 查看挂接的分区状态  
+# fdisk -l # 查看所有分区  
+# swapon -s # 查看所有交换分区  
+# hdparm -i /dev/hda # 查看磁盘参数（仅适用于IDE设备）  
+# dmesg | grep IDE # 查看启动时IDE设备检测状况  
+</code></pre>
+
+<h3>网络</h3>
+
+<hr />
+
+<pre><code># ifconfig # 查看所有网络接口的属性  
+# iptables -L # 查看防火墙设置  
+# route -n # 查看路由表  
+# netstat -lntp # 查看所有监听端口  
+# netstat -antp # 查看所有已经建立的连接  
+# netstat -s # 查看网络统计信息  
+</code></pre>
+
+<h3>进程</h3>
+
+<hr />
+
+<pre><code># ps -ef # 查看所有进程  
+# top # 实时显示进程状态  
+</code></pre>
+
+<h3>用户</h3>
+
+<hr />
+
+<pre><code># w # 查看活动用户  
+# id &lt;用户名&gt; # 查看指定用户信息  
+# last # 查看用户登录日志  
+# cut -d: -f1 /etc/passwd # 查看系统所有用户  
+# cut -d: -f1 /etc/group # 查看系统所有组  
+# crontab -l # 查看当前用户的计划任务  
+</code></pre>
+
+<h3>服务</h3>
+
+<hr />
+
+<pre><code># chkconfig --list # 列出所有系统服务  
+# chkconfig --list | grep on # 列出所有启动的系统服务  
+</code></pre>
+
+<h3>程序</h3>
+
+<hr />
+
+<pre><code># rpm -qa # 查看所有安装的软件包  
+</code></pre>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/CentOS-git-hooks/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/git-clone-empty/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<div class="ds-thread" />
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"andygc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2013 - 2015 <a href="/about/">andygc</a>
+
+             | <a href="http://www.miibeian.gov.cn" target="_blank">苏ICP备1500846</a>
+
+
+             | <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255174608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255174608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+         </small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

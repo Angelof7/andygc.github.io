@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="andygc" />
+    <title>常用的Shell命令</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="andygc" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css" />
+    <link rel="stylesheet" href="/media/css/highlight.css" />
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="top-bar"></div>
+
+    <a href="https://github.com/angelof7"><img style="position: absolute; top: 0; right: 0; border: 0;" src="../album/forkme_dark.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>常用的Shell命令</h1>
+        </header>
+        <nav>
+        <span><a title="网站首页" class="" href="/">首页</a></span>
+        <span><a title="文章分类" class="" href="/categories/">分类</a></span>
+        <span><a title="标签索引" class="" href="/tags/">标签</a></span>
+        <span><a title="豆瓣书单" class="" href="/books/">书单</a></span>
+        <span><a title="关于站长" class="" href="/about/">关于</a></span>
+        <span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+        <!--<span><a title="种子订阅" class="" href="/feed/" target="_blank">订阅</a></span>-->
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-04-24">2014-04-24</time>
+</span>
+
+ | 
+<span class="categories">
+  分类
+  
+  <a href="/categories/#shell" title="shell">shell</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  标签
+  
+  <a href="/tags/#Shell" title="Shell">Shell</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本文主要总结一些常用的shell命令。</p>
+
+<h3>文本处理类</h3>
+
+<hr />
+
+<h4>查找特定文件名</h4>
+
+<p>grep -rn “name” 目录</p>
+
+<p>例如  grep -rn “ming” *   寻找当前目录下所有文件 有ming字符的列出。
+<a href="http://www.ruanyifeng.com/blog/2009/10/5_ways_to_search_for_files_using_the_terminal.html">Linux的五个查找命令</a></p>
+
+<h4>make -p</h4>
+
+<p>即使data这个文件夹不存在，也可以创建他的子目录，当然同同时，他也被创建。</p>
+
+<p>mkdir -p /data/coredump</p>
+
+<h4>head  tail</h4>
+
+<p>head 是显示一个文件的内容的前多少行；</p>
+
+<p>head  -n  行数值  文件名；</p>
+
+<p>比如我们显示/etc/profile的前10行内容，应该是：</p>
+
+<p>[root@localhost ~]# head -n 10 /etc/profile</p>
+
+<p>tail 工具，显示文件内容的最后几行，用法比较简单；</p>
+
+<p>tail   -n  行数值  文件名；</p>
+
+<p>比如我们显示/etc/profile的最后5行内容，应该是：</p>
+
+<p>[root@localhost ~]# tail  -n 5 /etc/profile</p>
+
+<h4>解压缩文件</h4>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">解压</span>
+
+<span class="n">tar</span> <span class="err">–</span><span class="n">xvf</span> <span class="n">file</span><span class="o">.</span><span class="na">tar</span> <span class="c1">//解压 tar包</span>
+
+<span class="n">tar</span> <span class="o">-</span><span class="n">xzvf</span> <span class="n">file</span><span class="o">.</span><span class="na">tar</span><span class="o">.</span><span class="na">gz</span> <span class="c1">//解压tar.gz</span>
+
+<span class="n">tar</span> <span class="o">-</span><span class="n">xjvf</span> <span class="n">file</span><span class="o">.</span><span class="na">tar</span><span class="o">.</span><span class="na">bz2</span>   <span class="c1">//解压 tar.bz2</span>
+
+<span class="n">tar</span> <span class="err">–</span><span class="n">xZvf</span> <span class="n">file</span><span class="o">.</span><span class="na">tar</span><span class="o">.</span><span class="na">Z</span>   <span class="c1">//解压tar.Z</span>
+
+<span class="n">unrar</span> <span class="n">e</span> <span class="n">file</span><span class="o">.</span><span class="na">rar</span> <span class="c1">//解压rar</span>
+
+<span class="n">unzip</span> <span class="n">file</span><span class="o">.</span><span class="na">zip</span> <span class="c1">//解压zip</span>
+
+<span class="n">压缩</span>
+
+<span class="n">tar</span> <span class="err">–</span><span class="n">cvf</span> <span class="n">jpg</span><span class="o">.</span><span class="na">tar</span> <span class="o">*.</span><span class="na">jpg</span> <span class="c1">//将目录里所有jpg文件打包成tar.jpg</span>
+
+<span class="n">tar</span> <span class="err">–</span><span class="n">czf</span> <span class="n">jpg</span><span class="o">.</span><span class="na">tar</span><span class="o">.</span><span class="na">gz</span> <span class="o">*.</span><span class="na">jpg</span>   <span class="c1">//将目录里所有jpg文件打包成jpg.tar后，并且将其用gzip压缩，生成一个gzip压缩过的包，命名为jpg.tar.gz</span>
+
+<span class="n">tar</span> <span class="err">–</span><span class="n">cjf</span> <span class="n">jpg</span><span class="o">.</span><span class="na">tar</span><span class="o">.</span><span class="na">bz2</span> <span class="o">*.</span><span class="na">jpg</span> <span class="c1">//将目录里所有jpg文件打包成jpg.tar后，并且将其用bzip2压缩，生成一个bzip2压缩过的包，命名为jpg.tar.bz2</span>
+
+<span class="n">tar</span> <span class="err">–</span><span class="n">cZf</span> <span class="n">jpg</span><span class="o">.</span><span class="na">tar</span><span class="o">.</span><span class="na">Z</span> <span class="o">*.</span><span class="na">jpg</span>   <span class="c1">//将目录里所有jpg文件打包成jpg.tar后，并且将其用compress压缩，生成一个umcompress压缩过的包，命名为jpg.tar.Z</span>
+
+<span class="n">rar</span> <span class="n">a</span> <span class="n">jpg</span><span class="o">.</span><span class="na">rar</span> <span class="o">*.</span><span class="na">jpg</span> <span class="c1">//rar格式的压缩，需要先下载rar for linux</span>
+
+<span class="n">zip</span> <span class="n">jpg</span><span class="o">.</span><span class="na">zip</span> <span class="o">*.</span><span class="na">jpg</span> <span class="c1">//zip格式的压缩，需要先下载zip for linux</span></code></pre></div>
+
+
+<h4>字符串处理</h4>
+
+<p><em>找文件夹下包含字符串的文件</em></p>
+
+<p>例：查找/usr/local目录下所有包含”rubyer.me”的文件。</p>
+
+<blockquote><p>grep -lr 'rubyer.me' /usr/local/*</p></blockquote>
+
+<p><em>vim替换单个文件中所有字符串方法</em></p>
+
+<p>例：替换当前文件中所有old为new</p>
+
+<blockquote><p>:%s/old/new/g
+#%表示替换说有行，g表示替换一行中所有匹配点。</p></blockquote>
+
+<p><em>替换文件夹下包含字符串的文件</em></p>
+
+<p>sed结合grep</p>
+
+<p>例：要将目录/www下面所有文件中的zhangsan都修改成lisi，这样做：</p>
+
+<blockquote><p>sed -i "s/old/new/g" <code>grep old -rl /www</code></p></blockquote>
+
+<h3>进程管理类</h3>
+
+<hr />
+
+<h4>查找进程</h4>
+
+<p>ps -ef|grep -w  indexd_admin_mcd.pid|grep -v grep|wc -l</p>
+
+<p>ps -ef 查找进程    grep -v  查找不存在  grep -w 强制 PATTERN 仅匹配整个词</p>
+
+<p>查找进程中为 indexd_admin_mcd.pid的进程，并且排除掉grep的进程。最后计数，这样进程的个数。</p>
+
+<h4>杀死进程</h4>
+
+<p>kill -9 pid，是不顾后果的强制终止(如果的你的速度够快，有时候是和ctrl＋c是一样的)</p>
+
+<p>kill -15 pid，是先关闭和其有关的程序，再将其关闭</p>
+
+<h4>linux下如何查询已知进程运行目录</h4>
+
+<p> ls -l /proc/PID/cwd</p>
+
+<h3>监视类</h3>
+
+<hr />
+
+<p>top命令
+<br/><br/></p>
+
+<h3>内存管理类</h3>
+
+<hr />
+
+<h4>ipcs  查看共享内存的使用的情况</h4>
+
+<p>ipcrm -M  shmid  关闭共享内存</p>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/google-java-style/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/JNI-usage1/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<div class="ds-thread" />
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"andygc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2013 - 2015 <a href="/about/">andygc</a>
+
+             | <a href="http://www.miibeian.gov.cn" target="_blank">苏ICP备1500846</a>
+
+
+             | <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255174608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255174608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+         </small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

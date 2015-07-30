@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="andygc" />
+    <title>Comparable vs Comparator</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="andygc" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css" />
+    <link rel="stylesheet" href="/media/css/highlight.css" />
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="top-bar"></div>
+
+    <a href="https://github.com/angelof7"><img style="position: absolute; top: 0; right: 0; border: 0;" src="../album/forkme_dark.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>Comparable vs Comparator</h1>
+        </header>
+        <nav>
+        <span><a title="网站首页" class="" href="/">首页</a></span>
+        <span><a title="文章分类" class="" href="/categories/">分类</a></span>
+        <span><a title="标签索引" class="" href="/tags/">标签</a></span>
+        <span><a title="豆瓣书单" class="" href="/books/">书单</a></span>
+        <span><a title="关于站长" class="" href="/about/">关于</a></span>
+        <span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+        <!--<span><a title="种子订阅" class="" href="/feed/" target="_blank">订阅</a></span>-->
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-07-12">2014-07-12</time>
+</span>
+
+ | 
+<span class="categories">
+  分类
+  
+  <a href="/categories/#java" title="java">java</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  标签
+  
+  <a href="/tags/#Collection" title="Collection">Collection</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>Comparable 和 Comparator 是Java Core API提供的两个比较接口。实现这两个接口，可以方便我们
+对相应数组和集合中的对象排序。但二者的优缺点差别是什么呢？本文的例子或许能解决这个问题。</p>
+
+<h3>Comparable</h3>
+
+<p>一个类通过实现Comparable接口获得与其他此类对象比较的能力。compareTo()方法是必须要实现的。
+下面来演示如何使用Comparable接口。Comparable 接口只有一个方法 compareTo(Object obj)
+其中
+- this &lt; obj 返回负
+- this = obj 返回 0
+- this > obj 返回正
+即将当前这个对象与指定的对象进行顺序比较，当该对象小于、等于或大于指定对象时，
+分别返回一个负整数、 0 或正整数，如果无法进行比较，则抛出ClassCastException 异常。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">HDTV</span> <span class="kd">implements</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">HDTV</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">brand</span><span class="o">;</span>
+    
+    <span class="kd">public</span> <span class="nf">HDTV</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">,</span> <span class="n">String</span> <span class="n">brand</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">size</span> <span class="o">=</span> <span class="n">size</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">brand</span> <span class="o">=</span> <span class="n">brand</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getSize</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">size</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getBrand</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">brand</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compareTo</span><span class="o">(</span><span class="n">HDTV</span> <span class="n">tv</span><span class="o">){</span>
+    <span class="cm">/*为了程序健壮，记住不要使用 </span>
+<span class="cm">   **return this.getSize() - tv.getSize()</span>
+<span class="cm">   ** 减法可能可能会溢出，尽管发生概率很小</span>
+<span class="cm">   **或使用 return (i2 &lt; i1 ? -1 : (i2 == i1 ? 0 :1))这种表示方法</span>
+<span class="cm">   */</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getSize</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">tv</span><span class="o">.</span><span class="na">getSize</span><span class="o">())</span>
+                <span class="k">return</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getSize</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">tv</span><span class="o">.</span><span class="na">getSize</span><span class="o">())</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+        <span class="k">else</span> 
+                <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">HDTV</span> <span class="n">tv1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HDTV</span><span class="o">(</span><span class="mi">55</span><span class="o">,</span> <span class="s">&quot;Samsung&quot;</span><span class="o">);</span>
+        <span class="n">HDTV</span> <span class="n">tv2</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HDTV</span><span class="o">(</span><span class="mi">60</span><span class="o">,</span> <span class="s">&quot;Sony&quot;</span><span class="o">);</span>
+ 
+        <span class="k">if</span> <span class="o">(</span><span class="n">tv1</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">tv2</span><span class="o">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tv1</span><span class="o">.</span><span class="na">getBrand</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; is better.&quot;</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tv2</span><span class="o">.</span><span class="na">getBrand</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; is better.&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+<blockquote><p>Sony is better.</p></blockquote>
+
+<h3>Comparator</h3>
+
+<p>Comparator比较器是用一个新类实现Comparator接口，实现接口里的方法compare(Object o1, Object o2).
+如果已有的类没有实现Comparable接口，而我们需要按类的某一属性排序，自定义的Comparator完成了“类外”排序任务。
+下面一个例子演示了Comparator的用法。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collections</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Comparator</span><span class="o">;</span>
+ 
+<span class="kd">class</span> <span class="nc">HDTV</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">brand</span><span class="o">;</span>
+ 
+    <span class="kd">public</span> <span class="nf">HDTV</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">,</span> <span class="n">String</span> <span class="n">brand</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">size</span> <span class="o">=</span> <span class="n">size</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">brand</span> <span class="o">=</span> <span class="n">brand</span><span class="o">;</span>
+    <span class="o">}</span>
+ 
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getSize</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">size</span><span class="o">;</span>
+    <span class="o">}</span>
+ 
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSize</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">size</span> <span class="o">=</span> <span class="n">size</span><span class="o">;</span>
+    <span class="o">}</span>
+ 
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getBrand</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">brand</span><span class="o">;</span>
+    <span class="o">}</span>
+ 
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setBrand</span><span class="o">(</span><span class="n">String</span> <span class="n">brand</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">brand</span> <span class="o">=</span> <span class="n">brand</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+ 
+<span class="kd">class</span> <span class="nc">SizeComparator</span> <span class="kd">implements</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">HDTV</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="n">HDTV</span> <span class="n">tv1</span><span class="o">,</span> <span class="n">HDTV</span> <span class="n">tv2</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">tv1Size</span> <span class="o">=</span> <span class="n">tv1</span><span class="o">.</span><span class="na">getSize</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">tv2Size</span> <span class="o">=</span> <span class="n">tv2</span><span class="o">.</span><span class="na">getSize</span><span class="o">();</span>
+ 
+        <span class="k">if</span> <span class="o">(</span><span class="n">tv1Size</span> <span class="o">&gt;</span> <span class="n">tv2Size</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">tv1Size</span> <span class="o">&lt;</span> <span class="n">tv2Size</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+ 
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">HDTV</span> <span class="n">tv1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HDTV</span><span class="o">(</span><span class="mi">55</span><span class="o">,</span> <span class="s">&quot;Samsung&quot;</span><span class="o">);</span>
+        <span class="n">HDTV</span> <span class="n">tv2</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HDTV</span><span class="o">(</span><span class="mi">60</span><span class="o">,</span> <span class="s">&quot;Sony&quot;</span><span class="o">);</span>
+        <span class="n">HDTV</span> <span class="n">tv3</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HDTV</span><span class="o">(</span><span class="mi">42</span><span class="o">,</span> <span class="s">&quot;Panasonic&quot;</span><span class="o">);</span>
+ 
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">HDTV</span><span class="o">&gt;</span> <span class="n">al</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">HDTV</span><span class="o">&gt;();</span>
+        <span class="n">al</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tv1</span><span class="o">);</span>
+        <span class="n">al</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tv2</span><span class="o">);</span>
+        <span class="n">al</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tv3</span><span class="o">);</span>
+ 
+        <span class="n">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">al</span><span class="o">,</span> <span class="k">new</span> <span class="nf">SizeComparator</span><span class="o">());</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">HDTV</span> <span class="n">a</span> <span class="o">:</span> <span class="n">al</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getBrand</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+<h3>选择Comparable还是Comparator</h3>
+
+<p>如果一个类设计的很清晰有一种排序关系，可以实现Comparable接口；若不清晰，则等到需要的时候实现
+Comparator，也避免使用Comparable引入了类的复杂性。</p>
+
+<h3>二者区别</h3>
+
+<p>下面来说说Comparable接口和Comparator接口的区别</p>
+
+<ul>
+<li><p>Comparator位于包java.util下，而Comparable位于包 java.lang下</p></li>
+<li><p>Comparable 是一个对象本身就已经支持自比较所需要实现的接口（如 String、Integer 自己就可以完成比较大小操作，已经实现了Comparable接口）  此接口强行对实现它的每个类的对象进行整体排序。这种排序被称为类的自然排序，类的 compareTo 方法被称为它的自然比较方法。</p></li>
+<li><p>Comparator接口使用更加灵活。也是策略模式的一个体现。</p></li>
+</ul>
+
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/reasons-of-OOM/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/Java-Memory-Model/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<div class="ds-thread" />
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"andygc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2013 - 2015 <a href="/about/">andygc</a>
+
+             | <a href="http://www.miibeian.gov.cn" target="_blank">苏ICP备1500846</a>
+
+
+             | <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255174608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255174608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+         </small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

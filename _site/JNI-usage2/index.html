@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="andygc" />
+    <title>JNI调用机制(二)</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="andygc" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css" />
+    <link rel="stylesheet" href="/media/css/highlight.css" />
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="top-bar"></div>
+
+    <a href="https://github.com/angelof7"><img style="position: absolute; top: 0; right: 0; border: 0;" src="../album/forkme_dark.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>JNI调用机制(二)</h1>
+        </header>
+        <nav>
+        <span><a title="网站首页" class="" href="/">首页</a></span>
+        <span><a title="文章分类" class="" href="/categories/">分类</a></span>
+        <span><a title="标签索引" class="" href="/tags/">标签</a></span>
+        <span><a title="豆瓣书单" class="" href="/books/">书单</a></span>
+        <span><a title="关于站长" class="" href="/about/">关于</a></span>
+        <span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+        <!--<span><a title="种子订阅" class="" href="/feed/" target="_blank">订阅</a></span>-->
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-05-13">2014-05-13</time>
+</span>
+
+ | 
+<span class="categories">
+  分类
+  
+  <a href="/categories/#java" title="java">java</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  标签
+  
+  <a href="/tags/#JNI" title="JNI">JNI</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>JNI可以实现Java调用本地库，也可以实现C/C++调用Java代码。使Java使用更加灵活。</p>
+
+<p>本文涉及到的一些功能：</p>
+
+<ol>
+<li>创建虚拟机</li>
+<li>寻找class对象，创建对象</li>
+<li>调用静态方法和成员方法</li>
+<li>获取成员属性，修改成员属性</li>
+</ol>
+
+
+<p>C/C++调用Java代码的一般步骤：</p>
+
+<ol>
+<li>编写Java代码，并编译</li>
+<li>编写C/C++代码</li>
+<li>配置lib进行编译，配置PATH添加相应的dll或so并运行</li>
+</ol>
+
+
+<p><strong>编写Java代码并编译</strong></p>
+
+<p>JNITest代码仅仅有静态方法和成员方法，一个public的成员变量</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">JNITest2</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">sayHello</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello, &quot;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&quot;!&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">sayHello</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello, &quot;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&quot;!&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+<p>编译成功后我们可以用命令：</p>
+
+<ul>
+<li>javap -s -private JNITest2</li>
+</ul>
+
+
+<p>看到JNITest2类中的签名。</p>
+
+<p><strong>编写C/C++代码</strong></p>
+
+<p>下面的代码可以当做C/C++代码调用Java代码的事例，主要做了这四件事情：</p>
+
+<ol>
+<li>创建虚拟机JVM，在程序结束时销毁虚拟机JVM</li>
+<li>寻找class对象</li>
+<li>创建class对象的实例</li>
+<li>调用方法和修改属性</li>
+</ol>
+
+
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;jni.h&gt;</span>
+<span class="cp">#include &lt;string.h&gt;</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="c1">//环境变量PATH在windows和linux的分隔符定义</span>
+<span class="cp">#ifdef _WIN32</span>
+<span class="cp">#define PATH_SEPARATOR &#39;;&#39;</span>
+<span class="cp">#else </span>
+<span class="cp">#define PATH_SEPARATOR &#39;:&#39;</span>
+<span class="cp">#endif</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="n">JavaVMOption</span> <span class="n">options</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="c1">//相当于命令行里传入的参数</span>
+    <span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">;</span>  <span class="c1">//JNI环境</span>
+    <span class="n">JavaVM</span> <span class="o">*</span><span class="n">jvm</span><span class="p">;</span>  <span class="c1">//我们需要创建的虚拟机实例</span>
+    <span class="n">JavaVMInitArgs</span> <span class="n">vm_args</span><span class="p">;</span>  <span class="c1">//虚拟机创建的初始化参数，这个参数里面会包含JavaVMOption</span>
+
+    <span class="kt">long</span> <span class="n">status</span><span class="p">;</span>
+    <span class="n">jclass</span> <span class="n">cls</span><span class="p">;</span>
+    <span class="n">jmethodID</span> <span class="n">mid</span><span class="p">;</span>
+    <span class="n">jfieldID</span> <span class="n">fid</span><span class="p">;</span>
+    <span class="n">jobject</span> <span class="n">obj</span><span class="p">;</span>
+
+    <span class="n">options</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">optionString</span> <span class="o">=</span> <span class="s">&quot;-Djava.class.path=.&quot;</span><span class="p">;</span>  <span class="c1">//传入路径，作为JVM寻找class的用户自定义路径，我们的JNITest2.clsss就在当前路径（当然也可以在别的路径）</span>
+    <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">vm_args</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">vm_args</span><span class="p">));</span>
+    <span class="n">vm_args</span><span class="p">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">JNI_VERSION_1_4</span><span class="p">;</span> <span class="c1">//Java版本，这个宏在jni.h中有定义</span>
+    <span class="n">vm_args</span><span class="p">.</span><span class="n">nOptions</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="c1">//传入的Options有多长，我们这只有一个，所以是1</span>
+    <span class="n">vm_args</span><span class="p">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">options</span><span class="p">;</span>  <span class="c1">// 把JavaVMOption传给JavaVMInitArgs中</span>
+
+    <span class="n">status</span> <span class="o">=</span> <span class="n">JNI_CreateJavaVM</span><span class="p">(</span><span class="o">&amp;</span><span class="n">jvm</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">env</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">vm_args</span><span class="p">);</span> <span class="c1">//启动虚拟机，通过status返回值，可知道虚拟机启动情况</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">!=</span> <span class="n">JNI_ERR</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cls</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="s">&quot;JNITest2&quot;</span><span class="p">);</span> <span class="c1">//获取class对象</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">cls</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">//Java中类名格式是java.lang.String，但是ClassName格式不同，是java/lang/String</span>
+            <span class="c1">//获取静态方法 </span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetStaticMethodID</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="s">&quot;sayHello&quot;</span><span class="p">,</span> <span class="s">&quot;(Ljava/lang/String;)Ljava/lang/String;&quot;</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">mid</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;World&quot;</span><span class="p">;</span>
+                <span class="n">jstring</span> <span class="n">arg</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewStringUTF</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
+                <span class="n">jstring</span> <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">jstring</span><span class="p">)(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">CallStaticObjectMethod</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">arg</span><span class="p">);</span>
+                <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Result of sayHello: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+                <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">ReleaseStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="c1">//调用指定的构造函数，构造函数的名字叫&lt;init&gt;</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="s">&quot;&lt;init&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;()V&quot;</span><span class="p">);</span>  <span class="c1">//调用非静态方法</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewObject</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">mid</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">obj</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Create object failed!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="c1">//属性也有静态和非静态之分，有static为静态，无为非静态</span>
+            <span class="n">fid</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetFieldID</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;Ljava/lang/String;&quot;</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">fid</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;stackvoid&quot;</span><span class="p">;</span>
+                <span class="n">jstring</span> <span class="n">arg</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewStringUTF</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
+                <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">SetObjectField</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="n">arg</span><span class="p">);</span><span class="c1">//修改属性</span>
+            <span class="p">}</span>
+            <span class="c1">//调用成员方法</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="s">&quot;sayHello&quot;</span><span class="p">,</span> <span class="s">&quot;()Ljava/lang/String;&quot;</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">mid</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">jstring</span> <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">jstring</span><span class="p">)(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">CallObjectMethod</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">mid</span><span class="p">);</span>
+                <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Result of sayHello: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+                <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">ReleaseStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="p">(</span><span class="o">*</span><span class="n">jvm</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">DestoryJavaVM</span><span class="p">(</span><span class="n">jvm</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;JVM Created failed!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span></code></pre></div>
+
+
+<p>注意：</p>
+
+<ol>
+<li><p>JNI的函数都是有一定规律的，static就表示静态，没有表示非静态。</p></li>
+<li><p>静态方法是只需要class对象, 不需要实例的, 而非静态方法需要使用我们之前实例化的对象.</p></li>
+</ol>
+
+
+<p><strong>jstring</strong></p>
+
+<p>Java的String使用的是Unicode是双字节的字符，而C/C++使用的是单字节的字符。
+从C转换为Java字符使用 NewStringUTF方法；从java转换为C的字符，使用GetStringUTFChars</p>
+
+<p><strong>编译运行</strong></p>
+
+<p>编译需要头文件, 头文件在这两个目录中%JAVA_HOME%\include和%JAVA_HOME%\include\win32, 第一个是与平台无关的, 第二个是与平台有关的, 当前系统是windows, 所以是win32.</p>
+
+<p>编译的时候还要一个lib文件, 是对虚拟机的支持, 保证编译通过.</p>
+
+<p>cl -I%JAVA_HOME%\include -I%JAVA_HOME%\include\win32 Sample2.c %JAVA_HOME%\lib\jvm.lib
+我们可以看到在当前目录下Sample2.exe, 运行的时候需要jvm.dll(不要将其复制到当前目录下, 这样不可以运行, 会导致jvm创建失败)</p>
+
+<p>set PATH=%JAVA_HOME%\jre\bin\client\;%PATH%
+Sample2
+ jvm.dll在%JAVA_HOME%\jre\bin\client\目录下, 所以我把这个目录加入到PATH中, 然后就可以运行</p>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/JNI-usage1/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/introduction-to-Sublime-Text/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<div class="ds-thread" />
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"andygc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2013 - 2015 <a href="/about/">andygc</a>
+
+             | <a href="http://www.miibeian.gov.cn" target="_blank">苏ICP备1500846</a>
+
+
+             | <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255174608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255174608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+         </small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="andygc" />
+    <title>Java基本概念原理总结(三)</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="andygc" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css" />
+    <link rel="stylesheet" href="/media/css/highlight.css" />
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="top-bar"></div>
+
+    <a href="https://github.com/angelof7"><img style="position: absolute; top: 0; right: 0; border: 0;" src="../album/forkme_dark.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>Java基本概念原理总结(三)</h1>
+        </header>
+        <nav>
+        <span><a title="网站首页" class="" href="/">首页</a></span>
+        <span><a title="文章分类" class="" href="/categories/">分类</a></span>
+        <span><a title="标签索引" class="" href="/tags/">标签</a></span>
+        <span><a title="豆瓣书单" class="" href="/books/">书单</a></span>
+        <span><a title="关于站长" class="" href="/about/">关于</a></span>
+        <span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+        <!--<span><a title="种子订阅" class="" href="/feed/" target="_blank">订阅</a></span>-->
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2013-05-22">2013-05-22</time>
+</span>
+
+ | 
+<span class="categories">
+  分类
+  
+  <a href="/categories/#java" title="java">java</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  标签
+  
+  <a href="/tags/#Summary" title="Summary">Summary</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本文是一些Java 并发编程的总结。主要来自《Java编程思想》和互联网。</p>
+
+<h3>Java多线程实现方式</h3>
+
+<p>Java多线程实现方式主要有三种：</p>
+
+<ul>
+<li><p>继承Thread类</p></li>
+<li><p>实现Runnable接口</p></li>
+<li><p>使用ExecutorService、Callable、Future实现有返回结果的多线程</p></li>
+</ul>
+
+
+<p>其中前两种方式的多线程执行完后没有返回值，只有最后一种是带返回值的；其中最常用的也是前两种实现方式。</p>
+
+<p><strong>继承Thread类实现多线程</strong></p>
+
+<p>本质上来说Thread也是实现了Runnable接口的一个实例，它代表一个线程实例，并且启动线程唯一的方法就是通过Thread类的start方法；start()方法是一个native的方法，它将启动一个新线程，并执行run()方法。之中方式实现多线程很简单，通过自己的类直接extend Thread，并复写run()方法，就可以启动新线程并执行自己定义的run()方法。</p>
+
+<p><strong>实现Runnable接口方式实现多线程</strong></p>
+
+<p>如果自己的类已经extends另一个类，就无法直接extends Thread，此时，必须实现一个Runnable接口。<a href="http://wangqiang6028.iteye.com/blog/1887342">例子</a>
+事实上，当传入一个Runnable target参数给Thread后，Thread的run()方法就会调用target.run()。</p>
+
+<p><strong>对sleep（）、wait（）、yeid（）、join（）几个方法进行下区别总结</strong></p>
+
+<p>sleep方法与wait方法的区别：</p>
+
+<p>sleep方法是静态方法，wait方法是非静态方法。
+sleep方法在时间到后会自己“醒来”，但wait不能，必须由其它线程通过notify（All）方法让它“醒来”。
+sleep方法通常用在不需要等待资源情况下的阻塞，像等待线程、数据库连接的情况一般用wait。</p>
+
+<p>sleep/wait与yeld方法的区别：</p>
+
+<p>调用sleep或wait方法后，线程即进入block状态，而调用yeld方法后，线程进入runnable状态。</p>
+
+<p>wait与join方法的区别：</p>
+
+<p>wait方法体现了线程之间的互斥关系，而join方法体现了线程之间的同步关系。
+wait方法必须由其它线程来解锁，而join方法不需要，只要被等待线程执行完毕，当前线程自动变为就绪。
+join方法的一个用途就是让子线程在完成业务逻辑执行之前，主线程一直等待直到所有子线程执行完毕。</p>
+
+<h3>线程同步</h3>
+
+<p>多线程安全问题：当多条语句在操作同一线程共享数据是，一个线程对多条语句只执行了一部分，还没有执行完， 此时另一个线程参与进来执行，导致共享数据的错误。</p>
+
+<p>解决办法：对多条操作共享数据的语句，只能让一个线程都执行完，在执行过程中，其他线程不可以参与执行。
+Java 对于多线程的安全提供了专业的解决方式。</p>
+
+<p><strong>synchronized关键字</strong></p>
+
+<p>线程的同步是保证多线程安全访问竞争资源的一种手段，对于同步，在具体的Java代码中需要完成一下两个操作：</p>
+
+<p><em>把竞争访问的资源标识为private；</em> 这非常重要，否则synchronized关键字就不能防止其他任务直接访问域。</p>
+
+<p><em>同步哪些修改变量的代码，使用synchronized关键字同步方法或代码。</em></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">synchronized</span><span class="o">(</span><span class="n">对象</span><span class="o">){</span>
+     <span class="n">代码块</span>
+     <span class="o">...</span>
+<span class="o">}</span></code></pre></div>
+
+
+<p><strong>volatile关键字</strong></p>
+
+<p>volatile修饰的变量，线程在每次使用变量的时候，都会读取变量修改后的值。volatile很容易被误用，用来进行原子性操作。</p>
+
+<p><a href="http://www.cnblogs.com/aigongsi/archive/2012/04/01/2429166.html">volatile关键字修饰变量失效</a></p>
+
+<p>这个例子很好显示了 volatile这个坑及其解释。</p>
+
+<p>要始终牢记使用 volatile 的限制 —— 只有在状态真正独立于程序内其他内容时才能使用 volatile —— 这条规则能够避免将这些模式扩展到不安全的用例。</p>
+
+<p><a href="http://tuoluo2004.blog.163.com/blog/static/4015241620132164153319/"><em>正确使用 volatile 的模式</em></a>很好的说明了 volatile关键字应该在什么时候正确的用。</p>
+
+<p><strong>显式使用Lock对象</strong></p>
+
+<p>Lock对象必须被显式创建、锁定和释放。</p>
+
+<p><a href="">同步的前提：</a></p>
+
+<ol>
+<li><p>必须要有两个或者两个以上的线程运行;</p></li>
+<li><p>必须是多个线程使用同一个锁;</p></li>
+</ol>
+
+
+<p>好处：解决了多线程的安全问题;</p>
+
+<p>弊端：多个线程需要判断锁，较为消耗资源;</p>
+
+<p>注意： 非静态同步函数的对象锁为this，静态同步函数所使用的锁是该方法所在类的字节码文件对象，即类名.class,静态方法里的同步锁都是使用的是类的字节码对象。</p>
+
+<p>用到线程的同步，随之可能会带来死锁问题。
+导致死锁的原因：两个线程互相等待竞争资源，导致两边都无法得到资源，而使自己无法运行。</p>
+
+<p><a href="http://wangqiang6028.iteye.com/blog/1887342">生产者消费者多线程模型的例子!!!!!</a></p>
+
+<p><strong>原子类</strong></p>
+
+<p>java.util.concurrent.atomic 包中提供了以下原子类, 它们是线程安全的类, 但是它们并不是通过同步和锁来实现的, 原子变量的操作会变为平台提供的用于并发访问的硬件原语。</p>
+
+<ul>
+<li><p>AtomicBoolean -- 原子布尔</p></li>
+<li><p>AtomicInteger -- 原子整型</p></li>
+<li><p>AtomicIntegerArray -- 原子整型数组</p></li>
+<li><p>AtomicLong -- 原子长整型</p></li>
+<li><p>AtomicLongArray -- 原子长整型数组</p></li>
+<li><p>AtomicReference -- 原子引用</p></li>
+<li><p>AtomicReferenceArray -- 原子引用数组</p></li>
+<li><p>AtomicMarkableReference -- 原子标记引用</p></li>
+<li><p>AtomicStampedReference -- 原子戳记引用</p></li>
+<li><p>AtomicIntegerFieldUpdater -- 用来包裹对整形 volatile 域的原子操作</p></li>
+<li><p>AtomicLongFieldUpdater -- 用来包裹对长整型 volatile 域的原子操作</p></li>
+<li><p>AtomicReferenceFieldUpdater -- 用来包裹对对象 volatile 域的原子操作</p></li>
+</ul>
+
+
+<p>引入这些类的主要原因是为了实现一种所谓的无锁定且无等待算法. 如: 比较并交换 (CAS), 它的原理是比较当前值与期望值, 如果相同则表示该变量没有发生变化。</p>
+
+<p>如下面的例子使用同步和CAS方式来实现一个ID生成器。</p>
+
+<p><em>同步实现方式</em></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">IDGenerator</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">IDGenerator</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">int</span> <span class="nf">nextInt</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">++</span><span class="n">id</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+<p><em>CAS实现方式</em></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">IDGenerator</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">AtomicInteger</span> <span class="n">id</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">AtomicInteger</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+
+    <span class="kd">public</span> <span class="nf">IDGenerator</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">nextInt</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">oldID</span> <span class="o">=</span> <span class="n">id</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+            <span class="kt">int</span> <span class="n">newID</span> <span class="o">=</span> <span class="n">oldID</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">id</span><span class="o">.</span><span class="na">compareAndSet</span><span class="o">(</span><span class="n">oldID</span><span class="o">,</span> <span class="n">newID</span><span class="o">))</span>
+                <span class="k">return</span> <span class="n">newID</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+<h3>线程的状态转换图</h3>
+
+<p>线程在一定条件下，状态会发生变化。线程变化的状态转换图如下：</p>
+
+<p><img src="http://stackvoid.qiniudn.com/2014-05-20-%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E5%9B%BE.png" alt="线程的状态转换图" /></p>
+
+<ol>
+<li><p>新建状态（New）：新创建了一个线程对象。</p></li>
+<li><p>就绪状态（Runnable）：线程对象创建后，其他线程调用了该对象的start()方法。该状态的线程位于可运行线程池中，变得可运行，等待获取CPU的使用权。</p></li>
+<li><p>运行状态（Running）：就绪状态的线程获取了CPU，执行程序代码。</p></li>
+<li><p>阻塞状态（Blocked）：阻塞状态是线程因为某种原因放弃CPU使用权，暂时停止运行。直到线程进入就绪状态，才有机会转到运行状态。阻塞的情况分三种：</p>
+
+<blockquote><p>等待阻塞：运行的线程执行wait()方法，JVM会把该线程放入等待池中。
+同步阻塞：运行的线程在获取对象的同步锁时，若该同步锁被别的线程占用，则JVM会把该线程放入锁池中。
+其他阻塞：运行的线程执行sleep()或join()方法，或者发出了I/O请求时，JVM会把该线程置为阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。</p></blockquote></li>
+<li><p>死亡状态（Dead）：线程执行完了或者因异常退出了run()方法，该线程结束生命周期。</p></li>
+</ol>
+
+
+<h3>Executor</h3>
+
+<p>java.util.concurrent包中的Executor用于管理Thread对象，简化并发。在Java 5之后，通过Executor来启动线程比使用Thread的start方法更好，除了更易管理，效率更好（用线程池实现，节约开销）外，还有关键的一点：有助于避免this逃逸问题——如果我们在构造器中启动一个线程，因为另一个任务可能会在构造器结束之前开始执行，此时可能会访问到初始化了一半的对象用Executor在构造器中。</p>
+
+<p>Executor框架包括：线程池，Executor，Executors，ExecutorService，CompletionService，Future，Callable等。</p>
+
+<p>Executor接口中之定义了一个方法execute（Runnable command），该方法接收一个Runable实例，它用来执行一个任务，任务即一个实现了Runnable接口的类。ExecutorService接口继承自Executor接口，它提供了更丰富的实现多线程的方法，比如，ExecutorService提供了关闭自己的方法，以及可为跟踪一个或多个异步任务执行状况而生成 Future 的方法。 可以调用ExecutorService的shutdown（）方法来平滑地关闭 ExecutorService，调用该方法后，将导致ExecutorService停止接受任何新的任务且等待已经提交的任务执行完成(已经提交的任务会分两类：一类是已经在执行的，另一类是还没有开始执行的)，当所有已经提交的任务执行完毕后将会关闭ExecutorService。因此我们一般用该接口来实现和管理多线程。</p>
+
+<p>Executor接口中之定义了一个方法execute（Runnable command），该方法接收一个Runable实例，它用来执行一个任务，任务即一个实现了Runnable接口的类。ExecutorService接口继承自Executor接口，它提供了更丰富的实现多线程的方法，比如，ExecutorService提供了关闭自己的方法，以及可为跟踪一个或多个异步任务执行状况而生成 Future 的方法。 可以调用ExecutorService的shutdown（）方法来平滑地关闭 ExecutorService，调用该方法后，将导致ExecutorService停止接受任何新的任务且等待已经提交的任务执行完成(已经提交的任务会分两类：一类是已经在执行的，另一类是还没有开始执行的)，当所有已经提交的任务执行完毕后将会关闭ExecutorService。因此我们一般用该接口来实现和管理多线程。</p>
+
+<p>ExecutorService的生命周期包括三种状态：运行、关闭、终止。创建后便进入运行状态，当调用了shutdown（）方法时，便进入关闭状态，此时意味着ExecutorService不再接受新的任务，但它还在执行已经提交了的任务，当素有已经提交了的任务执行完后，便到达终止状态。如果不调用shutdown（）方法，ExecutorService会一直处在运行状态，不断接收新的任务，执行新的任务，服务器端一般不需要关闭它，保持一直运行即可。</p>
+
+<p>Executors提供了一系列工厂方法用于创建线程池，返回的线程池都实现了ExecutorService接口。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="n">ExecutorService</span> <span class="nf">newFixedThreadPool</span><span class="o">(</span><span class="kt">int</span> <span class="n">nThreads</span><span class="o">)</span>
+    <span class="n">创建固定数目线程的线程池</span><span class="err">。</span>
+
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">ExecutorService</span> <span class="nf">newCachedThreadPool</span><span class="o">()</span>
+    <span class="n">创建一个可缓存的线程池</span><span class="err">，</span><span class="n">调用execute将重用以前构造的线程</span><span class="err">（</span><span class="n">如果线程可用</span><span class="err">）。</span><span class="n">如果现有线程没有可用的</span><span class="err">，</span><span class="n">则创建一个新线</span>   <span class="n">程并添加到池中</span><span class="err">。</span><span class="n">终止并从缓存中移除那些已有</span> <span class="mi">60</span> <span class="n">秒钟未被使用的线程</span><span class="err">。</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">ExecutorService</span> <span class="nf">newSingleThreadExecutor</span><span class="o">()</span>
+    <span class="n">创建一个单线程化的Executor</span><span class="err">。</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">ScheduledExecutorService</span> <span class="nf">newScheduledThreadPool</span><span class="o">(</span><span class="kt">int</span> <span class="n">corePoolSize</span><span class="o">)</span>
+    <span class="n">创建一个支持定时及周期性的任务执行的线程池</span><span class="err">，</span><span class="n">多数情况下可用来替代Timer类</span><span class="err">。</span></code></pre></div>
+
+
+<p> <a href="http://blog.csdn.net/ns_code/article/details/17465497">Executor参考</a></p>
+
+<p> 这四种方法都是用的Executors中的<a href="">ThreadFactory建立的线程</a>，下面就以上四个方法做个比较.</p>
+
+<p> <strong>newCachedThreadPool()</strong></p>
+
+<ul>
+<li><p>缓存型池子，先查看池中有没有以前建立的线程，如果有，就 reuse.如果没有，就建一个新的线程加入池中。</p></li>
+<li><p>缓存型池子通常用于执行一些生存期很短的异步型任务.因此在一些面向连接的daemon型SERVER中用得不多。但对于生存期短的异步任务，它是Executor的首选。</p></li>
+<li><p>能reuse的线程，必须是timeout IDLE内的池中线程，缺省     timeout是60s,超过这个IDLE时长，线程实例将被终止及移出池。注意，放入CachedThreadPool的线程不必担心其结束，超过TIMEOUT不活动，其会自动被终止。</p></li>
+</ul>
+
+
+<p><strong>newFixedThreadPool(int)</strong></p>
+
+<p>-newFixedThreadPool与cacheThreadPool差不多，也是能reuse就用，但不能随时建新的线程</p>
+
+<p>-其独特之处:任意时间点，最多只能有固定数目的活动线程存在，此时如果有新的线程要建立，只能放在另外的队列中等待，直到当前的线程中某个线程终止直接被移出池子</p>
+
+<p>-和cacheThreadPool不同，FixedThreadPool没有IDLE机制（可能也有，但既然文档没提，肯定非常长，类似依赖上层的TCP或UDP IDLE机制之类的），所以FixedThreadPool多数针对一些很稳定很固定的正规并发线程，多用于服务器</p>
+
+<p>-从方法的源代码看，cache池和fixed 池调用的是同一个底层 池，只不过参数不同:fixed池线程数固定，并且是0秒IDLE（无IDLE），cache池线程数支持0-Integer.MAX_VALUE(显然完全没考虑主机的资源承受能力），60秒IDLE</p>
+
+<p><strong>newScheduledThreadPool(int)</strong></p>
+
+<p>-调度型线程池</p>
+
+<p>-这个池子里的线程可以按schedule依次delay执行，或周期执行</p>
+
+<p><strong>SingleThreadExecutor()</strong></p>
+
+<p>-单例线程，任意时间池中只能有一个线程</p>
+
+<p>-用的是和cache池和fixed池相同的底层池，但线程数目是1-1,0秒IDLE（无IDLE）</p>
+
+<p><strong>Executor执行Callable任务</strong></p>
+
+<p>在Java 5之后，任务分两类：一类是实现了Runnable接口的类，一类是实现了Callable接口的类。两者都可以被ExecutorService执行，但是Runnable任务没有返回值，而Callable任务有返回值。并且Callable的call()方法只能通过ExecutorService的submit(Callable<T> task) 方法来执行，并且返回一个 <T>Future<T>，是表示任务等待完成的 Future。</p>
+
+<p>如果Future的返回尚未完成，则get（）方法会阻塞等待，直到Future完成返回，可以通过调用isDone（）方法判断Future是否完成了返回。</p>
+
+<p><strong>自定义线程池</strong></p>
+
+<p>自定义线程池，可以用ThreadPoolExecutor类创建，它有多个构造方法来创建线程池，用该类很容易实现自定义的线程池。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">ThreadPoolExecutor</span> <span class="o">(</span><span class="kt">int</span> <span class="n">corePoolSize</span><span class="o">,</span> <span class="kt">int</span> <span class="n">maximumPoolSize</span><span class="o">,</span> <span class="kt">long</span>         <span class="n">keepAliveTime</span><span class="o">,</span> <span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">,</span><span class="n">BlockingQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span> <span class="n">workQueue</span><span class="o">)</span></code></pre></div>
+
+
+<ul>
+<li><p>corePoolSize：线程池中所保存的线程数，包括空闲线程。</p></li>
+<li><p>maximumPoolSize：池中允许的最大线程数。</p></li>
+<li><p>keepAliveTime：当线程数大于核心数时，该参数为所有的任务终止前，多余的空闲线程等待新任务的最长时间。</p></li>
+<li><p>unit：等待时间的单位。</p></li>
+<li><p>workQueue：任务执行前保存任务的队列，仅保存由execute方法提交的Runnable任务。</p></li>
+</ul>
+
+
+<h3>一些新的构件</h3>
+
+<p><strong>CountDownLatch</strong></p>
+
+<p>一个同步辅助类，在完成一组正在其他线程中执行的操作之前，它允许一个或多个线程一直等待。</p>
+
+<p>主要方法</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">CountDownLatch</span><span class="o">(</span><span class="kt">int</span> <span class="n">count</span><span class="o">);</span>
+ <span class="kd">public</span> <span class="kt">void</span> <span class="nf">countDown</span><span class="o">();</span>
+ <span class="kd">public</span> <span class="kt">void</span> <span class="nf">await</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span></code></pre></div>
+
+
+<p>构造方法参数指定了计数的次数
+countDown方法，当前线程调用此方法，则计数减一
+awaint方法，调用此方法会一直阻塞当前线程，直到计时器的值为0</p>
+
+<p><strong>CyclicBarrier</strong></p>
+
+<p>N个线程相互等待，任何一个线程完成之前，所有的线程都必须等待。
+这样应该就清楚一点了，对于CountDownLatch来说，重点是那个“一个线程”, 是它在等待， 而另外那N的线程在把“某个事情”做完之后可以继续等待，可以终止。而对于CyclicBarrier来说，重点是那N个线程，他们之间任何一个没有完成，所有的线程都必须等待。</p>
+
+<ol>
+<li><p>CyclicBarrier初始化时规定一个数目，然后计算调用了CyclicBarrier.await()进入等待的线程数。当线程数达到了这个数目时，所有进入等待状态的线程被唤醒并继续。</p></li>
+<li><p>CyclicBarrier就象它名字的意思一样，可看成是个障碍， 所有的线程必须到齐后才能一起通过这个障碍。</p></li>
+<li><p>CyclicBarrier初始时还可带一个Runnable的参数， 此Runnable任务在CyclicBarrier的数目达到后，所有其它线程被唤醒前被执行。</p></li>
+</ol>
+
+
+<p><em>CountDownLatch和CyclicBarrier的区别</em></p>
+
+<blockquote><p>CountDownLatch 是计数器, 线程完成一个就记一个, 就像 报数一样, 只不过是递减的。
+而CyclicBarrier更像一个水闸, 线程执行就想水流, 在水闸处都会堵住, 等到水满(线程到齐)了, 才开始泄流。</p></blockquote>
+
+<p><strong>DelayQueue</strong></p>
+
+<p>DelayQueue是一个BlockingQueue，其特化的参数是Delayed。（不了解BlockingQueue的同学，先去了解BlockingQueue再看本文）
+Delayed扩展了Comparable接口，比较的基准为延时的时间值，Delayed接口的实现类getDelay的返回值应为固定值（final）。DelayQueue内部是使用PriorityQueue实现的。</p>
+
+<p>DelayQueue = BlockingQueue + PriorityQueue + Delayed</p>
+
+<p>DelayQueue的关键元素BlockingQueue、PriorityQueue、Delayed。可以这么说，DelayQueue是一个使用优先队列（PriorityQueue）实现的BlockingQueue，优先队列的比较基准值是时间。</p>
+
+<p>DelayQueue类的主要作用：是一个无界的BlockingQueue，用于放置实现了Delayed接口的对象，其中的对象只能在其到期时才能从队列中取走。这种队列是有序的，即队头对象的延迟到期时间最长。注意：不能将null元素放置到这种队列中。</p>
+
+<p><a href="http://www.cnblogs.com/sunzhenchao/p/3515085.html">DelayQueue资料一</a>
+<a href="http://www.cnblogs.com/jobs/archive/2007/04/27/730255.html">DelayQueue资料二</a></p>
+
+<p><strong>PriorityBlockingQueue</strong></p>
+
+<p>PriorityBlockingQueue里面存储的对象必须是实现Comparable接口。队列通过这个接口的compare方法确定对象的priority。</p>
+
+<p>规则是：当前和其他对象比较，如果compare方法返回负数，那么在队列里面的优先级就比较搞。</p>
+
+<p><a href="http://zzhonghe.iteye.com/blog/826757">PriorityBlockingQueue资料一</a>
+<a href="http://www.blogjava.net/yuyee/archive/2010/11/01/336701.html">PriorityBlockingQueue资料二</a></p>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/Core-Concepts-of-Java-2/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/google-java-style/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<div class="ds-thread" />
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"andygc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2013 - 2015 <a href="/about/">andygc</a>
+
+             | <a href="http://www.miibeian.gov.cn" target="_blank">苏ICP备1500846</a>
+
+
+             | <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255174608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255174608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+         </small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

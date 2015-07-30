@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="andygc" />
+    <title>Apache Maven 使用指南</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="andygc" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css" />
+    <link rel="stylesheet" href="/media/css/highlight.css" />
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="top-bar"></div>
+
+    <a href="https://github.com/angelof7"><img style="position: absolute; top: 0; right: 0; border: 0;" src="../album/forkme_dark.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>Apache Maven 使用指南</h1>
+        </header>
+        <nav>
+        <span><a title="网站首页" class="" href="/">首页</a></span>
+        <span><a title="文章分类" class="" href="/categories/">分类</a></span>
+        <span><a title="标签索引" class="" href="/tags/">标签</a></span>
+        <span><a title="豆瓣书单" class="" href="/books/">书单</a></span>
+        <span><a title="关于站长" class="" href="/about/">关于</a></span>
+        <span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+        <!--<span><a title="种子订阅" class="" href="/feed/" target="_blank">订阅</a></span>-->
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2015-07-27">2015-07-27</time>
+</span>
+
+ | 
+<span class="categories">
+  分类
+  
+  <a href="/categories/#configuration" title="configuration">configuration</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  标签
+  
+  <a href="/tags/#Maven" title="Maven">Maven</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h3>Apache Maven:</h3>
+
+<hr />
+
+<p>Maven 是一个项目管理和构建自动化工具。但是对于我们程序员来说，我们最关心的是它的项目构建功能。所以这里我们介绍的就是怎样用 maven 来满足我们项目的日常需要。
+Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所有的项目都有如下的结构:</p>
+
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${basedir}</td>
+<td>存放 pom.xml和所有的子目录</td>
+</tr>
+<tr>
+<td>${basedir}/src/main/java</td>
+<td>项目的 java源代码</td>
+</tr>
+<tr>
+<td>${basedir}/src/main/resources</td>
+<td>项目的资源，比如说 property文件</td>
+</tr>
+<tr>
+<td>${basedir}/src/test/java</td>
+<td>项目的测试类，比如说 JUnit代码</td>
+</tr>
+<tr>
+<td>${basedir}/src/test/resources</td>
+<td>测试使用的资源</td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>Maven 的安装:</h3>
+
+<p><a href="http://maven.apache.org/download.html">maven下载安装</a><br/>
+<code>$ mvn -v</code></p>
+
+<h3>Maven 的使用:</h3>
+
+<ol>
+<li>archetype</li>
+</ol>
+
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>mvn archetype:generate 
+-DgroupId<span class="o">=</span>com.mycompany.helloworld 
+-DartifactId<span class="o">=</span>helloworld 
+-Dpackage<span class="o">=</span>com.mycompany.helloworld 
+-Dversion<span class="o">=</span>1.0-SNAPSHOT</code></pre></div>
+
+
+<ol>
+<li>构建</li>
+</ol>
+
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>mvn clean compile   
+<span class="nv">$ </span>mvn clean <span class="nb">test</span>   
+<span class="nv">$ </span>mvn clean package  
+<span class="nv">$ </span>mvn clean install</code></pre></div>
+
+
+<ol>
+<li>POM</li>
+</ol>
+
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+     <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span> 
+
+     <span class="nt">&lt;groupId&gt;</span>com.mycompany.helloworld<span class="nt">&lt;/groupId&gt;</span> 
+     <span class="nt">&lt;artifactId&gt;</span>helloworld<span class="nt">&lt;/artifactId&gt;</span> 
+     <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span> 
+     <span class="nt">&lt;packaging&gt;</span>jar<span class="nt">&lt;/packaging&gt;</span> 
+
+     <span class="nt">&lt;name&gt;</span>helloworld<span class="nt">&lt;/name&gt;</span> 
+     <span class="nt">&lt;url&gt;</span>http://maven.apache.org<span class="nt">&lt;/url&gt;</span> 
+
+     <span class="nt">&lt;properties&gt;</span> 
+       <span class="nt">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.build.sourceEncoding&gt;</span> 
+     <span class="nt">&lt;/properties&gt;</span> 
+
+     <span class="nt">&lt;dependencies&gt;</span>
+       <span class="nt">&lt;dependency&gt;</span> 
+         <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span> 
+         <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span> 
+         <span class="nt">&lt;version&gt;</span>3.8.1<span class="nt">&lt;/version&gt;</span> 
+         <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span> 
+       <span class="nt">&lt;/dependency&gt;</span> 
+     <span class="nt">&lt;/dependencies&gt;</span> 
+    <span class="nt">&lt;/project&gt;</span></code></pre></div>
+
+
+<p>在 POM 中，groupId, artifactId, packaging, version 叫作 maven 坐标，它能唯一的确定一个项目。有了 maven 坐标，我们就可以用它来指定我们的项目所依赖的其他项目，插件，或者父项目。一般 maven 坐标写成如下的格式：<br/>
+<code>groupId:artifactId:packaging:version</code><br/>
+像我们的例子就会写成：<br/>
+<code>com.mycompany.helloworld: helloworld: jar: 1.0-SNAPSHOT</code></p>
+
+<p>我们的 helloworld 示例很简单，但是大项目一般会分成几个子项目。在这种情况下，每个子项目就会有自己的 POM 文件，然后它们会有一个共同的父项目。这样只要构建父项目就能够构建所有的子项目了。子项目的 POM 会继承父项目的 POM。</p>
+
+<ol>
+<li>scope</li>
+<li>compile (默认)</li>
+<li>test</li>
+<li>provided (servlet-api)</li>
+<li>runtime (JDBC Driver)</li>
+<li>system</li>
+<li><p>import</p></li>
+<li><p>聚合和继承</p></li>
+<li><p>反应堆</p></li>
+<li><p>常用命令</p></li>
+</ol>
+
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/jvm-monitor-remote/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+	
+	<div class="ds-thread" />
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"andygc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2013 - 2015 <a href="/about/">andygc</a>
+
+             | <a href="http://www.miibeian.gov.cn" target="_blank">苏ICP备1500846</a>
+
+
+             | <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255174608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255174608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+         </small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

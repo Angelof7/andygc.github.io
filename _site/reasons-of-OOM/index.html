@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="andygc" />
+    <title>OOM的常见原因</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="andygc" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css" />
+    <link rel="stylesheet" href="/media/css/highlight.css" />
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="top-bar"></div>
+
+    <a href="https://github.com/angelof7"><img style="position: absolute; top: 0; right: 0; border: 0;" src="../album/forkme_dark.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>OOM的常见原因</h1>
+        </header>
+        <nav>
+        <span><a title="网站首页" class="" href="/">首页</a></span>
+        <span><a title="文章分类" class="" href="/categories/">分类</a></span>
+        <span><a title="标签索引" class="" href="/tags/">标签</a></span>
+        <span><a title="豆瓣书单" class="" href="/books/">书单</a></span>
+        <span><a title="关于站长" class="" href="/about/">关于</a></span>
+        <span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+        <!--<span><a title="种子订阅" class="" href="/feed/" target="_blank">订阅</a></span>-->
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-07-10">2014-07-10</time>
+</span>
+
+ | 
+<span class="categories">
+  分类
+  
+  <a href="/categories/#java" title="java">java</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  标签
+  
+  <a href="/tags/#JVM" title="JVM">JVM</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>java.lang.OutOfMemoryError这个异常我相信大部分开发人员都有遇到过，通过本文希望读者能快速解决OOM问题。</p>
+
+<h4>Java堆溢出</h4>
+
+<p>Java堆用于存储对象实例，只要不断创建对象，且保证GC Roots到对象这件有可达路径来避免垃圾回收机制清除这些对象，那么在对象数量到达最大堆的容量限制后就会产生内存溢出异常。</p>
+
+<p>通过参数 -XX：+HeapDumpOnOutOfMemoryError可以让虚拟机在出现内存溢出时Dump出当前内存堆转储快照以方便事后分析。</p>
+
+<p>用工具（如Eclipse Memory Analyzer）查看泄露对象到GC Roots的引用链；就能找到泄露对象是通过怎么的路径与GC Roots相关联并导致垃圾回收器无法自动回收他们的。</p>
+
+<p>若不存在泄露，就要检查虚拟机的堆参数了(-Xmx与-Xms)。</p>
+
+<h4>虚拟机栈和本地方法栈溢出</h4>
+
+<p>关于虚拟机栈和本地方法栈，在虚拟机规范中描述了两种异常：</p>
+
+<ul>
+<li>若线程请求的栈深度大于虚拟机所允许的最大深度，将抛出 StackOverflowError异常</li>
+<li>若虚拟机在扩展栈时无法申请到足够的内存空间，则抛出OutOfMemoryError异常。</li>
+</ul>
+
+
+<h4>方法区和运行时常量池溢出</h4>
+
+<p>方法区存放的是Class相关的信息，如类名、访问修饰符、常量池、字段描述、方法描述等。如果运行时有大量的类，
+那么方法区可能出现OOM。一个类要被垃圾收集器回收掉，判定条件比较苛刻，经常动态生成大量Class的应用中，要特别注意类的回收状况。</p>
+
+<h4>本机内存直接溢出</h4>
+
+<p>明显特征是Heap Dump文件中不会看到明显异常，若发现OOM后的Dump很小，并且程序中直接或间接使用了NIO，那么就要考虑一下是不是这方面的原因。</p>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/Introduce-to-G1/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/Comparable-vs-Comparator-in-Java/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<div class="ds-thread" />
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"andygc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2013 - 2015 <a href="/about/">andygc</a>
+
+             | <a href="http://www.miibeian.gov.cn" target="_blank">苏ICP备1500846</a>
+
+
+             | <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255174608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255174608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+         </small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

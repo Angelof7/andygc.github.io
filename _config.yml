@@ -1,0 +1,15 @@
+markdown: rdiscount
+permalink: /:title/
+url: http://andygc.com
+beian: 苏ICP备1500846
+name: AndyStack
+author: andygc
+email: cgao886@163.com
+duoshuo: andygc
+cnzz: 1255174608
+weibo: 2106155130
+github: angelof7
+pygments: true
+safe: true
+paginate: 20
+about: "AndyGao's Life Stack."
