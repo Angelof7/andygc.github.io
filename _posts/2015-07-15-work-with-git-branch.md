@@ -10,36 +10,35 @@ tags: [Git]
 ###git工作流程
 ----------------
 1. clone远程仓库:  
-> $ git clone ...
-
+` $ git clone ...
+`
 2. 去自己的分支工作:  
-> $ git checkout work
-
+` $ git checkout work
+`
 3. 工作:  
-> working ....
-
+` working ....
+`
 4. 提交工作分支的修改:  
-> $ git add .  
-> $ git commit -a
-
+` $ git add . ` 
+` $ git commit -a `  
 5. 回到主分支:  
-> $ git checkout master
-
+` $ git checkout master
+`
 6. 获取最新的修改:   
-> $ git pull origin master
-
+` $ git pull origin master
+`
 7. 回到工作分支:  
-> $ git checkout work
-
+` $ git checkout work
+`
 8. 合并主分支,并修改冲突:  
-> $ git rebase master
-
+` $ git rebase master
+`
 9. 回到主分支:  
-> $ git checkout master
-
+` $ git checkout master
+`
 10. 合并工作分支的修改,此时不会发生冲突了:  
-> $ git merge work
-
+` $ git merge work
+`
 11. 提交到远程:  
-> $ git push origin master
-
+` $ git push origin master
+`
