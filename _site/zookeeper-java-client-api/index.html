@@ -54,24 +54,18 @@
 
 </section>
 <section class="post">
-<h3>Apache ZooKeeper:</h3>
-
+<h3 id="apache-zookeeper">Apache ZooKeeper:</h3>
 <hr />
-
 <p>ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服务，是Google的Chubby一个开源的实现，是Hadoop和Hbase的重要组件。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、名字服务、分布式同步、组服务等。
 ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。
 ZooKeeper包含一个简单的原语集, 提供Java和C的接口。</p>
 
-<h3>ZooKeeper 的安装:</h3>
-
+<h3 id="zookeeper-">ZooKeeper 的安装:</h3>
 <hr />
-
 <p><a href="http://zookeeper.apache.org">ZooKeeper下载安装</a></p>
 
-<h3>Java Client 的使用:</h3>
-
+<h3 id="java-client-">Java Client 的使用:</h3>
 <hr />
-
 <p>Watcher 在 ZooKeeper 是一个核心功能,Watcher 可以监控目录节点的数据变化以及子目录的变化,一旦这些状态发生变化,服务器就会通知所有设置在这个目录节点上的 Watcher,从而每个客户端都很快知道它所关注的目录节点的状态发生变化,而做出相应的反应.
 可以设置观察的操作：exists,getChildren,getData</p>
 
@@ -85,9 +79,8 @@ ZooKeeper包含一个简单的原语集, 提供Java和C的接口。</p>
 意 思是说，zk的客户端每次和server进行通信的时候，会记住server上最新的zxid。如果某个时刻，客户端和server断开了连接，那么等到 下次重新连接到集群中的机器上时，会检查当前连接上的那个server是否和client有相同的zxid，或者已经是更新的zxid了。一旦客户端发现 server的zxid比自己小，那么客户端会断开和这个server的连接，并且重新连接集群中的其它server.</p>
 
 <ol>
-<li>连接ZooKeeper服务器</li>
+  <li>连接ZooKeeper服务器</li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/***</span>
 <span class="cm">*** [关于connectString服务器地址配置]</span>
@@ -127,11 +120,9 @@ ZooKeeper包含一个简单的原语集, 提供Java和C的接口。</p>
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-
 <ol>
-<li>创建节点</li>
+  <li>创建节点</li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/*</span>
 <span class="cm">* 创建zNode节点, String create(path&lt;节点路径&gt;, data[]&lt;节点内容&gt;, List(ACL访问控制列表), CreateMode&lt;zNode创建类型&gt;)</span>
@@ -164,11 +155,9 @@ ZooKeeper包含一个简单的原语集, 提供Java和C的接口。</p>
         
 <span class="o">}</span></code></pre></div>
 
-
 <ol>
-<li>删除节点</li>
+  <li>删除节点</li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
 <span class="cm">* &lt;p&gt;删除一个zMode节点, void delete(path&lt;节点路径&gt;, stat&lt;数据版本号&gt;)&lt;/p&gt;&lt;br/&gt;</span>
@@ -200,9 +189,8 @@ ZooKeeper包含一个简单的原语集, 提供Java和C的接口。</p>
         
 <span class="o">}</span></code></pre></div>
 
-
 <ol>
-<li>节点赋值/更新节点</li>
+  <li>节点赋值/更新节点</li>
 </ol>
 
 

@@ -62,11 +62,17 @@
 
 <p>使用</p>
 
-<blockquote><p>git init</p>
+<blockquote>
+  <p>git init</p>
+</blockquote>
 
-<p>git add *  //添加所有文件到本地</p>
+<blockquote>
+  <p>git add *  //添加所有文件到本地</p>
+</blockquote>
 
-<p>git commit -m "init"  //提交所有文件到本地</p></blockquote>
+<blockquote>
+  <p>git commit -m “init”  //提交所有文件到本地</p>
+</blockquote>
 
 <p>命令来初始化当前的git目录。如果当前目录有 .git 存在，可以跳过此步骤。</p>
 
@@ -74,7 +80,9 @@
 
 <p>修改完后，可以用</p>
 
-<blockquote><p>git diff</p></blockquote>
+<blockquote>
+  <p>git diff</p>
+</blockquote>
 
 <p>来查看你修改了哪些code，以保证正确性。</p>
 
@@ -89,7 +97,9 @@ git commit -asm   填写patch的名字
 
 <p>使用</p>
 
-<blockquote><p>git format-patch -1</p></blockquote>
+<blockquote>
+  <p>git format-patch -1</p>
+</blockquote>
 
 <p>生成patch。</p>
 
@@ -99,9 +109,12 @@ git commit -asm   填写patch的名字
 
 <p>拿到 patch 的消费者直接到对应目录下，用命令</p>
 
-<blockquote><p>git am *.patch</p></blockquote>
+<blockquote>
+  <p>git am *.patch</p>
+</blockquote>
 
 <p>即可打上 patch。</p>
+
 
 </section>
 <section align="right">

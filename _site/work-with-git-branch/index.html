@@ -56,46 +56,43 @@
 <section class="post">
 <p>本篇博客记录使用git协作的一般过程</p>
 
-<h3>git工作流程</h3>
-
+<h3 id="git">git工作流程</h3>
 <hr />
-
 <ol>
-<li>clone远程仓库:<br/>
-<code>$ git clone ...
-</code></li>
-<li>去自己的分支工作:<br/>
-<code>$ git checkout work
-</code></li>
-<li>工作:<br/>
-<code>working ....
-</code></li>
-<li>提交工作分支的修改:<br/>
-<code>$ git add .</code>
-<code>$ git commit -a</code></li>
-<li>回到主分支:<br/>
-<code>$ git checkout master
-</code></li>
-<li>获取最新的修改: <br/>
-<code>$ git pull origin master
-</code></li>
-<li>回到工作分支:<br/>
-<code>$ git checkout work
-</code></li>
-<li>合并主分支,并修改冲突:<br/>
-<code>$ git rebase master
-</code></li>
-<li>回到主分支:<br/>
-<code>$ git checkout master
-</code></li>
-<li>合并工作分支的修改,此时不会发生冲突了:<br/>
-<code>$ git merge work
-</code></li>
-<li>提交到远程:<br/>
-<code>$ git push origin master
-</code></li>
+  <li>clone远程仓库:<br />
+` $ git clone …
+`</li>
+  <li>去自己的分支工作:<br />
+` $ git checkout work
+`</li>
+  <li>工作:<br />
+` working ….
+`</li>
+  <li>提交工作分支的修改:<br />
+` $ git add . ` 
+` $ git commit -a `</li>
+  <li>回到主分支:<br />
+` $ git checkout master
+`</li>
+  <li>获取最新的修改: <br />
+` $ git pull origin master
+`</li>
+  <li>回到工作分支:<br />
+` $ git checkout work
+`</li>
+  <li>合并主分支,并修改冲突:<br />
+` $ git rebase master
+`</li>
+  <li>回到主分支:<br />
+` $ git checkout master
+`</li>
+  <li>合并工作分支的修改,此时不会发生冲突了:<br />
+` $ git merge work
+`</li>
+  <li>提交到远程:<br />
+` $ git push origin master
+`</li>
 </ol>
-
 
 </section>
 <section align="right">

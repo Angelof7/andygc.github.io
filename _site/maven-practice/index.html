@@ -54,56 +54,50 @@
 
 </section>
 <section class="post">
-<h3>Apache Maven:</h3>
-
+<h3 id="apache-maven">Apache Maven:</h3>
 <hr />
-
 <p>Maven 是一个项目管理和构建自动化工具。但是对于我们程序员来说，我们最关心的是它的项目构建功能。所以这里我们介绍的就是怎样用 maven 来满足我们项目的日常需要。
 Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所有的项目都有如下的结构:</p>
 
 <table>
-<thead>
-<tr>
-<th>目录</th>
-<th>目的</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>${basedir}</td>
-<td>存放 pom.xml和所有的子目录</td>
-</tr>
-<tr>
-<td>${basedir}/src/main/java</td>
-<td>项目的 java源代码</td>
-</tr>
-<tr>
-<td>${basedir}/src/main/resources</td>
-<td>项目的资源，比如说 property文件</td>
-</tr>
-<tr>
-<td>${basedir}/src/test/java</td>
-<td>项目的测试类，比如说 JUnit代码</td>
-</tr>
-<tr>
-<td>${basedir}/src/test/resources</td>
-<td>测试使用的资源</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>目录</th>
+      <th>目的</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>${basedir}</td>
+      <td>存放 pom.xml和所有的子目录</td>
+    </tr>
+    <tr>
+      <td>${basedir}/src/main/java</td>
+      <td>项目的 java源代码</td>
+    </tr>
+    <tr>
+      <td>${basedir}/src/main/resources</td>
+      <td>项目的资源，比如说 property文件</td>
+    </tr>
+    <tr>
+      <td>${basedir}/src/test/java</td>
+      <td>项目的测试类，比如说 JUnit代码</td>
+    </tr>
+    <tr>
+      <td>${basedir}/src/test/resources</td>
+      <td>测试使用的资源</td>
+    </tr>
+  </tbody>
 </table>
 
-
-<h3>Maven 的安装:</h3>
-
-<p><a href="http://maven.apache.org/download.html">maven下载安装</a><br/>
+<h3 id="maven-">Maven 的安装:</h3>
+<p><a href="http://maven.apache.org/download.html">maven下载安装</a><br />
 <code>$ mvn -v</code></p>
 
-<h3>Maven 的使用:</h3>
-
+<h3 id="maven--1">Maven 的使用:</h3>
 <ol>
-<li>archetype</li>
+  <li>archetype</li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>mvn archetype:generate 
 -DgroupId<span class="o">=</span>com.mycompany.helloworld 
@@ -111,22 +105,18 @@ Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所�
 -Dpackage<span class="o">=</span>com.mycompany.helloworld 
 -Dversion<span class="o">=</span>1.0-SNAPSHOT</code></pre></div>
 
-
 <ol>
-<li>构建</li>
+  <li>构建</li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>mvn clean compile   
 <span class="nv">$ </span>mvn clean <span class="nb">test</span>   
 <span class="nv">$ </span>mvn clean package  
 <span class="nv">$ </span>mvn clean install</code></pre></div>
 
-
 <ol>
-<li>POM</li>
+  <li>POM</li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
      <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
@@ -154,25 +144,31 @@ Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所�
      <span class="nt">&lt;/dependencies&gt;</span> 
     <span class="nt">&lt;/project&gt;</span></code></pre></div>
 
-
-<p>在 POM 中，groupId, artifactId, packaging, version 叫作 maven 坐标，它能唯一的确定一个项目。有了 maven 坐标，我们就可以用它来指定我们的项目所依赖的其他项目，插件，或者父项目。一般 maven 坐标写成如下的格式：<br/>
-<code>groupId:artifactId:packaging:version</code><br/>
-像我们的例子就会写成：<br/>
+<p>在 POM 中，groupId, artifactId, packaging, version 叫作 maven 坐标，它能唯一的确定一个项目。有了 maven 坐标，我们就可以用它来指定我们的项目所依赖的其他项目，插件，或者父项目。一般 maven 坐标写成如下的格式：<br />
+<code>groupId:artifactId:packaging:version</code><br />
+像我们的例子就会写成：<br />
 <code>com.mycompany.helloworld: helloworld: jar: 1.0-SNAPSHOT</code></p>
 
 <p>我们的 helloworld 示例很简单，但是大项目一般会分成几个子项目。在这种情况下，每个子项目就会有自己的 POM 文件，然后它们会有一个共同的父项目。这样只要构建父项目就能够构建所有的子项目了。子项目的 POM 会继承父项目的 POM。</p>
 
 <ol>
-<li>scope</li>
-<li>compile (默认)</li>
-<li>test</li>
-<li>provided (servlet-api)</li>
-<li>runtime (JDBC Driver)</li>
-<li>system</li>
-<li><p>import</p></li>
-<li><p>聚合和继承</p></li>
-<li><p>反应堆</p></li>
-<li><p>常用命令</p></li>
+  <li>scope
+    <ul>
+      <li>compile (默认)</li>
+      <li>test</li>
+      <li>provided (servlet-api)</li>
+      <li>runtime (JDBC Driver)</li>
+      <li>system</li>
+      <li>import</li>
+    </ul>
+  </li>
+  <li>
+    <p>聚合和继承</p>
+  </li>
+  <li>
+    <p>反应堆</p>
+  </li>
+  <li>常用命令</li>
 </ol>
 
 

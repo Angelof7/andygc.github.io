@@ -58,7 +58,7 @@
 
 <p>编译环境：Ubuntu13.04 64位。</p>
 
-<p><font color='purple' style='font-size:13pt'>1. 下载openjdk7源代码</font></p>
+<font color="purple" style="font-size:13pt">1. 下载openjdk7源代码</font>
 
 <p>下载源代码有两种方式。</p>
 
@@ -68,15 +68,15 @@
 
 <p>然后按照以下命令下载源代码。</p>
 
-<p>hg clone http://hg.openjdk.java.net/jdk7u/jdk7u6 YourOpenJDK
-cd YourOpenJDK
+<p>hg clone http://hg.openjdk.java.net/jdk7u/jdk7u6 YourOpenJDK 
+cd YourOpenJDK 
 sh ./get_source.sh</p>
 
 <p><strong>直接到官方下载</strong></p>
 
 <p>最好用<a href="http://openjdk.java.net/">官方</a>最新的包,以避免各种之前出现的Bug。</p>
 
-<p><font color='purple' style='font-size:13pt'>2. 下载编译所需要的包</font></p>
+<font color="purple" style="font-size:13pt">2. 下载编译所需要的包</font>
 
 <p>sudo aptitude build-dep openjdk-7</p>
 
@@ -84,7 +84,7 @@ sh ./get_source.sh</p>
 
 <p>没有aptitude命令，自行安装。</p>
 
-<p><font color='purple' style='font-size:13pt'>3. 编译</font></p>
+<font color="purple" style="font-size:13pt">3. 编译</font>
 
 <p>进入openjdk的目录，用命令</p>
 
@@ -94,25 +94,25 @@ sh ./get_source.sh</p>
 
 <p>建立sh脚本，注意脚本必须拥有可执行权限。编译脚本如下：</p>
 
-<p><font color='green' style='font-size:13pt'>
-export LANG=C</p>
+<font color="green" style="font-size:13pt">
+export LANG=C
 
-<p>export ANT_HOME=/usr/share/ant</p>
+export ANT_HOME=/usr/share/ant
 
-<p>export ALT_BOOTDIR=/usr/lib/jvm/java-7-openjdk-amd64</p>
+export ALT_BOOTDIR=/usr/lib/jvm/java-7-openjdk-amd64
 
-<p>export DEBUG_NAME=debug</p>
+export DEBUG_NAME=debug
 
-<p>export ALT_JDK_IMPORT_PATH=/usr/lib/jvm/java-7-openjdk-amd64</p>
+export ALT_JDK_IMPORT_PATH=/usr/lib/jvm/java-7-openjdk-amd64
 
-<p>unset JAVA_HOME</p>
+unset JAVA_HOME
 
-<p>unset CLASS_PATH</p>
+unset CLASS_PATH
 
-<p>make ARCH_DATA_MODEL=64 BUILD_JAXWS=false BUILD_JAXP=false
-</font></p>
+make ARCH_DATA_MODEL=64 BUILD_JAXWS=false BUILD_JAXP=false
+</font>
 
-<p><font color='purple' style='font-size:13pt'>4. 编译成功</font></p>
+<font color="purple" style="font-size:13pt">4. 编译成功</font>
 
 <p>经过漫长的编译，成功后会出现如下信息。</p>
 
@@ -122,15 +122,18 @@ export LANG=C</p>
 
 <p><img src="http://stackvoid.qiniudn.com/2014-05-062014-06-05-build-jdk-2.png" alt="jdk" /></p>
 
-<p><font color='purple' style='font-size:13pt'>5. 一些有用的资料</font></p>
+<font color="purple" style="font-size:13pt">5. 一些有用的资料</font>
 
 <ol>
-<li><p><a href="http://blog.csdn.net/hengyunabc/article/details/16912775">Eclipse调试Hotspot</a></p></li>
-<li><p><a href="https://github.com/codefollower/OpenJDK-Research/blob/master/hotspot/my-docs/%E6%9E%84%E5%BB%BA%E4%B8%8E%E8%B0%83%E8%AF%95-Linux.md">调试Hotspot</a></p></li>
+  <li>
+    <p><a href="http://blog.csdn.net/hengyunabc/article/details/16912775">Eclipse调试Hotspot</a></p>
+  </li>
+  <li>
+    <p><a href="https://github.com/codefollower/OpenJDK-Research/blob/master/hotspot/my-docs/%E6%9E%84%E5%BB%BA%E4%B8%8E%E8%B0%83%E8%AF%95-Linux.md">调试Hotspot</a></p>
+  </li>
 </ol>
 
-
-<p><font color='blue' style='font-size:14pt'>真爱生命，远离百度。</font></p>
+<font color="blue" style="font-size:14pt">真爱生命，远离百度。</font>
 
 <p>(完)</p>
 

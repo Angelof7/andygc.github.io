@@ -54,9 +54,9 @@
 
 </section>
 <section class="post">
-<p>设一组数p = {r1, r2, r3, ... ,rn}, 全排列为perm(p)，pn = p - {rn}。</p>
+<p>设一组数p = {r1, r2, r3, … ,rn}, 全排列为perm(p)，pn = p - {rn}。</p>
 
-<p>因此perm(p) = r1perm(p1), r2perm(p2), r3perm(p3), ... , rnperm(pn)。当n = 1时perm(p} = r1。</p>
+<p>因此perm(p) = r1perm(p1), r2perm(p2), r3perm(p3), … , rnperm(pn)。当n = 1时perm(p} = r1。</p>
 
 <p><strong>实现java代码如下：</strong></p>
 
@@ -64,10 +64,10 @@
         <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
         <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">swap</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">str</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span>
         <span class="o">{</span>
-            <span class="n">String</span> <span class="n">temp</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">String</span><span class="o">();</span>
-            <span class="n">temp</span> <span class="o">=</span> <span class="n">str</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-            <span class="n">str</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">str</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
-            <span class="n">str</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+	        <span class="n">String</span> <span class="n">temp</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">String</span><span class="o">();</span>
+	        <span class="n">temp</span> <span class="o">=</span> <span class="n">str</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+	        <span class="n">str</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">str</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+	        <span class="n">str</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
         <span class="o">}</span>
         <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">arrange</span> <span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">str</span><span class="o">,</span> <span class="kt">int</span> <span class="n">st</span><span class="o">,</span> <span class="kt">int</span> <span class="n">len</span><span class="o">)</span>
         <span class="o">{</span>
@@ -89,19 +89,17 @@
                                 <span class="n">swap</span><span class="o">(</span><span class="n">str</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
                         <span class="o">}</span>
                 <span class="o">}</span>
-        
+		
         <span class="o">}</span>
-    <span class="cm">/**</span>
-<span class="cm">    * @param args</span>
-<span class="cm">    */</span>
+	<span class="cm">/**</span>
+<span class="cm">	 * @param args</span>
+<span class="cm">	 */</span>
         <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
                 <span class="n">String</span> <span class="n">str</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;a&quot;</span><span class="o">,</span> <span class="s">&quot;b&quot;</span><span class="o">,</span> <span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="s">&quot;d&quot;</span><span class="o">,</span> <span class="s">&quot;e&quot;</span><span class="o">};</span>
                 <span class="n">arrange</span><span class="o">(</span><span class="n">str</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">str</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
                 <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">total</span><span class="o">);</span>
         <span class="o">}</span>
     <span class="o">}</span></code></pre></div>
-
-
 
 
 </section>

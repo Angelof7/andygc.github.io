@@ -1,4 +1,4 @@
-markdown: rdiscount
+markdown: kramdown
 permalink: /:title/
 url: http://angelof7.github.io
 beian: 苏ICP备1500846

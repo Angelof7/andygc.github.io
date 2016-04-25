@@ -61,26 +61,32 @@
 <p><img src="http://stackvoid.qiniudn.com/2014-05-25-1.png" alt="JVM1" /></p>
 
 <ol>
-<li>绝大部分新生成的对象都放在Eden区，当Eden区将满，JVM会因申请不到内存，而触发Young GC ,进行Eden区+有对象的Survivor区(设为S0区)垃圾回收，把存活的对象用复制算法拷贝到一个空的Survivor(S1)中，此时Eden区被清空，另外一个Survivor S0也为空。下次触发Young GC回收Eden+S0，将存活对象拷贝到S1中。新生代垃圾回收简单、粗暴、高效。</li>
-<li>若发现Survivor区满了，则将这些对象拷贝到old区或者Survivor没满但某些对象足够Old,也拷贝到Old区(每次Young GC都会使Survivor区存活对象值+1，直到阈值)。
+  <li>绝大部分新生成的对象都放在Eden区，当Eden区将满，JVM会因申请不到内存，而触发Young GC ,进行Eden区+有对象的Survivor区(设为S0区)垃圾回收，把存活的对象用复制算法拷贝到一个空的Survivor(S1)中，此时Eden区被清空，另外一个Survivor S0也为空。下次触发Young GC回收Eden+S0，将存活对象拷贝到S1中。新生代垃圾回收简单、粗暴、高效。</li>
+  <li>若发现Survivor区满了，则将这些对象拷贝到old区或者Survivor没满但某些对象足够Old,也拷贝到Old区(每次Young GC都会使Survivor区存活对象值+1，直到阈值)。
 3.Old区也会进行垃圾收集(Young GC),发生一次 Major GC 至少伴随一次Young GC，一般比Young GC慢十倍以上。</li>
-<li>JVM在Old区申请不到内存，会进行Full GC。Old区使用一般采用Concurrent-Mark–Sweep策略回收内存。</li>
+  <li>JVM在Old区申请不到内存，会进行Full GC。Old区使用一般采用Concurrent-Mark–Sweep策略回收内存。</li>
 </ol>
-
 
 <p>总结：Java垃圾回收器是一种“自适应的、分代的、停止—复制、标记-清扫”式的垃圾回收器。</p>
 
 <p>缺点：</p>
 
 <ol>
-<li><p>GC过程中会出现STW(Stop-The-World)，若Old区对象太多，STW耗费大量时间。</p></li>
-<li><p>CMS收集器对CPU资源很敏感。</p></li>
-<li><p>CMS收集器无法处理浮动垃圾，可能出现“Concurrent Mode Failure”失败而导致另一次Full GC的产生。</p></li>
-<li><p>CMS导致内存碎片问题。</p></li>
+  <li>
+    <p>GC过程中会出现STW(Stop-The-World)，若Old区对象太多，STW耗费大量时间。</p>
+  </li>
+  <li>
+    <p>CMS收集器对CPU资源很敏感。</p>
+  </li>
+  <li>
+    <p>CMS收集器无法处理浮动垃圾，可能出现“Concurrent Mode Failure”失败而导致另一次Full GC的产生。</p>
+  </li>
+  <li>
+    <p>CMS导致内存碎片问题。</p>
+  </li>
 </ol>
 
-
-<h2>G1收集器</h2>
+<h2 id="g1">G1收集器</h2>
 
 <p>在G1中，堆被划分成 许多个连续的区域(region)。每个区域大小相等，在1M~32M之间。JVM最多支持2000个区域，可推算G1能支持的最大内存为2000*32M=62.5G。区域(region)的大小在JVM初始化的时候决定，也可以用-XX:G1HeapReginSize设置。</p>
 
@@ -104,16 +110,21 @@
 <p>和CMS类似，G1收集器收集老年代对象会有短暂停顿。</p>
 
 <ol>
-<li><p>标记阶段，首先初始标记(Initial-Mark),这个阶段是停顿的(Stop the World Event)，并且会触发一次普通Mintor GC。对应GC log:GC pause (young) (inital-mark)</p></li>
-<li><p>Root Region Scanning，程序运行过程中会回收survivor区(存活到老年代)，这一过程必须在young GC之前完成。</p></li>
-<li><p>Concurrent Marking，在整个堆中进行并发标记(和应用程序并发执行)，此过程可能被young GC中断。在并发标记阶段，若发现区域对象中的所有对象都是垃圾，那个这个区域会被立即回收(图中打X)。同时，并发标记过程中，会计算每个区域的对象活性(区域中存活对象的比例)。
-<img src="http://stackvoid.qiniudn.com/2014-06-25-4.jpg" alt="JVM4" /></p></li>
-<li><p>Remark, 再标记，会有短暂停顿(STW)。再标记阶段是用来收集 并发标记阶段 产生新的垃圾(并发阶段和应用程序一同运行)；G1中采用了比CMS更快的初始快照算法:snapshot-at-the-beginning (SATB)。</p></li>
-<li><p>Copy/Clean up，多线程清除失活对象，会有STW。G1将回收区域的存活对象拷贝到新区域，清除Remember Sets，并发清空回收区域并把它返回到空闲区域链表中。
-<img src="http://stackvoid.qiniudn.com/2014-06-25-5.jpg" alt="JVM5" /></p></li>
-<li>复制/清除过程后。回收区域的活性对象已经被集中回收到深蓝色和深绿色区域。</li>
+  <li>
+    <p>标记阶段，首先初始标记(Initial-Mark),这个阶段是停顿的(Stop the World Event)，并且会触发一次普通Mintor GC。对应GC log:GC pause (young) (inital-mark)</p>
+  </li>
+  <li>
+    <p>Root Region Scanning，程序运行过程中会回收survivor区(存活到老年代)，这一过程必须在young GC之前完成。</p>
+  </li>
+  <li>Concurrent Marking，在整个堆中进行并发标记(和应用程序并发执行)，此过程可能被young GC中断。在并发标记阶段，若发现区域对象中的所有对象都是垃圾，那个这个区域会被立即回收(图中打X)。同时，并发标记过程中，会计算每个区域的对象活性(区域中存活对象的比例)。
+<img src="http://stackvoid.qiniudn.com/2014-06-25-4.jpg" alt="JVM4" /></li>
+  <li>
+    <p>Remark, 再标记，会有短暂停顿(STW)。再标记阶段是用来收集 并发标记阶段 产生新的垃圾(并发阶段和应用程序一同运行)；G1中采用了比CMS更快的初始快照算法:snapshot-at-the-beginning (SATB)。</p>
+  </li>
+  <li>Copy/Clean up，多线程清除失活对象，会有STW。G1将回收区域的存活对象拷贝到新区域，清除Remember Sets，并发清空回收区域并把它返回到空闲区域链表中。
+<img src="http://stackvoid.qiniudn.com/2014-06-25-5.jpg" alt="JVM5" /></li>
+  <li>复制/清除过程后。回收区域的活性对象已经被集中回收到深蓝色和深绿色区域。</li>
 </ol>
-
 
 <p><img src="http://stackvoid.qiniudn.com/2014-06-25-6.jpg" alt="JVM6" /></p>
 
@@ -124,11 +135,19 @@
 <p>参考：</p>
 
 <ol>
-<li><p><a href="http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf">Memory Management in the Java
-HotSpot™ Virtual Machine</a></p></li>
-<li><p><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html">Getting Started with the G1 Garbage Collector</a></p></li>
-<li><p><a href="http://www.oracle.com/technetwork/cn/articles/java/g1gc-1984535-zhs.html">垃圾优先型垃圾回收器调优</a></p></li>
-<li><p><a href="book.douban.com/subject/6522893/">深入理解Java虚拟机:JVM高级特性与最佳实践</a></p></li>
+  <li>
+    <p><a href="http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf">Memory Management in the Java
+HotSpot™ Virtual Machine</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html">Getting Started with the G1 Garbage Collector</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.oracle.com/technetwork/cn/articles/java/g1gc-1984535-zhs.html">垃圾优先型垃圾回收器调优</a></p>
+  </li>
+  <li>
+    <p><a href="book.douban.com/subject/6522893/">深入理解Java虚拟机:JVM高级特性与最佳实践</a></p>
+  </li>
 </ol>
 
 

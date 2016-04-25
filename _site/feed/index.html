@@ -7,7 +7,7 @@
     <title>AndyStack</title>
     <link href="http://angelof7.github.io/feed/" rel="self" />
     <link href="http://angelof7.github.io" />
-    <lastBuildDate>2016-04-25T18:49:03+08:00</lastBuildDate>
+    <lastBuildDate>2016-04-25T19:12:26+08:00</lastBuildDate>
     <webMaster>cgao886@163.com</webMaster>
     
     <item>
@@ -16,24 +16,18 @@
       <pubDate>2015-08-03T00:00:00+08:00</pubDate>
       <author>andygc</author>
       <guid>http://angelof7.github.io/zookeeper-java-client-api</guid>
-      <content:encoded><![CDATA[<h3>Apache ZooKeeper:</h3>
-
+      <content:encoded><![CDATA[<h3 id="apache-zookeeper">Apache ZooKeeper:</h3>
 <hr />
-
 <p>ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服务，是Google的Chubby一个开源的实现，是Hadoop和Hbase的重要组件。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、名字服务、分布式同步、组服务等。
 ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。
 ZooKeeper包含一个简单的原语集, 提供Java和C的接口。</p>
 
-<h3>ZooKeeper 的安装:</h3>
-
+<h3 id="zookeeper-">ZooKeeper 的安装:</h3>
 <hr />
-
 <p><a href="http://zookeeper.apache.org">ZooKeeper下载安装</a></p>
 
-<h3>Java Client 的使用:</h3>
-
+<h3 id="java-client-">Java Client 的使用:</h3>
 <hr />
-
 <p>Watcher 在 ZooKeeper 是一个核心功能,Watcher 可以监控目录节点的数据变化以及子目录的变化,一旦这些状态发生变化,服务器就会通知所有设置在这个目录节点上的 Watcher,从而每个客户端都很快知道它所关注的目录节点的状态发生变化,而做出相应的反应.
 可以设置观察的操作：exists,getChildren,getData</p>
 
@@ -47,9 +41,8 @@ ZooKeeper包含一个简单的原语集, 提供Java和C的接口。</p>
 意 思是说，zk的客户端每次和server进行通信的时候，会记住server上最新的zxid。如果某个时刻，客户端和server断开了连接，那么等到 下次重新连接到集群中的机器上时，会检查当前连接上的那个server是否和client有相同的zxid，或者已经是更新的zxid了。一旦客户端发现 server的zxid比自己小，那么客户端会断开和这个server的连接，并且重新连接集群中的其它server.</p>
 
 <ol>
-<li>连接ZooKeeper服务器</li>
+  <li>连接ZooKeeper服务器</li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/***</span>
 <span class="cm">*** [关于connectString服务器地址配置]</span>
@@ -89,11 +82,9 @@ ZooKeeper包含一个简单的原语集, 提供Java和C的接口。</p>
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-
 <ol>
-<li>创建节点</li>
+  <li>创建节点</li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/*</span>
 <span class="cm">* 创建zNode节点, String create(path&lt;节点路径&gt;, data[]&lt;节点内容&gt;, List(ACL访问控制列表), CreateMode&lt;zNode创建类型&gt;)</span>
@@ -126,11 +117,9 @@ ZooKeeper包含一个简单的原语集, 提供Java和C的接口。</p>
         
 <span class="o">}</span></code></pre></div>
 
-
 <ol>
-<li>删除节点</li>
+  <li>删除节点</li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
 <span class="cm">* &lt;p&gt;删除一个zMode节点, void delete(path&lt;节点路径&gt;, stat&lt;数据版本号&gt;)&lt;/p&gt;&lt;br/&gt;</span>
@@ -162,9 +151,8 @@ ZooKeeper包含一个简单的原语集, 提供Java和C的接口。</p>
         
 <span class="o">}</span></code></pre></div>
 
-
 <ol>
-<li>节点赋值/更新节点</li>
+  <li>节点赋值/更新节点</li>
 </ol>
 
 ]]></content:encoded>
@@ -176,56 +164,50 @@ ZooKeeper包含一个简单的原语集, 提供Java和C的接口。</p>
       <pubDate>2015-07-27T00:00:00+08:00</pubDate>
       <author>andygc</author>
       <guid>http://angelof7.github.io/maven-practice</guid>
-      <content:encoded><![CDATA[<h3>Apache Maven:</h3>
-
+      <content:encoded><![CDATA[<h3 id="apache-maven">Apache Maven:</h3>
 <hr />
-
 <p>Maven 是一个项目管理和构建自动化工具。但是对于我们程序员来说，我们最关心的是它的项目构建功能。所以这里我们介绍的就是怎样用 maven 来满足我们项目的日常需要。
 Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所有的项目都有如下的结构:</p>
 
 <table>
-<thead>
-<tr>
-<th>目录</th>
-<th>目的</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>${basedir}</td>
-<td>存放 pom.xml和所有的子目录</td>
-</tr>
-<tr>
-<td>${basedir}/src/main/java</td>
-<td>项目的 java源代码</td>
-</tr>
-<tr>
-<td>${basedir}/src/main/resources</td>
-<td>项目的资源，比如说 property文件</td>
-</tr>
-<tr>
-<td>${basedir}/src/test/java</td>
-<td>项目的测试类，比如说 JUnit代码</td>
-</tr>
-<tr>
-<td>${basedir}/src/test/resources</td>
-<td>测试使用的资源</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>目录</th>
+      <th>目的</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>${basedir}</td>
+      <td>存放 pom.xml和所有的子目录</td>
+    </tr>
+    <tr>
+      <td>${basedir}/src/main/java</td>
+      <td>项目的 java源代码</td>
+    </tr>
+    <tr>
+      <td>${basedir}/src/main/resources</td>
+      <td>项目的资源，比如说 property文件</td>
+    </tr>
+    <tr>
+      <td>${basedir}/src/test/java</td>
+      <td>项目的测试类，比如说 JUnit代码</td>
+    </tr>
+    <tr>
+      <td>${basedir}/src/test/resources</td>
+      <td>测试使用的资源</td>
+    </tr>
+  </tbody>
 </table>
 
-
-<h3>Maven 的安装:</h3>
-
-<p><a href="http://maven.apache.org/download.html">maven下载安装</a><br/>
+<h3 id="maven-">Maven 的安装:</h3>
+<p><a href="http://maven.apache.org/download.html">maven下载安装</a><br />
 <code>$ mvn -v</code></p>
 
-<h3>Maven 的使用:</h3>
-
+<h3 id="maven--1">Maven 的使用:</h3>
 <ol>
-<li>archetype</li>
+  <li>archetype</li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>mvn archetype:generate 
 -DgroupId<span class="o">=</span>com.mycompany.helloworld 
@@ -233,22 +215,18 @@ Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所�
 -Dpackage<span class="o">=</span>com.mycompany.helloworld 
 -Dversion<span class="o">=</span>1.0-SNAPSHOT</code></pre></div>
 
-
 <ol>
-<li>构建</li>
+  <li>构建</li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>mvn clean compile   
 <span class="nv">$ </span>mvn clean <span class="nb">test</span>   
 <span class="nv">$ </span>mvn clean package  
 <span class="nv">$ </span>mvn clean install</code></pre></div>
 
-
 <ol>
-<li>POM</li>
+  <li>POM</li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
      <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
@@ -276,25 +254,31 @@ Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所�
      <span class="nt">&lt;/dependencies&gt;</span> 
     <span class="nt">&lt;/project&gt;</span></code></pre></div>
 
-
-<p>在 POM 中，groupId, artifactId, packaging, version 叫作 maven 坐标，它能唯一的确定一个项目。有了 maven 坐标，我们就可以用它来指定我们的项目所依赖的其他项目，插件，或者父项目。一般 maven 坐标写成如下的格式：<br/>
-<code>groupId:artifactId:packaging:version</code><br/>
-像我们的例子就会写成：<br/>
+<p>在 POM 中，groupId, artifactId, packaging, version 叫作 maven 坐标，它能唯一的确定一个项目。有了 maven 坐标，我们就可以用它来指定我们的项目所依赖的其他项目，插件，或者父项目。一般 maven 坐标写成如下的格式：<br />
+<code>groupId:artifactId:packaging:version</code><br />
+像我们的例子就会写成：<br />
 <code>com.mycompany.helloworld: helloworld: jar: 1.0-SNAPSHOT</code></p>
 
 <p>我们的 helloworld 示例很简单，但是大项目一般会分成几个子项目。在这种情况下，每个子项目就会有自己的 POM 文件，然后它们会有一个共同的父项目。这样只要构建父项目就能够构建所有的子项目了。子项目的 POM 会继承父项目的 POM。</p>
 
 <ol>
-<li>scope</li>
-<li>compile (默认)</li>
-<li>test</li>
-<li>provided (servlet-api)</li>
-<li>runtime (JDBC Driver)</li>
-<li>system</li>
-<li><p>import</p></li>
-<li><p>聚合和继承</p></li>
-<li><p>反应堆</p></li>
-<li><p>常用命令</p></li>
+  <li>scope
+    <ul>
+      <li>compile (默认)</li>
+      <li>test</li>
+      <li>provided (servlet-api)</li>
+      <li>runtime (JDBC Driver)</li>
+      <li>system</li>
+      <li>import</li>
+    </ul>
+  </li>
+  <li>
+    <p>聚合和继承</p>
+  </li>
+  <li>
+    <p>反应堆</p>
+  </li>
+  <li>常用命令</li>
 </ol>
 
 ]]></content:encoded>
@@ -306,10 +290,8 @@ Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所�
       <pubDate>2015-07-20T00:00:00+08:00</pubDate>
       <author>andygc</author>
       <guid>http://angelof7.github.io/jvm-monitor-remote</guid>
-      <content:encoded><![CDATA[<h3>远程服务器配置:</h3>
-
+      <content:encoded><![CDATA[<h3 id="section">远程服务器配置:</h3>
 <hr />
-
 <p>在tomcat中的bin/catalina.sh中添加:</p>
 
 <div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">&quot;$JAVA_OPTS  </span>
@@ -318,22 +300,17 @@ Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所�
 <span class="s2"> -Dcom.sun.management.jmxremote.authenticate=false  </span>
 <span class="s2"> -Dcom.sun.management.jmxremote.ssl=false&quot;</span></code></pre></div>
 
-
-<h3>JConsole</h3>
-
+<h3 id="jconsole">JConsole</h3>
 <hr />
-
 <p><img src="/album/2015/jconsole.png" alt="jconsole.png" /></p>
 
-<h3>VisualVM</h3>
-
+<h3 id="visualvm">VisualVM</h3>
 <hr />
-
 <p><img src="/album/2015/jvisualvm.png" alt="jvisualvm.png" /></p>
 
-<h3>参考</h3>
-
+<h3 id="section-1">参考</h3>
 <p><a href="http://docs.oracle.com/javase/1.5.0/docs/guide/management/agent.html">Monitoring and Management Using JMX</a></p>
+
 ]]></content:encoded>
     </item>
     
@@ -345,46 +322,43 @@ Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所�
       <guid>http://angelof7.github.io/work-with-git-branch</guid>
       <content:encoded><![CDATA[<p>本篇博客记录使用git协作的一般过程</p>
 
-<h3>git工作流程</h3>
-
+<h3 id="git">git工作流程</h3>
 <hr />
-
 <ol>
-<li>clone远程仓库:<br/>
-<code>$ git clone ...
-</code></li>
-<li>去自己的分支工作:<br/>
-<code>$ git checkout work
-</code></li>
-<li>工作:<br/>
-<code>working ....
-</code></li>
-<li>提交工作分支的修改:<br/>
-<code>$ git add .</code>
-<code>$ git commit -a</code></li>
-<li>回到主分支:<br/>
-<code>$ git checkout master
-</code></li>
-<li>获取最新的修改: <br/>
-<code>$ git pull origin master
-</code></li>
-<li>回到工作分支:<br/>
-<code>$ git checkout work
-</code></li>
-<li>合并主分支,并修改冲突:<br/>
-<code>$ git rebase master
-</code></li>
-<li>回到主分支:<br/>
-<code>$ git checkout master
-</code></li>
-<li>合并工作分支的修改,此时不会发生冲突了:<br/>
-<code>$ git merge work
-</code></li>
-<li>提交到远程:<br/>
-<code>$ git push origin master
-</code></li>
+  <li>clone远程仓库:<br />
+` $ git clone …
+`</li>
+  <li>去自己的分支工作:<br />
+` $ git checkout work
+`</li>
+  <li>工作:<br />
+` working ….
+`</li>
+  <li>提交工作分支的修改:<br />
+` $ git add . ` 
+` $ git commit -a `</li>
+  <li>回到主分支:<br />
+` $ git checkout master
+`</li>
+  <li>获取最新的修改: <br />
+` $ git pull origin master
+`</li>
+  <li>回到工作分支:<br />
+` $ git checkout work
+`</li>
+  <li>合并主分支,并修改冲突:<br />
+` $ git rebase master
+`</li>
+  <li>回到主分支:<br />
+` $ git checkout master
+`</li>
+  <li>合并工作分支的修改,此时不会发生冲突了:<br />
+` $ git merge work
+`</li>
+  <li>提交到远程:<br />
+` $ git push origin master
+`</li>
 </ol>
-
 ]]></content:encoded>
     </item>
     
@@ -398,7 +372,7 @@ Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所�
 LinkedHashMap的实现不是同步的。如果多个线程同时访问LinkedHashMap，而其中至少一个线程从结构上修改了该映射，则它必须
 保持外部同步。</p>
 
-<h2>1.LinkedHashMap的存储结构</h2>
+<h2 id="linkedhashmap">1.LinkedHashMap的存储结构</h2>
 
 <p><img src="http://stackvoid.qiniudn.com/20140805-LinkedHashMapDataStructure01.png" alt="LinkedHashMap01" />
 LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMap中的Entry按照插入的先后顺序（accessOrder标志位默认为false）依次加入到以head为头结点的双向循环链表的尾部。</p>
@@ -408,7 +382,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
 
 <p>下面我们来分析LinkedHashMap的源代码。</p>
 
-<h2>2.LinkedHashMap成员变量</h2>
+<h2 id="linkedhashmap-1">2.LinkedHashMap成员变量</h2>
 
 <p>LinkedHashMap采用的hash算法和HashMap相同，但它重新定义了数组中保存的元素Entry，该Entry除了保存当前对象的引用外，还保
 存了其上一个元素before和下一个元素after的引用，从而在哈希表的基础上又构成了双向链接列表。</p>
@@ -433,8 +407,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="err">……</span>  <span class="c1">//Entry类涉及到的方法，下面会继续分析</span>
 <span class="o">}</span></code></pre></div>
 
-
-<h2>3.构造函数</h2>
+<h2 id="section">3.构造函数</h2>
 
 <p>LinkedList一共提供了五个构造方法。</p>
 
@@ -478,7 +451,6 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="k">this</span><span class="o">.</span><span class="na">accessOrder</span> <span class="o">=</span> <span class="n">accessOrder</span><span class="o">;</span>
 <span class="o">}</span></code></pre></div>
 
-
 <p>我们已经知道LinkedHashMap的Entry元素继承HashMap的Entry，提供了双向链表的功能。在HashMap的构造器中，最后会调用init()方法，进行相关的初始化，这个方法在HashMap的实现中是空方法(感叹模板模式的精妙！)，只是提供给子类实现相关的初始化调用。LinkedHashMap重写了init()方法，在调用父类的构造方法完成构造后，进一步实现了对其元素Entry的初始化操作。分析init()方法，的确是对header进行了初始化，并构造成一个双向循环链表（和LinkedList的存储结构是一样的）。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
@@ -486,27 +458,26 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="n">header</span><span class="o">.</span><span class="na">before</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="n">header</span><span class="o">;</span>
 <span class="o">}</span></code></pre></div>
 
+<h2 id="section-1">4.元素存储</h2>
 
-<h2>4.元素存储</h2>
-
-<p>   LinkedHashMap重写了父类HashMap的put方法调用的<strong>子方法void addEntry(int hash, K key, V value, int bucketIndex) 和void createEntry(int hash, K key, V value, int bucketIndex)</strong>，提供了自己特有的双向链接列表的实现。</p>
+<p>LinkedHashMap重写了父类HashMap的put方法调用的<strong>子方法void addEntry(int hash, K key, V value, int bucketIndex) 和void createEntry(int hash, K key, V value, int bucketIndex)</strong>，提供了自己特有的双向链接列表的实现。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//覆写HashMap中的addEntry方法，LinkedHashmap并没有覆写HashMap中的put方法，</span>
-    <span class="c1">//而是覆写了put方法所调用的addEntry方法和recordAccess方法，</span>
-    <span class="c1">//put方法在插入的key已存在的情况下，会调用recordAccess方法，</span>
-    <span class="c1">//在插入的key不存在的情况下，要调用addEntry插入新的Entry</span>
+	<span class="c1">//而是覆写了put方法所调用的addEntry方法和recordAccess方法，</span>
+	<span class="c1">//put方法在插入的key已存在的情况下，会调用recordAccess方法，</span>
+	<span class="c1">//在插入的key不存在的情况下，要调用addEntry插入新的Entry</span>
 <span class="kt">void</span> <span class="nf">addEntry</span><span class="o">(</span><span class="kt">int</span> <span class="n">hash</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span> <span class="n">bucketIndex</span><span class="o">)</span> <span class="o">{</span>
-    <span class="c1">//创建新的Entry，并插入到LinkedHashMap中</span>
+	<span class="c1">//创建新的Entry，并插入到LinkedHashMap中</span>
     <span class="n">createEntry</span><span class="o">(</span><span class="n">hash</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">bucketIndex</span><span class="o">);</span>
 
     <span class="c1">//双向链表的第一个有效节点（header后的那个节点）为近期最少使用的节点</span>
     <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">eldest</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="na">after</span><span class="o">;</span>
     <span class="c1">//如果有必要，则删除掉该近期最少使用的节点，</span>
-    <span class="c1">//这要看对removeEldestEntry的覆写,由于默认为false，因此默认是不做任何处理的。</span>
+	<span class="c1">//这要看对removeEldestEntry的覆写,由于默认为false，因此默认是不做任何处理的。</span>
     <span class="k">if</span> <span class="o">(</span><span class="n">removeEldestEntry</span><span class="o">(</span><span class="n">eldest</span><span class="o">))</span> <span class="o">{</span>
         <span class="n">removeEntryForKey</span><span class="o">(</span><span class="n">eldest</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
     <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-        <span class="c1">//超过阈值，扩容到原来的2倍</span>
+    	<span class="c1">//超过阈值，扩容到原来的2倍</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="o">)</span>
             <span class="n">resize</span><span class="o">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">table</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
     <span class="o">}</span>
@@ -518,8 +489,8 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="n">table</span><span class="o">[</span><span class="n">bucketIndex</span><span class="o">]</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
     <span class="c1">// 调用元素的addBrefore方法，将元素加入到哈希、双向链接列表。</span>
     <span class="c1">//每次插入Entry时，都将其移到双向链表的尾部，</span>
-    <span class="c1">//这便会按照Entry插入LinkedHashMap的先后顺序来迭代元素，</span>
-    <span class="c1">//同时，新put进来的Entry是最近访问的Entry，把其放在链表末尾，符合LRU算法的实现</span>
+	<span class="c1">//这便会按照Entry插入LinkedHashMap的先后顺序来迭代元素，</span>
+	<span class="c1">//同时，新put进来的Entry是最近访问的Entry，把其放在链表末尾，符合LRU算法的实现</span>
     <span class="n">e</span><span class="o">.</span><span class="na">addBefore</span><span class="o">(</span><span class="n">header</span><span class="o">);</span>
     <span class="n">size</span><span class="o">++;</span>
 <span class="o">}</span>
@@ -540,16 +511,15 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-
-<h2>5.元素读取</h2>
+<h2 id="section-2">5.元素读取</h2>
 
 <p>LinkedHashMap重写了父类HashMap的get方法。由于的链表的增加、删除操作是常量级的，性能不会带来较大损失。LinkedHashMap
 最牛逼的地方在于<strong>recordAccess()</strong>方法</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//覆写HashMap中的get方法，通过getEntry方法获取Entry对象。</span>
-    <span class="c1">//注意这里的recordAccess方法，</span>
-    <span class="c1">//如果链表中元素的排序规则是按照插入的先后顺序排序的话，该方法什么也不做，</span>
-    <span class="c1">//如果链表中元素的排序规则是按照访问的先后顺序排序的话，则将e移到链表的末尾处。</span>
+	<span class="c1">//注意这里的recordAccess方法，</span>
+	<span class="c1">//如果链表中元素的排序规则是按照插入的先后顺序排序的话，该方法什么也不做，</span>
+	<span class="c1">//如果链表中元素的排序规则是按照访问的先后顺序排序的话，则将e移到链表的末尾处。</span>
 <span class="kd">public</span> <span class="n">V</span> <span class="nf">get</span><span class="o">(</span><span class="n">Object</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
     <span class="c1">// 调用父类HashMap的getEntry()方法，取得要查找的元素。</span>
     <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;)</span><span class="n">getEntry</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
@@ -568,8 +538,8 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
 <span class="c1">//它们导致Entry最近使用，因此将其移到双向链表的末尾</span>
 <span class="kt">void</span> <span class="nf">recordAccess</span><span class="o">(</span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">m</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">lm</span> <span class="o">=</span> <span class="o">(</span><span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;)</span><span class="n">m</span><span class="o">;</span>
-    <span class="c1">//如果链表中元素按照访问顺序排序，则将当前访问的Entry移到双向循环链表的尾部，</span>
-    <span class="c1">//如果是按照插入的先后顺序排序，则不做任何事情。</span>
+	<span class="c1">//如果链表中元素按照访问顺序排序，则将当前访问的Entry移到双向循环链表的尾部，</span>
+	<span class="c1">//如果是按照插入的先后顺序排序，则不做任何事情。</span>
     <span class="k">if</span> <span class="o">(</span><span class="n">lm</span><span class="o">.</span><span class="na">accessOrder</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">lm</span><span class="o">.</span><span class="na">modCount</span><span class="o">++;</span>
         <span class="n">remove</span><span class="o">();</span><span class="c1">//移除当前访问的Entry</span>
@@ -577,11 +547,10 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
+<h2 id="section-3">6.元素删除</h2>
 
-<h2>6.元素删除</h2>
-
-<p>LinkedHashMap没有重写remove(Object key)方法，重写了被remove调用的recordRemoval方法，再一次感叹模板方法模式的精妙！<br/>
-HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移除之后（就已经完成工作了，所以HashMap里面recordRemoval是空的实现调用了此方法<br/>
+<p>LinkedHashMap没有重写remove(Object key)方法，重写了被remove调用的recordRemoval方法，再一次感叹模板方法模式的精妙！<br />
+HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移除之后（就已经完成工作了，所以HashMap里面recordRemoval是空的实现调用了此方法<br />
 但在LinkedHashMap里面，还需要移除header链表里面Entry的after和before关系。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 继承了HashMap.Entry  </span>
@@ -598,8 +567,7 @@ HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移�
     <span class="o">}</span>  
 <span class="o">}</span></code></pre></div>
 
-
-<h2>7.元素遍历</h2>
+<h2 id="section-4">7.元素遍历</h2>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//迭代器</span>
     <span class="kd">private</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">LinkedHashIterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
@@ -653,8 +621,7 @@ HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移�
         <span class="kd">public</span> <span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="nf">next</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="nf">nextEntry</span><span class="o">();</span> <span class="o">}</span>
     <span class="o">}</span></code></pre></div>
 
-
-<h2>8.基于LinkedHashMap实现LRU Cache</h2>
+<h2 id="linkedhashmaplru-cache">8.基于LinkedHashMap实现LRU Cache</h2>
 
 <p>用LinkedHashmap实现LRU算法，就要覆写方法removeEldestEntry。该方法默认返回false，我们一般在用LinkedHashMap实现LRU算法时，要覆写该方法，一般的实现是，当设定的内存（这里指节点个数）达到最大值时，返回true，这样put新的Entry（该Entry的key在哈希表中没有已经存在）时，就会调用removeEntryForKey方法，将最近最少使用的节点删除（head后面的那个节点，实际上是最近没有使用）。</p>
 
@@ -730,15 +697,19 @@ get方法通过调用recordAccess方法来实现，put方法在覆盖已有key�
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-
-<h2>9.总结</h2>
+<h2 id="section-5">9.总结</h2>
 
 <ol>
-<li><p>LinkedHashMap继承自HashMap，具有HashMap的大部分特性，比如支持null键和值，默认容量为16，装载因子为0.75，非线程安全等等；</p></li>
-<li><p>LinkedHashMap通过设置accessOrder控制遍历顺序是按照插入顺序还是按照访问顺序。当accessOrder为true时，可以利用其完成LRU缓存的功能；</p></li>
-<li><p>LinkedHashMap内部维护了一个双向循环链表，并且其迭代操作时通过链表完成的，而不是去遍历hash表。</p></li>
+  <li>
+    <p>LinkedHashMap继承自HashMap，具有HashMap的大部分特性，比如支持null键和值，默认容量为16，装载因子为0.75，非线程安全等等；</p>
+  </li>
+  <li>
+    <p>LinkedHashMap通过设置accessOrder控制遍历顺序是按照插入顺序还是按照访问顺序。当accessOrder为true时，可以利用其完成LRU缓存的功能；</p>
+  </li>
+  <li>
+    <p>LinkedHashMap内部维护了一个双向循环链表，并且其迭代操作时通过链表完成的，而不是去遍历hash表。</p>
+  </li>
 </ol>
-
 ]]></content:encoded>
     </item>
     
@@ -748,30 +719,41 @@ get方法通过调用recordAccess方法来实现，put方法在覆盖已有key�
       <pubDate>2015-07-02T00:00:00+08:00</pubDate>
       <author>andygc</author>
       <guid>http://angelof7.github.io/mac-ubuntu-openvpn</guid>
-      <content:encoded><![CDATA[<h2>Mac</h2>
-
+      <content:encoded><![CDATA[<h2 id="mac">Mac</h2>
 <hr />
-
 <p><strong>tunnelblick</strong></p>
 
-<h2>Ubuntu</h2>
-
+<h2 id="ubuntu">Ubuntu</h2>
 <hr />
-
 <ol>
-<li><blockquote><p># sudo apt-get install openvpn</p></blockquote></li>
-<li><blockquote><p># cd /etc/openvpn</p></blockquote></li>
-<li><blockquote><p># cp ~/Downloads/client.ovpn .</p></blockquote></li>
-<li><blockquote><p># sudo openvpn /etc/openvpn/client.ovpn</p></blockquote></li>
-<li><p>后台连接:</p>
-
-<blockquote><p># sudo openvpn /etc/openvpn/client.ovpn > /dev/null &amp;</p></blockquote></li>
-<li><p>开机启动:<br/>
-将上述命令加入:</p>
-
-<blockquote><p>/etc/rc.local</p></blockquote></li>
+  <li>
+    <blockquote>
+      <p># sudo apt-get install openvpn</p>
+    </blockquote>
+  </li>
+  <li>
+    <blockquote>
+      <p># cd /etc/openvpn</p>
+    </blockquote>
+  </li>
+  <li>
+    <blockquote>
+      <p># cp ~/Downloads/client.ovpn .</p>
+    </blockquote>
+  </li>
+  <li>
+    <blockquote>
+      <p># sudo openvpn /etc/openvpn/client.ovpn</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>后台连接:<br />
+&gt;# sudo openvpn /etc/openvpn/client.ovpn &gt; /dev/null &amp;</p>
+  </li>
+  <li>开机启动:<br />
+将上述命令加入:
+&gt; /etc/rc.local</li>
 </ol>
-
 ]]></content:encoded>
     </item>
     
@@ -783,25 +765,22 @@ get方法通过调用recordAccess方法来实现，put方法在覆盖已有key�
       <guid>http://angelof7.github.io/git-clone-empty</guid>
       <content:encoded><![CDATA[<p>用git clone 下载项目后，目录中只有.git目录</p>
 
-<h2>原因</h2>
-
+<h2 id="section">原因</h2>
 <hr />
-
 <p>这个repository中存在多个分支下载的这个分支是个bare repository</p>
 
-<h2>解决方法</h2>
-
+<h2 id="section-1">解决方法</h2>
 <hr />
-
 <ol>
-<li><p>查看远程分支：</p>
-
-<blockquote><p>git branch -r -a</p></blockquote></li>
-<li><p>checkout：</p>
-
-<blockquote><p>git checkout branch_name</p></blockquote></li>
+  <li>
+    <p>查看远程分支：
+&gt; git branch -r -a</p>
+  </li>
+  <li>
+    <p>checkout：
+&gt; git checkout branch_name</p>
+  </li>
 </ol>
-
 ]]></content:encoded>
     </item>
     
@@ -813,163 +792,153 @@ get方法通过调用recordAccess方法来实现，put方法在覆盖已有key�
       <guid>http://angelof7.github.io/linux-shell-system</guid>
       <content:encoded><![CDATA[<p>本篇博客记录常用的Linux系统管理shell</p>
 
-<h3>ps</h3>
-
+<h3 id="ps">ps</h3>
 <hr />
-
 <ol>
-<li>ps 的参数说明
- l       长格式输出；
- u       按用户名和启动时间的顺序来显示进程；
- j       用任务格式来显示进程；
- f       用树形格式来显示进程；
- a       显示所有用户的所有进程（包括其它用户）；<br/>
- x       显示无控制终端的进程；<br/>
- r       显示运行中的进程；<br/>
- ww      避免详细参数被截断；<br/>
-<em>我们常用的选项是组合是aux -ef 输出的解释；</em>  <br/>
- USER    进程的属主；<br/>
- PID     进程的ID；<br/>
- PPID    父进程；<br/>
- %CPU    进程占用的CPU百分比；<br/>
- %MEM    占用内存的百分比；<br/>
- NI      进程的NICE值，数值大，表示较少占用CPU时间；<br/>
- VSZ     进程虚拟大小；<br/>
- RSS     驻留中页的数量；<br/>
- WCHAN   正在等待的进程资源 <br/>
- TTY     终端ID  <br/>
- STAT    进程状态 <br/>
+  <li>ps 的参数说明
+ l       长格式输出； 
+ u       按用户名和启动时间的顺序来显示进程； 
+ j       用任务格式来显示进程； 
+ f       用树形格式来显示进程； 
+ a       显示所有用户的所有进程（包括其它用户）；<br />
+ x       显示无控制终端的进程；<br />
+ r       显示运行中的进程；<br />
+ ww      避免详细参数被截断；<br />
+<em>我们常用的选项是组合是aux -ef 输出的解释；</em>  <br />
+ USER    进程的属主；<br />
+ PID     进程的ID；<br />
+ PPID    父进程；<br />
+ %CPU    进程占用的CPU百分比；<br />
+ %MEM    占用内存的百分比；<br />
+ NI      进程的NICE值，数值大，表示较少占用CPU时间；<br />
+ VSZ     进程虚拟大小；<br />
+ RSS     驻留中页的数量；<br />
+ WCHAN   正在等待的进程资源 <br />
+ TTY     终端ID  <br />
+ STAT    进程状态 <br />
  START   启动进程的时间；
- TIME    进程消耗CPU的时间；<br/>
- COMMAND 命令的名称和参数；<br/>
+ TIME    进程消耗CPU的时间；<br />
+ COMMAND 命令的名称和参数；<br />
 <em>实例</em>
-
-<blockquote><p>ps -aux | more<br/>
-ps -aux > ps001.txt<br/>
-ps aux | grep httpd <br/>
-ps auxf |grep httpd<br/>
-pgrep 是通过程序的名字来查询进程的工具，一般是用来判断程序是否正在运行: <br/>
-常用参数:<br/>
- -l      列出程序名和进程ID；<br/>
- -o      进程起始的ID；<br/>
- -n      进程终止的ID；<br/>
-pgrep -l httpd</p></blockquote></li>
+ &gt; ps -aux | more<br />
+ &gt; ps -aux &gt; ps001.txt<br />
+ &gt; ps aux | grep httpd <br />
+ &gt; ps auxf |grep httpd<br />
+pgrep 是通过程序的名字来查询进程的工具，一般是用来判断程序是否正在运行: <br />
+常用参数:<br />
+ -l      列出程序名和进程ID；<br />
+ -o      进程起始的ID；<br />
+ -n      进程终止的ID；<br />
+ &gt; pgrep -l httpd</li>
 </ol>
 
-
-<h3>kill</h3>
-
+<h3 id="kill">kill</h3>
 <hr />
-
-<h4>kill</h4>
-
-<p>kill的应用是和ps 或pgrep 命令结合在一起使用的；<br/>
-<em>用法</em>  <br/>
-kill ［信号代码］   进程ID<br/>
+<p>####kill<br />
+kill的应用是和ps 或pgrep 命令结合在一起使用的；<br />
+<em>用法</em>  <br />
+kill ［信号代码］   进程ID<br />
 注：信号代码可以省略；我们常用的信号代码是 -9 ，表示强制终止；</p>
 
-<h4>killall</h4>
+<h4 id="killall">killall</h4>
+<p>killall 通过程序的名字，直接杀死所有进程，咱们简单说一下就行了。<br />
+<em>用法</em><br />
+killall 正在运行的程序名  <br />
+killall 也和ps或pgrep 结合使用，比较方便；通过ps或pgrep 来查看哪些程序在运行；<br />
+<em>举例</em><br />
+ &gt;  [root@localhost beinan]# pgrep -l gaim<br />
+ &gt;  2979 gaim<br />
+ &gt;  [root@localhost beinan]# killall gaim</p>
 
-<p>killall 通过程序的名字，直接杀死所有进程，咱们简单说一下就行了。<br/>
-<em>用法</em><br/>
-killall 正在运行的程序名  <br/>
-killall 也和ps或pgrep 结合使用，比较方便；通过ps或pgrep 来查看哪些程序在运行；<br/>
-<em>举例</em></p>
+<h4 id="pkill">pkill</h4>
+<p>pkill 和killall 应用方法差不多，也是直接杀死运行中的程序；如果您想杀掉单个进程，请用kill 来杀掉。<br />
+<em>用法</em><br />
+pkill 正在运行的程序名<br />
+<em>举例</em><br />
+&gt;  [root@localhost beinan]# pgrep -l gaim</p>
 
-<blockquote><p> [root@localhost beinan]# pgrep -l gaim<br/>
- 2979 gaim<br/>
- [root@localhost beinan]# killall gaim</p></blockquote>
+<blockquote>
+  <p>2979 gaim</p>
+</blockquote>
 
-<h4>pkill</h4>
+<blockquote>
+  <p>[root@localhost beinan]# pkill gaim</p>
+</blockquote>
 
-<p>pkill 和killall 应用方法差不多，也是直接杀死运行中的程序；如果您想杀掉单个进程，请用kill 来杀掉。<br/>
-<em>用法</em><br/>
-pkill 正在运行的程序名<br/>
-<em>举例</em></p>
-
-<blockquote><p> [root@localhost beinan]# pgrep -l gaim</p>
-
-<p> 2979 gaim</p>
-
-<p> [root@localhost beinan]# pkill gaim</p></blockquote>
-
-<h4>xkill</h4>
-
+<h4 id="xkill">xkill</h4>
 <p>xkill 是在桌面用的杀死图形界面的程序。比如当firefox 出现崩溃不能退出时，点鼠标就能杀死firefox 。当xkill运行时出来和个人脑骨的图标，哪个图形程序崩溃一点就OK了。如果您想终止xkill ，就按右键取消；
-<em>用法</em></p>
+<em>用法</em><br />
+&gt;  [root@localhost ~]# xkill</p>
 
-<blockquote><p> [root@localhost ~]# xkill</p></blockquote>
-
-<h3>top</h3>
-
+<h3 id="top">top</h3>
 <hr />
-
 <p>TOP是一个动态显示过程,即可以通过用户按键来不断刷新当前状态.如果在前台执行该命令,它将独占前台,直到用户终止该程序为止.比较准确的说,top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式命令或者在个人定制文件中进行设定.</p>
 
-<p>total 进程总数<br/>
-running 正在运行的进程数<br/>
-sleeping 睡眠的进程数<br/>
-stopped 停止的进程数<br/>
-zombie 僵尸进程数<br/>
-Cpu(s): <br/>
-0.3% us 用户空间占用CPU百分比<br/>
-1.0% sy 内核空间占用CPU百分比<br/>
-0.0% ni 用户进程空间内改变过优先级的进程占用CPU百分比<br/>
-98.7% id 空闲CPU百分比<br/>
-0.0% wa 等待输入输出的CPU时间百分比<br/>
-0.0%hi：硬件CPU中断占用百分比<br/>
-0.0%si：软中断占用百分比<br/>
+<p>total 进程总数<br />
+running 正在运行的进程数<br />
+sleeping 睡眠的进程数<br />
+stopped 停止的进程数<br />
+zombie 僵尸进程数<br />
+Cpu(s): <br />
+0.3% us 用户空间占用CPU百分比<br />
+1.0% sy 内核空间占用CPU百分比<br />
+0.0% ni 用户进程空间内改变过优先级的进程占用CPU百分比<br />
+98.7% id 空闲CPU百分比<br />
+0.0% wa 等待输入输出的CPU时间百分比<br />
+0.0%hi：硬件CPU中断占用百分比<br />
+0.0%si：软中断占用百分比<br />
 0.0%st：虚拟机占用百分比</p>
 
-<p>Mem:<br/>
-191272k total    物理内存总量<br/>
-173656k used    使用的物理内存总量<br/>
-17616k free    空闲内存总量<br/>
-22052k buffers    用作内核缓存的内存量<br/>
-Swap: <br/>
-192772k total    交换区总量<br/>
-0k used    使用的交换区总量<br/>
-192772k free    空闲交换区总量<br/>
+<p>Mem:<br />
+191272k total    物理内存总量<br />
+173656k used    使用的物理内存总量<br />
+17616k free    空闲内存总量<br />
+22052k buffers    用作内核缓存的内存量<br />
+Swap: <br />
+192772k total    交换区总量<br />
+0k used    使用的交换区总量<br />
+192772k free    空闲交换区总量<br />
 123988k cached    缓冲的交换区总量,内存中的内容被换出到交换区，而后又被换入到内存，但使用过的交换区尚未被覆盖，该数值即为这些内容已存在于内存中的交换区的大小,相应的内存再次被换出时可不必再对交换区写入。</p>
 
-<p>序号  列名    含义<br/>
-a    PID     进程id<br/>
-b    PPID    父进程id<br/>
-c    RUSER   Real user name<br/>
-d    UID     进程所有者的用户id<br/>
-e    USER    进程所有者的用户名<br/>
-f    GROUP   进程所有者的组名<br/>
-g    TTY     启动进程的终端名。不是从终端启动的进程则显示为 ?<br/>
-h    PR      优先级<br/>
-i    NI      nice值。负值表示高优先级，正值表示低优先级<br/>
-j    P       最后使用的CPU，仅在多CPU环境下有意义<br/>
-k    %CPU    上次更新到现在的CPU时间占用百分比<br/>
-l    TIME    进程使用的CPU时间总计，单位秒<br/>
-m    TIME+   进程使用的CPU时间总计，单位1/100秒<br/>
-n    %MEM    进程使用的物理内存百分比<br/>
-o    VIRT    进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES<br/>
-p    SWAP    进程使用的虚拟内存中，被换出的大小，单位kb。<br/>
-q    RES     进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA<br/>
-r    CODE    可执行代码占用的物理内存大小，单位kb<br/>
-s    DATA    可执行代码以外的部分(数据段+栈)占用的物理内存大小，单位kb<br/>
-t    SHR     共享内存大小，单位kb<br/>
-u    nFLT    页面错误次数<br/>
-v    nDRT    最后一次写入到现在，被修改过的页面数。<br/>
-w    S       进程状态(D=不可中断的睡眠状态,R=运行,S=睡眠,T=跟踪/停止,Z=僵尸进程)<br/>
-x    COMMAND 命令名/命令行<br/>
-y    WCHAN   若该进程在睡眠，则显示睡眠中的系统函数名<br/>
+<p>序号  列名    含义<br />
+a    PID     进程id<br />
+b    PPID    父进程id<br />
+c    RUSER   Real user name<br />
+d    UID     进程所有者的用户id<br />
+e    USER    进程所有者的用户名<br />
+f    GROUP   进程所有者的组名<br />
+g    TTY     启动进程的终端名。不是从终端启动的进程则显示为 ?<br />
+h    PR      优先级<br />
+i    NI      nice值。负值表示高优先级，正值表示低优先级<br />
+j    P       最后使用的CPU，仅在多CPU环境下有意义<br />
+k    %CPU    上次更新到现在的CPU时间占用百分比<br />
+l    TIME    进程使用的CPU时间总计，单位秒<br />
+m    TIME+   进程使用的CPU时间总计，单位1/100秒<br />
+n    %MEM    进程使用的物理内存百分比<br />
+o    VIRT    进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES<br />
+p    SWAP    进程使用的虚拟内存中，被换出的大小，单位kb。<br />
+q    RES     进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA<br />
+r    CODE    可执行代码占用的物理内存大小，单位kb<br />
+s    DATA    可执行代码以外的部分(数据段+栈)占用的物理内存大小，单位kb<br />
+t    SHR     共享内存大小，单位kb<br />
+u    nFLT    页面错误次数<br />
+v    nDRT    最后一次写入到现在，被修改过的页面数。<br />
+w    S       进程状态(D=不可中断的睡眠状态,R=运行,S=睡眠,T=跟踪/停止,Z=僵尸进程)<br />
+x    COMMAND 命令名/命令行<br />
+y    WCHAN   若该进程在睡眠，则显示睡眠中的系统函数名<br />
 z    Flags   任务标志，参考 sched.h</p>
 
-<h4>top使用格式:</h4>
+<h4 id="top-1">top使用格式:</h4>
+<blockquote>
+  <p>top [-] [d] [p] [q] [c] [C] [S] [s]  [n]</p>
+</blockquote>
 
-<blockquote><p> top [-] [d] [p] [q] [c] [C] [S] [s]  [n]</p></blockquote>
-
-<p>d 指定每两次屏幕信息刷新之间的时间间隔。当然用户可以使用s交互命令来改变之。
-p 通过指定监控进程ID来仅仅监控某个进程的状态。
-q 该选项将使top没有任何延迟的进行刷新。如果调用程序有超级用户权限，那么top将以尽可能高的优先级运行。
-S 指定累计模式
-s 使top命令在安全模式中运行。这将去除交互命令所带来的潜在危险。
-i 使top不显示任何闲置或者僵死进程。
+<p>d 指定每两次屏幕信息刷新之间的时间间隔。当然用户可以使用s交互命令来改变之。 
+p 通过指定监控进程ID来仅仅监控某个进程的状态。 
+q 该选项将使top没有任何延迟的进行刷新。如果调用程序有超级用户权限，那么top将以尽可能高的优先级运行。 
+S 指定累计模式 
+s 使top命令在安全模式中运行。这将去除交互命令所带来的潜在危险。 
+i 使top不显示任何闲置或者僵死进程。 
 c 显示整个命令行而不只是显示命令名</p>
 
 <p>Ctrl+L 擦除并且重写屏幕。</p>
@@ -1008,16 +977,12 @@ c 显示整个命令行而不只是显示命令名</p>
 
 <p>W 将当前设置写入~/.toprc文件中。这是写top配置文件的推荐方法。</p>
 
-<h3>free</h3>
-
+<h3 id="free">free</h3>
 <hr />
-
 <p>free命令由procps.*.rpm提供（在Redhat系列的OS上）。free命令的所有输出值都是从/proc/meminfo中读出的。</p>
 
-<h3>系统</h3>
-
+<h3 id="section">系统</h3>
 <hr />
-
 <pre><code># uname -a # 查看内核/操作系统/CPU信息  
 # head -n 1 /etc/issue # 查看操作系统版本  
 # cat /proc/cpuinfo # 查看CPU信息    
@@ -1028,10 +993,8 @@ c 显示整个命令行而不只是显示命令名</p>
 # env # 查看环境变量  
 </code></pre>
 
-<h3>资源</h3>
-
+<h3 id="section-1">资源</h3>
 <hr />
-
 <pre><code># free -m # 查看内存使用量和交换区使用量  
 # df -h # 查看各分区使用情况   
 # du -sh &lt;目录名&gt; # 查看指定目录的大小  
@@ -1041,10 +1004,8 @@ c 显示整个命令行而不只是显示命令名</p>
 # cat /proc/loadavg # 查看系统负载  
 </code></pre>
 
-<h3>磁盘和分区</h3>
-
+<h3 id="section-2">磁盘和分区</h3>
 <hr />
-
 <pre><code># mount | column -t # 查看挂接的分区状态  
 # fdisk -l # 查看所有分区  
 # swapon -s # 查看所有交换分区  
@@ -1052,10 +1013,8 @@ c 显示整个命令行而不只是显示命令名</p>
 # dmesg | grep IDE # 查看启动时IDE设备检测状况  
 </code></pre>
 
-<h3>网络</h3>
-
+<h3 id="section-3">网络</h3>
 <hr />
-
 <pre><code># ifconfig # 查看所有网络接口的属性  
 # iptables -L # 查看防火墙设置  
 # route -n # 查看路由表  
@@ -1064,18 +1023,14 @@ c 显示整个命令行而不只是显示命令名</p>
 # netstat -s # 查看网络统计信息  
 </code></pre>
 
-<h3>进程</h3>
-
+<h3 id="section-4">进程</h3>
 <hr />
-
 <pre><code># ps -ef # 查看所有进程  
 # top # 实时显示进程状态  
 </code></pre>
 
-<h3>用户</h3>
-
+<h3 id="section-5">用户</h3>
 <hr />
-
 <pre><code># w # 查看活动用户  
 # id &lt;用户名&gt; # 查看指定用户信息  
 # last # 查看用户登录日志  
@@ -1084,20 +1039,17 @@ c 显示整个命令行而不只是显示命令名</p>
 # crontab -l # 查看当前用户的计划任务  
 </code></pre>
 
-<h3>服务</h3>
-
+<h3 id="section-6">服务</h3>
 <hr />
-
 <pre><code># chkconfig --list # 列出所有系统服务  
 # chkconfig --list | grep on # 列出所有启动的系统服务  
 </code></pre>
 
-<h3>程序</h3>
-
+<h3 id="section-7">程序</h3>
 <hr />
-
 <pre><code># rpm -qa # 查看所有安装的软件包  
 </code></pre>
+
 ]]></content:encoded>
     </item>
     
@@ -1109,90 +1061,107 @@ c 显示整个命令行而不只是显示命令名</p>
       <guid>http://angelof7.github.io/CentOS-git-hooks</guid>
       <content:encoded><![CDATA[<p>本篇博客记录在CentOS服务器中部署Git仓库，并同步apache中的网站目录的过程</p>
 
-<h3>搭建Git服务器</h3>
-
+<h3 id="git">搭建Git服务器</h3>
 <hr />
-
 <ol>
-<li><p>安装git</p></li>
-<li><p>创建一个git用户:</p>
-
-<blockquote><p>sudo adduser git</p></blockquote></li>
-<li><p>创建证书登陆:
-收集所有需要登录的用户的公钥（id_rsa.pub），把所有公钥导入到~/.ssh/authorized_keys文件中，一行一个</p></li>
-<li><p>初始化git仓库:</p>
-
-<blockquote><p>sudo git init --bare test.git</p></blockquote></li>
+  <li>
+    <p>安装git</p>
+  </li>
+  <li>
+    <p>创建一个git用户:
+&gt; sudo adduser git</p>
+  </li>
+  <li>
+    <p>创建证书登陆:
+收集所有需要登录的用户的公钥（id_rsa.pub），把所有公钥导入到~/.ssh/authorized_keys文件中，一行一个</p>
+  </li>
+  <li>
+    <p>初始化git仓库:
+&gt; sudo git init –bare test.git</p>
+  </li>
 </ol>
 
-
-<blockquote><p>sudo chown -R git:git test.git</p></blockquote>
+<blockquote>
+  <p>sudo chown -R git:git test.git</p>
+</blockquote>
 
 <ol>
-<li>禁用git用户的Shell登陆:
+  <li>禁用git用户的Shell登陆:
 修改/etc/passwd中的
-
-<blockquote><p>git:x:1001:1001:,,,:/home/git:/bin/bash</p></blockquote></li>
+&gt; git:x:1001:1001:,,,:/home/git:/bin/bash</li>
 </ol>
-
 
 <p>改为：</p>
 
-<blockquote><p>git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</p></blockquote>
+<blockquote>
+  <p>git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</p>
+</blockquote>
 
 <ol>
-<li>构建Hook:
-
-<blockquote><p>cd test.git</p></blockquote></li>
+  <li>构建Hook:
+&gt; cd test.git</li>
 </ol>
 
-
-<blockquote><p>cat > hooks/post-receive</p></blockquote>
+<blockquote>
+  <p>cat &gt; hooks/post-receive</p>
+</blockquote>
 
 <p>#!/bin/bash</p>
 
 <p>GIT_WORK_TREE=/var/www/blog git checkout -f</p>
 
-<blockquote><p>chmod +x hooks/post-receive</p></blockquote>
+<blockquote>
+  <p>chmod +x hooks/post-receive</p>
+</blockquote>
 
-<h3>本地clone并推送</h3>
-
+<h3 id="clone">本地clone并推送</h3>
 <hr />
-
 <ol>
-<li><p>cd work</p></li>
-<li><p>git clone git@server_address:/root/test/test.git</p></li>
-<li><p>cd test</p></li>
-<li><p>touch README.md</p></li>
-<li><p>git add .</p></li>
-<li><p>git commit -m "initial commit"</p></li>
-<li><p>git push origin master</p></li>
+  <li>
+    <p>cd work</p>
+  </li>
+  <li>
+    <p>git clone git@server_address:/root/test/test.git</p>
+  </li>
+  <li>
+    <p>cd test</p>
+  </li>
+  <li>
+    <p>touch README.md</p>
+  </li>
+  <li>
+    <p>git add .</p>
+  </li>
+  <li>
+    <p>git commit -m “initial commit”</p>
+  </li>
+  <li>
+    <p>git push origin master</p>
+  </li>
 </ol>
 
-
-<h3>二级域名</h3>
-
+<h3 id="section">二级域名</h3>
 <hr />
-
 <ol>
-<li><p><a href="http://jingyan.baidu.com/article/b24f6c82db5ecc86bfe5dae7.html">万网设置</a></p></li>
-<li><p>Apache设置</p></li>
+  <li>
+    <p><a href="http://jingyan.baidu.com/article/b24f6c82db5ecc86bfe5dae7.html">万网设置</a></p>
+  </li>
+  <li>
+    <p>Apache设置</p>
+  </li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-xml" data-lang="xml">NamevirtualHost *:80
 
 <span class="nt">&lt;VirtualHost</span> <span class="err">*:80</span><span class="nt">&gt;</span>
-    ServerName a.com
-    DocumentRoot /var/www/site
+	ServerName a.com
+	DocumentRoot /var/www/site
 <span class="nt">&lt;/VirtualHost&gt;</span>
 
 <span class="nt">&lt;VirtualHost</span> <span class="err">*:80</span><span class="nt">&gt;</span>
-    ServerName bbs.a.com
-    DocumentRoot /var/www/bbs
+	ServerName bbs.a.com
+	DocumentRoot /var/www/bbs
 <span class="nt">&lt;/VirtualHost&gt;</span></code></pre></div>
-
-
 
 ]]></content:encoded>
     </item>
@@ -1203,9 +1172,9 @@ c 显示整个命令行而不只是显示命令名</p>
       <pubDate>2015-04-29T00:00:00+08:00</pubDate>
       <author>andygc</author>
       <guid>http://angelof7.github.io/permutation-array</guid>
-      <content:encoded><![CDATA[<p>设一组数p = {r1, r2, r3, ... ,rn}, 全排列为perm(p)，pn = p - {rn}。</p>
+      <content:encoded><![CDATA[<p>设一组数p = {r1, r2, r3, … ,rn}, 全排列为perm(p)，pn = p - {rn}。</p>
 
-<p>因此perm(p) = r1perm(p1), r2perm(p2), r3perm(p3), ... , rnperm(pn)。当n = 1时perm(p} = r1。</p>
+<p>因此perm(p) = r1perm(p1), r2perm(p2), r3perm(p3), … , rnperm(pn)。当n = 1时perm(p} = r1。</p>
 
 <p><strong>实现java代码如下：</strong></p>
 
@@ -1213,10 +1182,10 @@ c 显示整个命令行而不只是显示命令名</p>
         <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
         <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">swap</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">str</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span>
         <span class="o">{</span>
-            <span class="n">String</span> <span class="n">temp</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">String</span><span class="o">();</span>
-            <span class="n">temp</span> <span class="o">=</span> <span class="n">str</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-            <span class="n">str</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">str</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
-            <span class="n">str</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+	        <span class="n">String</span> <span class="n">temp</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">String</span><span class="o">();</span>
+	        <span class="n">temp</span> <span class="o">=</span> <span class="n">str</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+	        <span class="n">str</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">str</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+	        <span class="n">str</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
         <span class="o">}</span>
         <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">arrange</span> <span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">str</span><span class="o">,</span> <span class="kt">int</span> <span class="n">st</span><span class="o">,</span> <span class="kt">int</span> <span class="n">len</span><span class="o">)</span>
         <span class="o">{</span>
@@ -1238,19 +1207,17 @@ c 显示整个命令行而不只是显示命令名</p>
                                 <span class="n">swap</span><span class="o">(</span><span class="n">str</span><span class="o">,</span> <span class="n">st</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
                         <span class="o">}</span>
                 <span class="o">}</span>
-        
+		
         <span class="o">}</span>
-    <span class="cm">/**</span>
-<span class="cm">    * @param args</span>
-<span class="cm">    */</span>
+	<span class="cm">/**</span>
+<span class="cm">	 * @param args</span>
+<span class="cm">	 */</span>
         <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
                 <span class="n">String</span> <span class="n">str</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;a&quot;</span><span class="o">,</span> <span class="s">&quot;b&quot;</span><span class="o">,</span> <span class="s">&quot;c&quot;</span><span class="o">,</span> <span class="s">&quot;d&quot;</span><span class="o">,</span> <span class="s">&quot;e&quot;</span><span class="o">};</span>
                 <span class="n">arrange</span><span class="o">(</span><span class="n">str</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">str</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
                 <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">total</span><span class="o">);</span>
         <span class="o">}</span>
     <span class="o">}</span></code></pre></div>
-
-
 
 ]]></content:encoded>
     </item>

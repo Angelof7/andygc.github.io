@@ -59,94 +59,127 @@
 <p><strong>JNI中的一些概念</strong></p>
 
 <ul>
-<li><p>native : Java语言中修饰本地方法的修饰符, 被该修饰符修饰的方法没有方法体;</p></li>
-<li><p>Native方法 : 在Java语言中被native关键字修饰的方法是Native方法;</p></li>
-<li><p>JNI层 : Java声明Native方法的部分;</p></li>
-<li><p>JNI函数 : JNIEnv提供的函数, 这些函数在jni.h中进行定义;</p></li>
-<li><p>JNI方法 : Native方法对应的JNI层实现的 C/C++方法, 即在jni目录中实现的那些C语言代码;</p></li>
+  <li>
+    <p>native : Java语言中修饰本地方法的修饰符, 被该修饰符修饰的方法没有方法体;</p>
+  </li>
+  <li>
+    <p>Native方法 : 在Java语言中被native关键字修饰的方法是Native方法;</p>
+  </li>
+  <li>
+    <p>JNI层 : Java声明Native方法的部分;</p>
+  </li>
+  <li>
+    <p>JNI函数 : JNIEnv提供的函数, 这些函数在jni.h中进行定义;</p>
+  </li>
+  <li>
+    <p>JNI方法 : Native方法对应的JNI层实现的 C/C++方法, 即在jni目录中实现的那些C语言代码;</p>
+  </li>
 </ul>
-
 
 <p><strong>C与Java如何交流</strong></p>
 
 <ul>
-<li><p>JNI规范 : C语言与Java语言交流需要一个适配器, 中间件, 即 JNI, JNI提供了一种规范;</p></li>
-<li><p>C语言中调用Java方法 : 可以让我们在C代码中找到Java代码class中的方法, 并且调用该方法;</p></li>
-<li><p>Java语言中调用C语言方法 : 同时也可以在Java代码中, 将一个C语言的方法映射到Java的某个方法上;</p></li>
-<li><p>JNI桥梁作用 : JNI提供了一个桥梁, 打通了C语言和Java语言之间的障碍;</p></li>
+  <li>
+    <p>JNI规范 : C语言与Java语言交流需要一个适配器, 中间件, 即 JNI, JNI提供了一种规范;</p>
+  </li>
+  <li>
+    <p>C语言中调用Java方法 : 可以让我们在C代码中找到Java代码class中的方法, 并且调用该方法;</p>
+  </li>
+  <li>
+    <p>Java语言中调用C语言方法 : 同时也可以在Java代码中, 将一个C语言的方法映射到Java的某个方法上;</p>
+  </li>
+  <li>
+    <p>JNI桥梁作用 : JNI提供了一个桥梁, 打通了C语言和Java语言之间的障碍;</p>
+  </li>
 </ul>
-
 
 <p>JNI作用 :</p>
 
 <ul>
-<li><p>扩展: JNI扩展了JVM能力, 驱动开发, 例如开发一个wifi驱动, 可以将手机设置为无限路由;</p></li>
-<li><p>高效 : 本地代码效率高, 游戏渲染, 音频视频处理等方面使用JNI调用本地代码, C语言可以灵活操作内存;</p></li>
-<li><p>复用 : 在文件压缩算法 7zip开源代码库, 机器视觉 openCV开放算法库 等方面可以复用C平台上的代码, 不必在开发一套完整的Java体系, 避免重复发明轮子;</p></li>
-<li><p>特殊 : 产品的核心技术一般也采用JNI开发, 不易破解;</p></li>
+  <li>
+    <p>扩展: JNI扩展了JVM能力, 驱动开发, 例如开发一个wifi驱动, 可以将手机设置为无限路由;</p>
+  </li>
+  <li>
+    <p>高效 : 本地代码效率高, 游戏渲染, 音频视频处理等方面使用JNI调用本地代码, C语言可以灵活操作内存;</p>
+  </li>
+  <li>
+    <p>复用 : 在文件压缩算法 7zip开源代码库, 机器视觉 openCV开放算法库 等方面可以复用C平台上的代码, 不必在开发一套完整的Java体系, 避免重复发明轮子;</p>
+  </li>
+  <li>
+    <p>特殊 : 产品的核心技术一般也采用JNI开发, 不易破解;</p>
+  </li>
 </ul>
-
 
 <p>Java语言执行流程 :</p>
 
 <ul>
-<li><p>编译字节码 : Java编译器编译 .java源文件, 获得.class 字节码文件;</p></li>
-<li><p>装载类库 : 使用类装载器装载平台上的Java类库, 并进行字节码验证;</p></li>
-<li><p>Java虚拟机 : 将字节码加入到JVM中, Java解释器 和 即时编译器 同时处理字节码文件, 将处理后的结果放入运行时系统;</p></li>
-<li><p>调用JVM所在平台类库 : JVM处理字节码后, 转换成相应平台的操作, 调用本平台底层类库进行相关处理;</p></li>
+  <li>
+    <p>编译字节码 : Java编译器编译 .java源文件, 获得.class 字节码文件;</p>
+  </li>
+  <li>
+    <p>装载类库 : 使用类装载器装载平台上的Java类库, 并进行字节码验证;</p>
+  </li>
+  <li>
+    <p>Java虚拟机 : 将字节码加入到JVM中, Java解释器 和 即时编译器 同时处理字节码文件, 将处理后的结果放入运行时系统;</p>
+  </li>
+  <li>
+    <p>调用JVM所在平台类库 : JVM处理字节码后, 转换成相应平台的操作, 调用本平台底层类库进行相关处理;</p>
+  </li>
 </ul>
-
 
 <p>网上JNI的文章不多，我将自己的一些总结写在这里。如有错误，欢迎指出。</p>
 
 <p>Java调用C/C++总结起来有如下三个步骤：</p>
 
 <ol>
-<li><p>编写带有native方法的Java类，使用javac工具编译Java类</p></li>
-<li><p>使用javah工具来生成与native方法对应的头文件（一般为XX.h文件）</p></li>
-<li><p>实现这个头文件，并将其编译为动态链接库(.dll或.so)</p></li>
+  <li>
+    <p>编写带有native方法的Java类，使用javac工具编译Java类</p>
+  </li>
+  <li>
+    <p>使用javah工具来生成与native方法对应的头文件（一般为XX.h文件）</p>
+  </li>
+  <li>
+    <p>实现这个头文件，并将其编译为动态链接库(.dll或.so)</p>
+  </li>
 </ol>
-
 
 <p>下面是一个简单完整的Java调用C/C++的例子，改自<a href="https://www.ibm.com/developerworks/cn/java/j-jni/">IBM的一篇介绍JNI的文章</a>和<a href="http://www.cnblogs.com/icejoywoo/archive/2012/02/22/2363709.html">icejoywoo</a>的博客。</p>
 
-<h4>编写Java类</h4>
+<h4 id="java">编写Java类</h4>
 
 <p>我们来编写一个JNITest的Java类。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">JNITest</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">native</span> <span class="kt">int</span> <span class="nf">intFunc</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">);</span> <span class="c1">//参数类型为int</span>
-    <span class="kd">public</span> <span class="kd">native</span> <span class="kt">boolean</span> <span class="nf">booleanFunc</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">bool</span><span class="o">);</span>  <span class="c1">//参数类型为boolean</span>
-    <span class="kd">public</span> <span class="kd">native</span> <span class="n">String</span> <span class="nf">stringFunc</span><span class="o">(</span><span class="n">String</span> <span class="n">text</span><span class="o">);</span>  <span class="c1">//参数类型为String</span>
-    <span class="kd">public</span> <span class="kd">native</span> <span class="kt">int</span> <span class="nf">intArrayFunc</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">intArray</span><span class="o">);</span>  <span class="c1">//参数类型为int</span>
+	<span class="kd">public</span> <span class="kd">native</span> <span class="kt">int</span> <span class="nf">intFunc</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">);</span> <span class="c1">//参数类型为int</span>
+	<span class="kd">public</span> <span class="kd">native</span> <span class="kt">boolean</span> <span class="nf">booleanFunc</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">bool</span><span class="o">);</span>  <span class="c1">//参数类型为boolean</span>
+	<span class="kd">public</span> <span class="kd">native</span> <span class="n">String</span> <span class="nf">stringFunc</span><span class="o">(</span><span class="n">String</span> <span class="n">text</span><span class="o">);</span>  <span class="c1">//参数类型为String</span>
+	<span class="kd">public</span> <span class="kd">native</span> <span class="kt">int</span> <span class="nf">intArrayFunc</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">intArray</span><span class="o">);</span>  <span class="c1">//参数类型为int</span>
 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span> <span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">//加载了动态类库，在windows下加载.dll，在Linux下加载.so，决不可加上后缀，要保证JNITest在path路径中</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">loadLibrary</span><span class="o">(</span><span class="s">&quot;JNITest&quot;</span><span class="o">);</span> 
-        <span class="n">JNITest</span> <span class="n">jnitest</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">JNITest</span><span class="o">();</span>
-        
-        <span class="kt">int</span> <span class="n">square</span> <span class="o">=</span> <span class="n">jnitest</span><span class="o">.</span><span class="na">intFunc</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
-        <span class="kt">boolean</span> <span class="n">boolv</span> <span class="o">=</span> <span class="n">jnitest</span><span class="o">.</span><span class="na">booleanFunc</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-        <span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">jnitest</span><span class="o">.</span><span class="na">stringFunc</span><span class="o">(</span><span class="s">&quot;Hello JNI&quot;</span><span class="o">);</span>
-        <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">jnitest</span><span class="o">.</span><span class="na">intArrayFunc</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">,</span><span class="mi">6</span><span class="o">,</span><span class="mi">7</span><span class="o">,</span><span class="mi">8</span><span class="o">,</span><span class="mi">9</span><span class="o">,</span><span class="mi">0</span><span class="o">});</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span> <span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">//加载了动态类库，在windows下加载.dll，在Linux下加载.so，决不可加上后缀，要保证JNITest在path路径中</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">loadLibrary</span><span class="o">(</span><span class="s">&quot;JNITest&quot;</span><span class="o">);</span> 
+		<span class="n">JNITest</span> <span class="n">jnitest</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">JNITest</span><span class="o">();</span>
+		
+		<span class="kt">int</span> <span class="n">square</span> <span class="o">=</span> <span class="n">jnitest</span><span class="o">.</span><span class="na">intFunc</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+		<span class="kt">boolean</span> <span class="n">boolv</span> <span class="o">=</span> <span class="n">jnitest</span><span class="o">.</span><span class="na">booleanFunc</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">jnitest</span><span class="o">.</span><span class="na">stringFunc</span><span class="o">(</span><span class="s">&quot;Hello JNI&quot;</span><span class="o">);</span>
+		<span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">jnitest</span><span class="o">.</span><span class="na">intArrayFunc</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">,</span><span class="mi">6</span><span class="o">,</span><span class="mi">7</span><span class="o">,</span><span class="mi">8</span><span class="o">,</span><span class="mi">9</span><span class="o">,</span><span class="mi">0</span><span class="o">});</span>
 
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;intFunc: &quot;</span> <span class="o">+</span> <span class="n">square</span><span class="o">);</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;booleanFunc: &quot;</span> <span class="o">+</span> <span class="n">boolv</span><span class="o">);</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;stringFunc: &quot;</span> <span class="o">+</span> <span class="n">text</span><span class="o">);</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;intArrayFunc: &quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="o">);</span>
-    <span class="o">}</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;intFunc: &quot;</span> <span class="o">+</span> <span class="n">square</span><span class="o">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;booleanFunc: &quot;</span> <span class="o">+</span> <span class="n">boolv</span><span class="o">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;stringFunc: &quot;</span> <span class="o">+</span> <span class="n">text</span><span class="o">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;intArrayFunc: &quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="o">);</span>
+	<span class="o">}</span>
 <span class="o">}</span></code></pre></div>
-
 
 <p>上面代码中的4个native方法就是我们需要用C来实现的方法。</p>
 
 <p>编译JNITest文件，可以看到JNITest.class文件。</p>
 
-<h4>javah工具生成头文件</h4>
+<h4 id="javah">javah工具生成头文件</h4>
 
-<p>命令行运行</p>
-
-<blockquote><p>javah JNITest</p></blockquote>
+<p>命令行运行
+&gt; javah JNITest</p>
 
 <p>可以看到目录下自动生成了一个头文件JNITest.h</p>
 
@@ -196,82 +229,80 @@
 <span class="cp">#endif</span>
 <span class="cp">#endif</span></code></pre></div>
 
-
-<p>可以看到有4个函数声明，命名方式为 Java<em>完整类名</em>方法名，完整类名包括包名，假设我的demo.JNITest是完整类名，对应的就是demo_JNITest(本文不是)。
+<p>可以看到有4个函数声明，命名方式为 Java_完整类名_方法名，完整类名包括包名，假设我的demo.JNITest是完整类名，对应的就是demo_JNITest(本文不是)。
 注释中有个方法签名（Signature），通过一个表格来介绍Signature。</p>
 
 <table>
-<thead>
-<tr>
-<th>Java类型 </th>
-<th> Signature  </th>
-<th> 备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>boolean  </td>
-<td> Z          </td>
-<td>      </td>
-</tr>
-<tr>
-<td>byte     </td>
-<td> B          </td>
-<td>      </td>
-</tr>
-<tr>
-<td>char     </td>
-<td> C          </td>
-<td>      </td>
-</tr>
-<tr>
-<td>short    </td>
-<td> S          </td>
-<td>      </td>
-</tr>
-<tr>
-<td>int      </td>
-<td> I          </td>
-<td>      </td>
-</tr>
-<tr>
-<td>long     </td>
-<td> L          </td>
-<td>      </td>
-</tr>
-<tr>
-<td>float    </td>
-<td> F          </td>
-<td>      </td>
-</tr>
-<tr>
-<td>double   </td>
-<td> D          </td>
-<td>      </td>
-</tr>
-<tr>
-<td>void     </td>
-<td> V          </td>
-<td>      </td>
-</tr>
-<tr>
-<td>object   </td>
-<td> L用/分割的完整类名 </td>
-<td> 例如：Ljava/lang/String表示String类型</td>
-</tr>
-<tr>
-<td>Array    </td>
-<td> [签名  </td>
-<td> 例如：[I 表示int数组，[Ljava/lang/String表示String数组</td>
-</tr>
-<tr>
-<td>Method   </td>
-<td> (参数签名) 返回类型签名 </td>
-<td> 例如：([I)I 表示参数类型为int数组，返回int类型的方法</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Java类型</th>
+      <th>Signature</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>boolean</td>
+      <td>Z</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>byte</td>
+      <td>B</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>char</td>
+      <td>C</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>short</td>
+      <td>S</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>int</td>
+      <td>I</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>long</td>
+      <td>L</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td>F</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>double</td>
+      <td>D</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td>V</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>object</td>
+      <td>L用/分割的完整类名</td>
+      <td>例如：Ljava/lang/String表示String类型</td>
+    </tr>
+    <tr>
+      <td>Array</td>
+      <td>[签名</td>
+      <td>例如：[I 表示int数组，[Ljava/lang/String表示String数组</td>
+    </tr>
+    <tr>
+      <td>Method</td>
+      <td>(参数签名) 返回类型签名</td>
+      <td>例如：([I)I 表示参数类型为int数组，返回int类型的方法</td>
+    </tr>
+  </tbody>
 </table>
-
 
 <p>上面头文件的第一个函数声明</p>
 
@@ -279,7 +310,7 @@
 
 <p>注释中的签名是 Signature: (I)I</p>
 
-<h4>实现头文件中的函数</h4>
+<h4 id="section">实现头文件中的函数</h4>
 
 <p>可以使用C/C++语言实现，下面是使用C语言实现的版本（其实C/C++）实现起来差不多。</p>
 
@@ -291,45 +322,44 @@
 <span class="cm">*/</span>
 <span class="n">JNIEXPORT</span> <span class="n">jint</span> <span class="n">JNICALL</span> <span class="nf">Java_JNITEST_intFunc</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">obj</span><span class="p">,</span> <span class="n">jint</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
 
-    <span class="k">return</span> <span class="n">num</span> <span class="o">*</span> <span class="n">num</span><span class="p">;</span>
+	<span class="k">return</span> <span class="n">num</span> <span class="o">*</span> <span class="n">num</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="n">JNIEXPORT</span> <span class="n">jboolean</span> <span class="n">JNICALL</span> <span class="nf">Java_JNITEST_booleanFunc</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">obj</span><span class="p">,</span> <span class="n">jboolean</span> <span class="n">boolean</span><span class="p">)</span> <span class="p">{</span>
 
-    <span class="k">return</span> <span class="o">!</span><span class="n">boolean</span><span class="p">;</span>
+	<span class="k">return</span> <span class="o">!</span><span class="n">boolean</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="n">JNIEXPORT</span> <span class="n">jstring</span> <span class="n">JNICALL</span> <span class="nf">Java_JNITEST_stringFunc</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">obj</span><span class="p">,</span> <span class="n">jstring</span> <span class="n">string</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">//GetStringUTFChars()这个方法，是Java和C/C++之间转换字符串，Java本身应的是双字节字符，而C使用的是单字节字符，故需要转换</span>
-    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-    <span class="kt">char</span> <span class="n">cap</span><span class="p">[</span><span class="mi">128</span><span class="p">];</span>
-    <span class="n">strcpy</span><span class="p">(</span><span class="n">cap</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
-    <span class="c1">//ReleaseStringUTFChars()是用来释放对象的, 在Java中有虚拟机进行垃圾回收, 但是在C语言中, 这些对象必须手动回收. 否则可能造成内存泄漏.</span>
-    <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">ReleaseStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-    <span class="k">return</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewStringUTF</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">strupr</span><span class="p">(</span><span class="n">cap</span><span class="p">));</span>
+	<span class="c1">//GetStringUTFChars()这个方法，是Java和C/C++之间转换字符串，Java本身应的是双字节字符，而C使用的是单字节字符，故需要转换</span>
+	<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="kt">char</span> <span class="n">cap</span><span class="p">[</span><span class="mi">128</span><span class="p">];</span>
+	<span class="n">strcpy</span><span class="p">(</span><span class="n">cap</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+	<span class="c1">//ReleaseStringUTFChars()是用来释放对象的, 在Java中有虚拟机进行垃圾回收, 但是在C语言中, 这些对象必须手动回收. 否则可能造成内存泄漏.</span>
+	<span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">ReleaseStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="k">return</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewStringUTF</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">strupr</span><span class="p">(</span><span class="n">cap</span><span class="p">));</span>
 <span class="p">}</span>
 
 <span class="n">JNIEXPORT</span> <span class="n">jint</span> <span class="n">JNICALL</span> <span class="nf">Java_JNITEST_intArrayFunc</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">obj</span><span class="p">,</span> <span class="n">jintArray</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="n">jsize</span> <span class="n">len</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetArrayLength</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">array</span><span class="p">);</span>
-    <span class="n">jint</span> <span class="o">*</span><span class="n">body</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetIntArrayElements</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="n">jsize</span> <span class="n">len</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetArrayLength</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">array</span><span class="p">);</span>
+	<span class="n">jint</span> <span class="o">*</span><span class="n">body</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetIntArrayElements</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 
-    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">sum</span> <span class="o">+=</span> <span class="n">body</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">sum</span> <span class="o">+=</span> <span class="n">body</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
 <span class="p">}</span></code></pre></div>
-
 
 <p>C++的代码和C的很像，只有一个不同点</p>
 
-<p>C代码: (*env)->GetStringUTFChars(env, string, 0);</p>
+<p>C代码: (*env)-&gt;GetStringUTFChars(env, string, 0);</p>
 
-<p>C++代码: env->GetStringUTFChars(string, 0);</p>
+<p>C++代码: env-&gt;GetStringUTFChars(string, 0);</p>
 
 <p>C语言中使用的是结构体的函数指针, 而在C++中使用的还是struct, 我们知道struct在C++中和class的功能是几乎一样的, struct也可以用来定义类, 所以env在C++中是个类对象的指针.</p>
 
-<h4>编译和运行</h4>
+<h4 id="section-1">编译和运行</h4>
 
 <p><strong>MS的编译器，编译C语言版本的.dll</strong></p>
 
@@ -344,24 +374,23 @@
 <p>注意：</p>
 
 <ol>
-<li>-I /home/mike_ming/workspace/JNI/ 这个是指当前有JNITest.h文件的目录</li>
-<li>Linux规定库文件(.so)必须以lib开头，但是我们使用loadlibrary方法加载的是<strong>JNITest</strong></li>
+  <li>-I /home/mike_ming/workspace/JNI/ 这个是指当前有JNITest.h文件的目录</li>
+  <li>Linux规定库文件(.so)必须以lib开头，但是我们使用loadlibrary方法加载的是<strong>JNITest</strong></li>
 </ol>
-
 
 <p><strong>运行</strong></p>
 
-<p>java -Djava.library.path='.' JNITest</p>
+<p>java -Djava.library.path=’.’ JNITest</p>
 
 <p>-Djava.library.path 代表的就是当前的.so路径了</p>
 
-<p><strong> 引用 </strong></p>
+<p>** 引用 **</p>
 
 <p><a href="http://blog.csdn.net/shulianghan/article/details/18964835">Android 开发 之 JNI入门 - NDK从入门到精通</a></p>
 
 <p><a href="http://www.cnblogs.com/bastard/archive/2012/05/17/2506877.html">Dufresne</a></p>
 
-<p><a href="http://www.cnblogs.com/icejoywoo/archive/2012/02/22/2363709.html">使用JNI进行Java与C/C++语言混合编程(1)--在Java中调用C/C++本地库</a></p>
+<p><a href="http://www.cnblogs.com/icejoywoo/archive/2012/02/22/2363709.html">使用JNI进行Java与C/C++语言混合编程(1)–在Java中调用C/C++本地库</a></p>
 
 </section>
 <section align="right">

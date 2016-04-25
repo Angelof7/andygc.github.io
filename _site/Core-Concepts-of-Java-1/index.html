@@ -149,7 +149,6 @@
 <span class="n">v1</span><span class="o">.</span><span class="na">c</span><span class="o">=</span><span class="mi">11</span>  <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">=</span><span class="mi">11</span>
 <span class="n">ct</span><span class="o">.</span><span class="na">c</span><span class="o">=</span><span class="mi">11</span></code></pre></div>
 
-
 <p>这个程序展示了静态初始化的各种特性。可能会对static后加大括号感到困惑。首先要告诉你的是，static定义的变量会优先于任何其它非static变量，不论其出现的顺序如何。正如在程序中所表现的，虽然v出现在v1和v2的前面，但是结果却是v1和v2的初始化在v的前面。在static{后面跟着一段代码，这是用来进行显式的静态变量初始化，这段代码只会初始化一次，且在类被第一次装载时。如果你能读懂并理解这段代码，会帮助你对static关键字的认识。在涉及到继承的时候，会先初始化父类的static变量，然后是子类的，依次类推。</p>
 
 <p><em>数组初始化</em></p>
@@ -160,7 +159,7 @@
 Java数组的计算也是从第0个开始到第length-1个结束，如果访问越界，会有运行时错误（异常）。</p>
 
 <p>可变参数列表，也是数组的应用之一。如下
-static void printArray(Object... args)</p>
+static void printArray(Object… args)</p>
 
 <p><em>枚举类型</em></p>
 
@@ -177,11 +176,10 @@ package access；
 <p>类的访问权限</p>
 
 <ol>
-<li>每个编译单元（文件）都只能有一个public类。</li>
-<li>public类的名称必须完全与含有该编译单元的文件名相匹配，包括大小写。不匹配得到编译时错误。
+  <li>每个编译单元（文件）都只能有一个public类。</li>
+  <li>public类的名称必须完全与含有该编译单元的文件名相匹配，包括大小写。不匹配得到编译时错误。
 3.编译单元内完全不带public类也是可能的（不常用），这种情况下可随意对文件命名。</li>
 </ol>
-
 
 <p><strong>复用类</strong></p>
 
@@ -259,12 +257,11 @@ package access；
 
 <p><em>复杂对象调用构造器的顺序</em></p>
 
-<ol type="a">
-<li><p>调用基类构造器。这个步骤会不断的反复递归下去，首先是构造这种层次结构的根，然后是下一层的导出类等等，直到最底层的导出类。</p></li>
-<li><p>按声明顺序调用成员的初始化方法。</p></li>
-<li><p>调用导出类构造器的主体。</p></li>
-</ol>
+<p>a. 调用基类构造器。这个步骤会不断的反复递归下去，首先是构造这种层次结构的根，然后是下一层的导出类等等，直到最底层的导出类。</p>
 
+<p>b. 按声明顺序调用成员的初始化方法。</p>
+
+<p>c. 调用导出类构造器的主体。</p>
 
 <p><strong>接口</strong></p>
 
@@ -273,10 +270,13 @@ package access；
 <p><em>抽象类</em></p>
 
 <ol>
-<li><p>一个类包含一个或多个抽象方法时，该类必须被限定为抽象的，否则编译器报错。</p></li>
-<li><p>继承抽象类，并想创建该类的对象，必须为基类中的所有抽象方法提供方法定义，否则，导出类也是抽象类，且编译器会强制用abstract关键字来限定这个类。</p></li>
+  <li>
+    <p>一个类包含一个或多个抽象方法时，该类必须被限定为抽象的，否则编译器报错。</p>
+  </li>
+  <li>
+    <p>继承抽象类，并想创建该类的对象，必须为基类中的所有抽象方法提供方法定义，否则，导出类也是抽象类，且编译器会强制用abstract关键字来限定这个类。</p>
+  </li>
 </ol>
-
 
 <p><em>接口</em></p>
 
@@ -329,10 +329,9 @@ package access；
 <p>分为两种List：</p>
 
 <ol>
-<li>基本的ArrayList：快速随机访问元素，但插入或移除元素较慢。</li>
-<li>LinkedList：较快插入或删除元素，但随机访问慢。</li>
+  <li>基本的ArrayList：快速随机访问元素，但插入或移除元素较慢。</li>
+  <li>LinkedList：较快插入或删除元素，但随机访问慢。</li>
 </ol>
-
 
 <p>常用的方法：
 contains()方法：确定某个对象是否在列表中
@@ -343,12 +342,19 @@ subList()：从较大列表中创建出一个片段</p>
 <p><em>迭代器</em></p>
 
 <ol>
-<li><p>使用方法iterator()要求容器返回一个Iterator，Iterator将准备好返回序列的第一个元素。</p></li>
-<li><p>使用next()获得序列中的写一个元素。</p></li>
-<li><p>使用hasNext()检查序列中是否还有元素。</p></li>
-<li><p>使用remove()将迭代器最近返回的元素删除。</p></li>
+  <li>
+    <p>使用方法iterator()要求容器返回一个Iterator，Iterator将准备好返回序列的第一个元素。</p>
+  </li>
+  <li>
+    <p>使用next()获得序列中的写一个元素。</p>
+  </li>
+  <li>
+    <p>使用hasNext()检查序列中是否还有元素。</p>
+  </li>
+  <li>
+    <p>使用remove()将迭代器最近返回的元素删除。</p>
+  </li>
 </ol>
-
 
 <p>如果仅仅向前遍历List，那么foreach语法更加简洁。</p>
 
@@ -377,29 +383,26 @@ Java中的Stack继承Vector,在Vector的基础上实现了Stack所要求的后�
 <p>HashSet</p>
 
 <ol>
-<li>HashSet基于HashMap实现，无容量限制。</li>
-<li>HashSet是非线程安全的。</li>
-<li>HashSet不保证有序。</li>
+  <li>HashSet基于HashMap实现，无容量限制。</li>
+  <li>HashSet是非线程安全的。</li>
+  <li>HashSet不保证有序。</li>
 </ol>
-
 
 <p>TreeSet</p>
 
 <ol>
-<li>TreeSet基于TreeMap实现，支持排序。</li>
-<li>TreeSet是非线程安全的。</li>
+  <li>TreeSet基于TreeMap实现，支持排序。</li>
+  <li>TreeSet是非线程安全的。</li>
 </ol>
-
 
 <p>从对HashSet和TreeSet的描述来看，TreeSet和HashSet一样，也是完全基于Map来实现的，并且都不支持get(int)来获取指定位置的元素（需要遍历获取），另外TreeSet还提供了一些排序方面的支持。例如传入Comparator实现、descendingSet以及descendingIterator等。</p>
 
 <p>LinkedHashSet:</p>
 
 <ol>
-<li>LinkedHashSet 以元素插入的顺序来维护集合的链接表，允许以插入的顺序在集合中迭代</li>
-<li>LinkedHashSet同样是非线程安全的。</li>
+  <li>LinkedHashSet 以元素插入的顺序来维护集合的链接表，允许以插入的顺序在集合中迭代</li>
+  <li>LinkedHashSet同样是非线程安全的。</li>
 </ol>
-
 
 <p>在同步并发环境下，为了确保Set是线程安全的，可以使用Collections。synchronizedSet(new HashSet());因为其能够返回原始hashset集合的同步版本，在多线程环境中可以访问这个同步版本。</p>
 
@@ -416,39 +419,35 @@ Java中的Stack继承Vector,在Vector的基础上实现了Stack所要求的后�
 <p>HashMap</p>
 
 <ol>
-<li>HashMap采用数组方式存储key，value构成的Entry对象，无容量限制。</li>
-<li>HashMap基于Key hash查找Entry对象存放到数组的位置，对于hash冲突采用链表的方式来解决。</li>
-<li>HashMap在插入元素时可能会要扩大数组的容量，在扩大容量时须要重新计算hash，并复制对象到新的数组中。</li>
-<li>HashMap是非线程安全的。</li>
-<li>HashMap遍历使用的是Iterator</li>
+  <li>HashMap采用数组方式存储key，value构成的Entry对象，无容量限制。</li>
+  <li>HashMap基于Key hash查找Entry对象存放到数组的位置，对于hash冲突采用链表的方式来解决。</li>
+  <li>HashMap在插入元素时可能会要扩大数组的容量，在扩大容量时须要重新计算hash，并复制对象到新的数组中。</li>
+  <li>HashMap是非线程安全的。</li>
+  <li>HashMap遍历使用的是Iterator</li>
 </ol>
-
 
 <p>HashTable</p>
 
 <ol>
-<li>HashTable是线程安全的。</li>
-<li>HashTable中无论是Key，还是Value都不允许为null。</li>
-<li>HashTable遍历使用的是Enumeration。</li>
+  <li>HashTable是线程安全的。</li>
+  <li>HashTable中无论是Key，还是Value都不允许为null。</li>
+  <li>HashTable遍历使用的是Enumeration。</li>
 </ol>
-
 
 <p>TreeMap：</p>
 
 <ol>
-<li>SortMap的实现</li>
-<li>TreeMap是一个典型的基于红黑树的Map实现，因此它要求一定要有Key比较的方法，要么传入Comparator实现，要么key对象实现Comparable接口。</li>
-<li>TreeMap是非线程安全的。</li>
+  <li>SortMap的实现</li>
+  <li>TreeMap是一个典型的基于红黑树的Map实现，因此它要求一定要有Key比较的方法，要么传入Comparator实现，要么key对象实现Comparable接口。</li>
+  <li>TreeMap是非线程安全的。</li>
 </ol>
-
 
 <p>LinkedHashMap：</p>
 
 <ol>
-<li>LinkedHashMap 是HashMap的一个子类，保存了记录的插入顺序，在用Iterator遍历LinkedHashMap时，先得到的记录肯定是先插入的.</li>
-<li>LinkedHashMap 也可以在构造时用带参数，按照应用次数排序。</li>
+  <li>LinkedHashMap 是HashMap的一个子类，保存了记录的插入顺序，在用Iterator遍历LinkedHashMap时，先得到的记录肯定是先插入的.</li>
+  <li>LinkedHashMap 也可以在构造时用带参数，按照应用次数排序。</li>
 </ol>
-
 
 <p>LinkedHashMap在遍历的时候会比HashMap慢。不过有种情况例外，当HashMap容量很大，实际数据较少时，遍历起来可能会比 LinkedHashMap慢，因为LinkedHashMap的遍历速度只和实际数据有关，和容量无关，而HashMap的遍历速度和他的容量有关。</p>
 

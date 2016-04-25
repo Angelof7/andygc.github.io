@@ -54,22 +54,16 @@
 
 </section>
 <section class="post">
-<h2>1. CyclicBarrier是什么</h2>
-
+<h2 id="cyclicbarrier">1. CyclicBarrier是什么</h2>
 <hr />
-
 <p>一个同步辅助类，它允许一组线程互相等待，直到到达某个公共屏障点 (common barrier point)。在涉及一组固定大小的线程的程序中，这些线程必须不时地互相等待，此时 CyclicBarrier 很有用。因为该 barrier 在释放等待线程后可以重用，所以称它为循环 的 barrier。</p>
 
-<h2>2. 使用场景</h2>
-
+<h2 id="section">2. 使用场景</h2>
 <hr />
-
 <p>需要所有的子任务都完成时，才执行主任务，这个时候就可以选择使用CyclicBarrier。</p>
 
-<h2>3. 实例</h2>
-
+<h2 id="section-1">3. 实例</h2>
 <hr />
-
 <p>赛跑时，等待所有人都准备好时，才起跑：</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CyclicBarrierTest</span> <span class="o">{</span>
@@ -113,8 +107,6 @@
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; 起跑！&quot;</span><span class="o">);</span>
         <span class="o">}</span>
     <span class="o">}</span></code></pre></div>
-
-
 
 
 </section>

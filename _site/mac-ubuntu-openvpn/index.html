@@ -54,30 +54,41 @@
 
 </section>
 <section class="post">
-<h2>Mac</h2>
-
+<h2 id="mac">Mac</h2>
 <hr />
-
 <p><strong>tunnelblick</strong></p>
 
-<h2>Ubuntu</h2>
-
+<h2 id="ubuntu">Ubuntu</h2>
 <hr />
-
 <ol>
-<li><blockquote><p># sudo apt-get install openvpn</p></blockquote></li>
-<li><blockquote><p># cd /etc/openvpn</p></blockquote></li>
-<li><blockquote><p># cp ~/Downloads/client.ovpn .</p></blockquote></li>
-<li><blockquote><p># sudo openvpn /etc/openvpn/client.ovpn</p></blockquote></li>
-<li><p>后台连接:</p>
-
-<blockquote><p># sudo openvpn /etc/openvpn/client.ovpn > /dev/null &amp;</p></blockquote></li>
-<li><p>开机启动:<br/>
-将上述命令加入:</p>
-
-<blockquote><p>/etc/rc.local</p></blockquote></li>
+  <li>
+    <blockquote>
+      <p># sudo apt-get install openvpn</p>
+    </blockquote>
+  </li>
+  <li>
+    <blockquote>
+      <p># cd /etc/openvpn</p>
+    </blockquote>
+  </li>
+  <li>
+    <blockquote>
+      <p># cp ~/Downloads/client.ovpn .</p>
+    </blockquote>
+  </li>
+  <li>
+    <blockquote>
+      <p># sudo openvpn /etc/openvpn/client.ovpn</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>后台连接:<br />
+&gt;# sudo openvpn /etc/openvpn/client.ovpn &gt; /dev/null &amp;</p>
+  </li>
+  <li>开机启动:<br />
+将上述命令加入:
+&gt; /etc/rc.local</li>
 </ol>
-
 
 </section>
 <section align="right">

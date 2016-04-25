@@ -58,163 +58,153 @@
 <section class="post">
 <p>本篇博客记录常用的Linux系统管理shell</p>
 
-<h3>ps</h3>
-
+<h3 id="ps">ps</h3>
 <hr />
-
 <ol>
-<li>ps 的参数说明
- l       长格式输出；
- u       按用户名和启动时间的顺序来显示进程；
- j       用任务格式来显示进程；
- f       用树形格式来显示进程；
- a       显示所有用户的所有进程（包括其它用户）；<br/>
- x       显示无控制终端的进程；<br/>
- r       显示运行中的进程；<br/>
- ww      避免详细参数被截断；<br/>
-<em>我们常用的选项是组合是aux -ef 输出的解释；</em>  <br/>
- USER    进程的属主；<br/>
- PID     进程的ID；<br/>
- PPID    父进程；<br/>
- %CPU    进程占用的CPU百分比；<br/>
- %MEM    占用内存的百分比；<br/>
- NI      进程的NICE值，数值大，表示较少占用CPU时间；<br/>
- VSZ     进程虚拟大小；<br/>
- RSS     驻留中页的数量；<br/>
- WCHAN   正在等待的进程资源 <br/>
- TTY     终端ID  <br/>
- STAT    进程状态 <br/>
+  <li>ps 的参数说明
+ l       长格式输出； 
+ u       按用户名和启动时间的顺序来显示进程； 
+ j       用任务格式来显示进程； 
+ f       用树形格式来显示进程； 
+ a       显示所有用户的所有进程（包括其它用户）；<br />
+ x       显示无控制终端的进程；<br />
+ r       显示运行中的进程；<br />
+ ww      避免详细参数被截断；<br />
+<em>我们常用的选项是组合是aux -ef 输出的解释；</em>  <br />
+ USER    进程的属主；<br />
+ PID     进程的ID；<br />
+ PPID    父进程；<br />
+ %CPU    进程占用的CPU百分比；<br />
+ %MEM    占用内存的百分比；<br />
+ NI      进程的NICE值，数值大，表示较少占用CPU时间；<br />
+ VSZ     进程虚拟大小；<br />
+ RSS     驻留中页的数量；<br />
+ WCHAN   正在等待的进程资源 <br />
+ TTY     终端ID  <br />
+ STAT    进程状态 <br />
  START   启动进程的时间；
- TIME    进程消耗CPU的时间；<br/>
- COMMAND 命令的名称和参数；<br/>
+ TIME    进程消耗CPU的时间；<br />
+ COMMAND 命令的名称和参数；<br />
 <em>实例</em>
-
-<blockquote><p>ps -aux | more<br/>
-ps -aux > ps001.txt<br/>
-ps aux | grep httpd <br/>
-ps auxf |grep httpd<br/>
-pgrep 是通过程序的名字来查询进程的工具，一般是用来判断程序是否正在运行: <br/>
-常用参数:<br/>
- -l      列出程序名和进程ID；<br/>
- -o      进程起始的ID；<br/>
- -n      进程终止的ID；<br/>
-pgrep -l httpd</p></blockquote></li>
+ &gt; ps -aux | more<br />
+ &gt; ps -aux &gt; ps001.txt<br />
+ &gt; ps aux | grep httpd <br />
+ &gt; ps auxf |grep httpd<br />
+pgrep 是通过程序的名字来查询进程的工具，一般是用来判断程序是否正在运行: <br />
+常用参数:<br />
+ -l      列出程序名和进程ID；<br />
+ -o      进程起始的ID；<br />
+ -n      进程终止的ID；<br />
+ &gt; pgrep -l httpd</li>
 </ol>
 
-
-<h3>kill</h3>
-
+<h3 id="kill">kill</h3>
 <hr />
-
-<h4>kill</h4>
-
-<p>kill的应用是和ps 或pgrep 命令结合在一起使用的；<br/>
-<em>用法</em>  <br/>
-kill ［信号代码］   进程ID<br/>
+<p>####kill<br />
+kill的应用是和ps 或pgrep 命令结合在一起使用的；<br />
+<em>用法</em>  <br />
+kill ［信号代码］   进程ID<br />
 注：信号代码可以省略；我们常用的信号代码是 -9 ，表示强制终止；</p>
 
-<h4>killall</h4>
+<h4 id="killall">killall</h4>
+<p>killall 通过程序的名字，直接杀死所有进程，咱们简单说一下就行了。<br />
+<em>用法</em><br />
+killall 正在运行的程序名  <br />
+killall 也和ps或pgrep 结合使用，比较方便；通过ps或pgrep 来查看哪些程序在运行；<br />
+<em>举例</em><br />
+ &gt;  [root@localhost beinan]# pgrep -l gaim<br />
+ &gt;  2979 gaim<br />
+ &gt;  [root@localhost beinan]# killall gaim</p>
 
-<p>killall 通过程序的名字，直接杀死所有进程，咱们简单说一下就行了。<br/>
-<em>用法</em><br/>
-killall 正在运行的程序名  <br/>
-killall 也和ps或pgrep 结合使用，比较方便；通过ps或pgrep 来查看哪些程序在运行；<br/>
-<em>举例</em></p>
+<h4 id="pkill">pkill</h4>
+<p>pkill 和killall 应用方法差不多，也是直接杀死运行中的程序；如果您想杀掉单个进程，请用kill 来杀掉。<br />
+<em>用法</em><br />
+pkill 正在运行的程序名<br />
+<em>举例</em><br />
+&gt;  [root@localhost beinan]# pgrep -l gaim</p>
 
-<blockquote><p> [root@localhost beinan]# pgrep -l gaim<br/>
- 2979 gaim<br/>
- [root@localhost beinan]# killall gaim</p></blockquote>
+<blockquote>
+  <p>2979 gaim</p>
+</blockquote>
 
-<h4>pkill</h4>
+<blockquote>
+  <p>[root@localhost beinan]# pkill gaim</p>
+</blockquote>
 
-<p>pkill 和killall 应用方法差不多，也是直接杀死运行中的程序；如果您想杀掉单个进程，请用kill 来杀掉。<br/>
-<em>用法</em><br/>
-pkill 正在运行的程序名<br/>
-<em>举例</em></p>
-
-<blockquote><p> [root@localhost beinan]# pgrep -l gaim</p>
-
-<p> 2979 gaim</p>
-
-<p> [root@localhost beinan]# pkill gaim</p></blockquote>
-
-<h4>xkill</h4>
-
+<h4 id="xkill">xkill</h4>
 <p>xkill 是在桌面用的杀死图形界面的程序。比如当firefox 出现崩溃不能退出时，点鼠标就能杀死firefox 。当xkill运行时出来和个人脑骨的图标，哪个图形程序崩溃一点就OK了。如果您想终止xkill ，就按右键取消；
-<em>用法</em></p>
+<em>用法</em><br />
+&gt;  [root@localhost ~]# xkill</p>
 
-<blockquote><p> [root@localhost ~]# xkill</p></blockquote>
-
-<h3>top</h3>
-
+<h3 id="top">top</h3>
 <hr />
-
 <p>TOP是一个动态显示过程,即可以通过用户按键来不断刷新当前状态.如果在前台执行该命令,它将独占前台,直到用户终止该程序为止.比较准确的说,top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式命令或者在个人定制文件中进行设定.</p>
 
-<p>total 进程总数<br/>
-running 正在运行的进程数<br/>
-sleeping 睡眠的进程数<br/>
-stopped 停止的进程数<br/>
-zombie 僵尸进程数<br/>
-Cpu(s): <br/>
-0.3% us 用户空间占用CPU百分比<br/>
-1.0% sy 内核空间占用CPU百分比<br/>
-0.0% ni 用户进程空间内改变过优先级的进程占用CPU百分比<br/>
-98.7% id 空闲CPU百分比<br/>
-0.0% wa 等待输入输出的CPU时间百分比<br/>
-0.0%hi：硬件CPU中断占用百分比<br/>
-0.0%si：软中断占用百分比<br/>
+<p>total 进程总数<br />
+running 正在运行的进程数<br />
+sleeping 睡眠的进程数<br />
+stopped 停止的进程数<br />
+zombie 僵尸进程数<br />
+Cpu(s): <br />
+0.3% us 用户空间占用CPU百分比<br />
+1.0% sy 内核空间占用CPU百分比<br />
+0.0% ni 用户进程空间内改变过优先级的进程占用CPU百分比<br />
+98.7% id 空闲CPU百分比<br />
+0.0% wa 等待输入输出的CPU时间百分比<br />
+0.0%hi：硬件CPU中断占用百分比<br />
+0.0%si：软中断占用百分比<br />
 0.0%st：虚拟机占用百分比</p>
 
-<p>Mem:<br/>
-191272k total    物理内存总量<br/>
-173656k used    使用的物理内存总量<br/>
-17616k free    空闲内存总量<br/>
-22052k buffers    用作内核缓存的内存量<br/>
-Swap: <br/>
-192772k total    交换区总量<br/>
-0k used    使用的交换区总量<br/>
-192772k free    空闲交换区总量<br/>
+<p>Mem:<br />
+191272k total    物理内存总量<br />
+173656k used    使用的物理内存总量<br />
+17616k free    空闲内存总量<br />
+22052k buffers    用作内核缓存的内存量<br />
+Swap: <br />
+192772k total    交换区总量<br />
+0k used    使用的交换区总量<br />
+192772k free    空闲交换区总量<br />
 123988k cached    缓冲的交换区总量,内存中的内容被换出到交换区，而后又被换入到内存，但使用过的交换区尚未被覆盖，该数值即为这些内容已存在于内存中的交换区的大小,相应的内存再次被换出时可不必再对交换区写入。</p>
 
-<p>序号  列名    含义<br/>
-a    PID     进程id<br/>
-b    PPID    父进程id<br/>
-c    RUSER   Real user name<br/>
-d    UID     进程所有者的用户id<br/>
-e    USER    进程所有者的用户名<br/>
-f    GROUP   进程所有者的组名<br/>
-g    TTY     启动进程的终端名。不是从终端启动的进程则显示为 ?<br/>
-h    PR      优先级<br/>
-i    NI      nice值。负值表示高优先级，正值表示低优先级<br/>
-j    P       最后使用的CPU，仅在多CPU环境下有意义<br/>
-k    %CPU    上次更新到现在的CPU时间占用百分比<br/>
-l    TIME    进程使用的CPU时间总计，单位秒<br/>
-m    TIME+   进程使用的CPU时间总计，单位1/100秒<br/>
-n    %MEM    进程使用的物理内存百分比<br/>
-o    VIRT    进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES<br/>
-p    SWAP    进程使用的虚拟内存中，被换出的大小，单位kb。<br/>
-q    RES     进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA<br/>
-r    CODE    可执行代码占用的物理内存大小，单位kb<br/>
-s    DATA    可执行代码以外的部分(数据段+栈)占用的物理内存大小，单位kb<br/>
-t    SHR     共享内存大小，单位kb<br/>
-u    nFLT    页面错误次数<br/>
-v    nDRT    最后一次写入到现在，被修改过的页面数。<br/>
-w    S       进程状态(D=不可中断的睡眠状态,R=运行,S=睡眠,T=跟踪/停止,Z=僵尸进程)<br/>
-x    COMMAND 命令名/命令行<br/>
-y    WCHAN   若该进程在睡眠，则显示睡眠中的系统函数名<br/>
+<p>序号  列名    含义<br />
+a    PID     进程id<br />
+b    PPID    父进程id<br />
+c    RUSER   Real user name<br />
+d    UID     进程所有者的用户id<br />
+e    USER    进程所有者的用户名<br />
+f    GROUP   进程所有者的组名<br />
+g    TTY     启动进程的终端名。不是从终端启动的进程则显示为 ?<br />
+h    PR      优先级<br />
+i    NI      nice值。负值表示高优先级，正值表示低优先级<br />
+j    P       最后使用的CPU，仅在多CPU环境下有意义<br />
+k    %CPU    上次更新到现在的CPU时间占用百分比<br />
+l    TIME    进程使用的CPU时间总计，单位秒<br />
+m    TIME+   进程使用的CPU时间总计，单位1/100秒<br />
+n    %MEM    进程使用的物理内存百分比<br />
+o    VIRT    进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES<br />
+p    SWAP    进程使用的虚拟内存中，被换出的大小，单位kb。<br />
+q    RES     进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA<br />
+r    CODE    可执行代码占用的物理内存大小，单位kb<br />
+s    DATA    可执行代码以外的部分(数据段+栈)占用的物理内存大小，单位kb<br />
+t    SHR     共享内存大小，单位kb<br />
+u    nFLT    页面错误次数<br />
+v    nDRT    最后一次写入到现在，被修改过的页面数。<br />
+w    S       进程状态(D=不可中断的睡眠状态,R=运行,S=睡眠,T=跟踪/停止,Z=僵尸进程)<br />
+x    COMMAND 命令名/命令行<br />
+y    WCHAN   若该进程在睡眠，则显示睡眠中的系统函数名<br />
 z    Flags   任务标志，参考 sched.h</p>
 
-<h4>top使用格式:</h4>
+<h4 id="top-1">top使用格式:</h4>
+<blockquote>
+  <p>top [-] [d] [p] [q] [c] [C] [S] [s]  [n]</p>
+</blockquote>
 
-<blockquote><p> top [-] [d] [p] [q] [c] [C] [S] [s]  [n]</p></blockquote>
-
-<p>d 指定每两次屏幕信息刷新之间的时间间隔。当然用户可以使用s交互命令来改变之。
-p 通过指定监控进程ID来仅仅监控某个进程的状态。
-q 该选项将使top没有任何延迟的进行刷新。如果调用程序有超级用户权限，那么top将以尽可能高的优先级运行。
-S 指定累计模式
-s 使top命令在安全模式中运行。这将去除交互命令所带来的潜在危险。
-i 使top不显示任何闲置或者僵死进程。
+<p>d 指定每两次屏幕信息刷新之间的时间间隔。当然用户可以使用s交互命令来改变之。 
+p 通过指定监控进程ID来仅仅监控某个进程的状态。 
+q 该选项将使top没有任何延迟的进行刷新。如果调用程序有超级用户权限，那么top将以尽可能高的优先级运行。 
+S 指定累计模式 
+s 使top命令在安全模式中运行。这将去除交互命令所带来的潜在危险。 
+i 使top不显示任何闲置或者僵死进程。 
 c 显示整个命令行而不只是显示命令名</p>
 
 <p>Ctrl+L 擦除并且重写屏幕。</p>
@@ -253,16 +243,12 @@ c 显示整个命令行而不只是显示命令名</p>
 
 <p>W 将当前设置写入~/.toprc文件中。这是写top配置文件的推荐方法。</p>
 
-<h3>free</h3>
-
+<h3 id="free">free</h3>
 <hr />
-
 <p>free命令由procps.*.rpm提供（在Redhat系列的OS上）。free命令的所有输出值都是从/proc/meminfo中读出的。</p>
 
-<h3>系统</h3>
-
+<h3 id="section">系统</h3>
 <hr />
-
 <pre><code># uname -a # 查看内核/操作系统/CPU信息  
 # head -n 1 /etc/issue # 查看操作系统版本  
 # cat /proc/cpuinfo # 查看CPU信息    
@@ -273,10 +259,8 @@ c 显示整个命令行而不只是显示命令名</p>
 # env # 查看环境变量  
 </code></pre>
 
-<h3>资源</h3>
-
+<h3 id="section-1">资源</h3>
 <hr />
-
 <pre><code># free -m # 查看内存使用量和交换区使用量  
 # df -h # 查看各分区使用情况   
 # du -sh &lt;目录名&gt; # 查看指定目录的大小  
@@ -286,10 +270,8 @@ c 显示整个命令行而不只是显示命令名</p>
 # cat /proc/loadavg # 查看系统负载  
 </code></pre>
 
-<h3>磁盘和分区</h3>
-
+<h3 id="section-2">磁盘和分区</h3>
 <hr />
-
 <pre><code># mount | column -t # 查看挂接的分区状态  
 # fdisk -l # 查看所有分区  
 # swapon -s # 查看所有交换分区  
@@ -297,10 +279,8 @@ c 显示整个命令行而不只是显示命令名</p>
 # dmesg | grep IDE # 查看启动时IDE设备检测状况  
 </code></pre>
 
-<h3>网络</h3>
-
+<h3 id="section-3">网络</h3>
 <hr />
-
 <pre><code># ifconfig # 查看所有网络接口的属性  
 # iptables -L # 查看防火墙设置  
 # route -n # 查看路由表  
@@ -309,18 +289,14 @@ c 显示整个命令行而不只是显示命令名</p>
 # netstat -s # 查看网络统计信息  
 </code></pre>
 
-<h3>进程</h3>
-
+<h3 id="section-4">进程</h3>
 <hr />
-
 <pre><code># ps -ef # 查看所有进程  
 # top # 实时显示进程状态  
 </code></pre>
 
-<h3>用户</h3>
-
+<h3 id="section-5">用户</h3>
 <hr />
-
 <pre><code># w # 查看活动用户  
 # id &lt;用户名&gt; # 查看指定用户信息  
 # last # 查看用户登录日志  
@@ -329,20 +305,17 @@ c 显示整个命令行而不只是显示命令名</p>
 # crontab -l # 查看当前用户的计划任务  
 </code></pre>
 
-<h3>服务</h3>
-
+<h3 id="section-6">服务</h3>
 <hr />
-
 <pre><code># chkconfig --list # 列出所有系统服务  
 # chkconfig --list | grep on # 列出所有启动的系统服务  
 </code></pre>
 
-<h3>程序</h3>
-
+<h3 id="section-7">程序</h3>
 <hr />
-
 <pre><code># rpm -qa # 查看所有安装的软件包  
 </code></pre>
+
 
 </section>
 <section align="right">

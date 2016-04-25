@@ -56,16 +56,21 @@
 <section class="post">
 <p>本文是一些Java 并发编程的总结。主要来自《Java编程思想》和互联网。</p>
 
-<h3>Java多线程实现方式</h3>
+<h3 id="java">Java多线程实现方式</h3>
 
 <p>Java多线程实现方式主要有三种：</p>
 
 <ul>
-<li><p>继承Thread类</p></li>
-<li><p>实现Runnable接口</p></li>
-<li><p>使用ExecutorService、Callable、Future实现有返回结果的多线程</p></li>
+  <li>
+    <p>继承Thread类</p>
+  </li>
+  <li>
+    <p>实现Runnable接口</p>
+  </li>
+  <li>
+    <p>使用ExecutorService、Callable、Future实现有返回结果的多线程</p>
+  </li>
 </ul>
-
 
 <p>其中前两种方式的多线程执行完后没有返回值，只有最后一种是带返回值的；其中最常用的也是前两种实现方式。</p>
 
@@ -96,7 +101,7 @@ sleep方法通常用在不需要等待资源情况下的阻塞，像等待线程
 wait方法必须由其它线程来解锁，而join方法不需要，只要被等待线程执行完毕，当前线程自动变为就绪。
 join方法的一个用途就是让子线程在完成业务逻辑执行之前，主线程一直等待直到所有子线程执行完毕。</p>
 
-<h3>线程同步</h3>
+<h3 id="section">线程同步</h3>
 
 <p>多线程安全问题：当多条语句在操作同一线程共享数据是，一个线程对多条语句只执行了一部分，还没有执行完， 此时另一个线程参与进来执行，导致共享数据的错误。</p>
 
@@ -115,7 +120,6 @@ Java 对于多线程的安全提供了专业的解决方式。</p>
      <span class="n">代码块</span>
      <span class="o">...</span>
 <span class="o">}</span></code></pre></div>
-
 
 <p><strong>volatile关键字</strong></p>
 
@@ -136,10 +140,13 @@ Java 对于多线程的安全提供了专业的解决方式。</p>
 <p><a href="">同步的前提：</a></p>
 
 <ol>
-<li><p>必须要有两个或者两个以上的线程运行;</p></li>
-<li><p>必须是多个线程使用同一个锁;</p></li>
+  <li>
+    <p>必须要有两个或者两个以上的线程运行;</p>
+  </li>
+  <li>
+    <p>必须是多个线程使用同一个锁;</p>
+  </li>
 </ol>
-
 
 <p>好处：解决了多线程的安全问题;</p>
 
@@ -157,20 +164,43 @@ Java 对于多线程的安全提供了专业的解决方式。</p>
 <p>java.util.concurrent.atomic 包中提供了以下原子类, 它们是线程安全的类, 但是它们并不是通过同步和锁来实现的, 原子变量的操作会变为平台提供的用于并发访问的硬件原语。</p>
 
 <ul>
-<li><p>AtomicBoolean -- 原子布尔</p></li>
-<li><p>AtomicInteger -- 原子整型</p></li>
-<li><p>AtomicIntegerArray -- 原子整型数组</p></li>
-<li><p>AtomicLong -- 原子长整型</p></li>
-<li><p>AtomicLongArray -- 原子长整型数组</p></li>
-<li><p>AtomicReference -- 原子引用</p></li>
-<li><p>AtomicReferenceArray -- 原子引用数组</p></li>
-<li><p>AtomicMarkableReference -- 原子标记引用</p></li>
-<li><p>AtomicStampedReference -- 原子戳记引用</p></li>
-<li><p>AtomicIntegerFieldUpdater -- 用来包裹对整形 volatile 域的原子操作</p></li>
-<li><p>AtomicLongFieldUpdater -- 用来包裹对长整型 volatile 域的原子操作</p></li>
-<li><p>AtomicReferenceFieldUpdater -- 用来包裹对对象 volatile 域的原子操作</p></li>
+  <li>
+    <p>AtomicBoolean – 原子布尔</p>
+  </li>
+  <li>
+    <p>AtomicInteger – 原子整型</p>
+  </li>
+  <li>
+    <p>AtomicIntegerArray – 原子整型数组</p>
+  </li>
+  <li>
+    <p>AtomicLong – 原子长整型</p>
+  </li>
+  <li>
+    <p>AtomicLongArray – 原子长整型数组</p>
+  </li>
+  <li>
+    <p>AtomicReference – 原子引用</p>
+  </li>
+  <li>
+    <p>AtomicReferenceArray – 原子引用数组</p>
+  </li>
+  <li>
+    <p>AtomicMarkableReference – 原子标记引用</p>
+  </li>
+  <li>
+    <p>AtomicStampedReference – 原子戳记引用</p>
+  </li>
+  <li>
+    <p>AtomicIntegerFieldUpdater – 用来包裹对整形 volatile 域的原子操作</p>
+  </li>
+  <li>
+    <p>AtomicLongFieldUpdater – 用来包裹对长整型 volatile 域的原子操作</p>
+  </li>
+  <li>
+    <p>AtomicReferenceFieldUpdater – 用来包裹对对象 volatile 域的原子操作</p>
+  </li>
 </ul>
-
 
 <p>引入这些类的主要原因是为了实现一种所谓的无锁定且无等待算法. 如: 比较并交换 (CAS), 它的原理是比较当前值与期望值, 如果相同则表示该变量没有发生变化。</p>
 
@@ -188,7 +218,6 @@ Java 对于多线程的安全提供了专业的解决方式。</p>
         <span class="k">return</span> <span class="o">++</span><span class="n">id</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
-
 
 <p><em>CAS实现方式</em></p>
 
@@ -209,27 +238,34 @@ Java 对于多线程的安全提供了专业的解决方式。</p>
 <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-
-<h3>线程的状态转换图</h3>
+<h3 id="section-1">线程的状态转换图</h3>
 
 <p>线程在一定条件下，状态会发生变化。线程变化的状态转换图如下：</p>
 
 <p><img src="http://stackvoid.qiniudn.com/2014-05-20-%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E5%9B%BE.png" alt="线程的状态转换图" /></p>
 
 <ol>
-<li><p>新建状态（New）：新创建了一个线程对象。</p></li>
-<li><p>就绪状态（Runnable）：线程对象创建后，其他线程调用了该对象的start()方法。该状态的线程位于可运行线程池中，变得可运行，等待获取CPU的使用权。</p></li>
-<li><p>运行状态（Running）：就绪状态的线程获取了CPU，执行程序代码。</p></li>
-<li><p>阻塞状态（Blocked）：阻塞状态是线程因为某种原因放弃CPU使用权，暂时停止运行。直到线程进入就绪状态，才有机会转到运行状态。阻塞的情况分三种：</p>
-
-<blockquote><p>等待阻塞：运行的线程执行wait()方法，JVM会把该线程放入等待池中。
-同步阻塞：运行的线程在获取对象的同步锁时，若该同步锁被别的线程占用，则JVM会把该线程放入锁池中。
-其他阻塞：运行的线程执行sleep()或join()方法，或者发出了I/O请求时，JVM会把该线程置为阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。</p></blockquote></li>
-<li><p>死亡状态（Dead）：线程执行完了或者因异常退出了run()方法，该线程结束生命周期。</p></li>
+  <li>
+    <p>新建状态（New）：新创建了一个线程对象。</p>
+  </li>
+  <li>
+    <p>就绪状态（Runnable）：线程对象创建后，其他线程调用了该对象的start()方法。该状态的线程位于可运行线程池中，变得可运行，等待获取CPU的使用权。</p>
+  </li>
+  <li>
+    <p>运行状态（Running）：就绪状态的线程获取了CPU，执行程序代码。</p>
+  </li>
+  <li>
+    <p>阻塞状态（Blocked）：阻塞状态是线程因为某种原因放弃CPU使用权，暂时停止运行。直到线程进入就绪状态，才有机会转到运行状态。阻塞的情况分三种：
+&gt; 等待阻塞：运行的线程执行wait()方法，JVM会把该线程放入等待池中。
+&gt; 同步阻塞：运行的线程在获取对象的同步锁时，若该同步锁被别的线程占用，则JVM会把该线程放入锁池中。
+&gt; 其他阻塞：运行的线程执行sleep()或join()方法，或者发出了I/O请求时，JVM会把该线程置为阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。</p>
+  </li>
+  <li>
+    <p>死亡状态（Dead）：线程执行完了或者因异常退出了run()方法，该线程结束生命周期。</p>
+  </li>
 </ol>
 
-
-<h3>Executor</h3>
+<h3 id="executor">Executor</h3>
 
 <p>java.util.concurrent包中的Executor用于管理Thread对象，简化并发。在Java 5之后，通过Executor来启动线程比使用Thread的start方法更好，除了更易管理，效率更好（用线程池实现，节约开销）外，还有关键的一点：有助于避免this逃逸问题——如果我们在构造器中启动一个线程，因为另一个任务可能会在构造器结束之前开始执行，此时可能会访问到初始化了一半的对象用Executor在构造器中。</p>
 
@@ -254,19 +290,23 @@ Java 对于多线程的安全提供了专业的解决方式。</p>
     <span class="kd">public</span> <span class="kd">static</span> <span class="n">ScheduledExecutorService</span> <span class="nf">newScheduledThreadPool</span><span class="o">(</span><span class="kt">int</span> <span class="n">corePoolSize</span><span class="o">)</span>
     <span class="n">创建一个支持定时及周期性的任务执行的线程池</span><span class="err">，</span><span class="n">多数情况下可用来替代Timer类</span><span class="err">。</span></code></pre></div>
 
+<p><a href="http://blog.csdn.net/ns_code/article/details/17465497">Executor参考</a></p>
 
-<p> <a href="http://blog.csdn.net/ns_code/article/details/17465497">Executor参考</a></p>
+<p>这四种方法都是用的Executors中的<a href="">ThreadFactory建立的线程</a>，下面就以上四个方法做个比较.</p>
 
-<p> 这四种方法都是用的Executors中的<a href="">ThreadFactory建立的线程</a>，下面就以上四个方法做个比较.</p>
-
-<p> <strong>newCachedThreadPool()</strong></p>
+<p><strong>newCachedThreadPool()</strong></p>
 
 <ul>
-<li><p>缓存型池子，先查看池中有没有以前建立的线程，如果有，就 reuse.如果没有，就建一个新的线程加入池中。</p></li>
-<li><p>缓存型池子通常用于执行一些生存期很短的异步型任务.因此在一些面向连接的daemon型SERVER中用得不多。但对于生存期短的异步任务，它是Executor的首选。</p></li>
-<li><p>能reuse的线程，必须是timeout IDLE内的池中线程，缺省     timeout是60s,超过这个IDLE时长，线程实例将被终止及移出池。注意，放入CachedThreadPool的线程不必担心其结束，超过TIMEOUT不活动，其会自动被终止。</p></li>
+  <li>
+    <p>缓存型池子，先查看池中有没有以前建立的线程，如果有，就 reuse.如果没有，就建一个新的线程加入池中。</p>
+  </li>
+  <li>
+    <p>缓存型池子通常用于执行一些生存期很短的异步型任务.因此在一些面向连接的daemon型SERVER中用得不多。但对于生存期短的异步任务，它是Executor的首选。</p>
+  </li>
+  <li>
+    <p>能reuse的线程，必须是timeout IDLE内的池中线程，缺省     timeout是60s,超过这个IDLE时长，线程实例将被终止及移出池。注意，放入CachedThreadPool的线程不必担心其结束，超过TIMEOUT不活动，其会自动被终止。</p>
+  </li>
 </ul>
-
 
 <p><strong>newFixedThreadPool(int)</strong></p>
 
@@ -292,7 +332,7 @@ Java 对于多线程的安全提供了专业的解决方式。</p>
 
 <p><strong>Executor执行Callable任务</strong></p>
 
-<p>在Java 5之后，任务分两类：一类是实现了Runnable接口的类，一类是实现了Callable接口的类。两者都可以被ExecutorService执行，但是Runnable任务没有返回值，而Callable任务有返回值。并且Callable的call()方法只能通过ExecutorService的submit(Callable<T> task) 方法来执行，并且返回一个 <T>Future<T>，是表示任务等待完成的 Future。</p>
+<p>在Java 5之后，任务分两类：一类是实现了Runnable接口的类，一类是实现了Callable接口的类。两者都可以被ExecutorService执行，但是Runnable任务没有返回值，而Callable任务有返回值。并且Callable的call()方法只能通过ExecutorService的submit(Callable<t> task) 方法来执行，并且返回一个 <t>Future<t>，是表示任务等待完成的 Future。</t></t></t></p>
 
 <p>如果Future的返回尚未完成，则get（）方法会阻塞等待，直到Future完成返回，可以通过调用isDone（）方法判断Future是否完成了返回。</p>
 
@@ -302,17 +342,25 @@ Java 对于多线程的安全提供了专业的解决方式。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">ThreadPoolExecutor</span> <span class="o">(</span><span class="kt">int</span> <span class="n">corePoolSize</span><span class="o">,</span> <span class="kt">int</span> <span class="n">maximumPoolSize</span><span class="o">,</span> <span class="kt">long</span>         <span class="n">keepAliveTime</span><span class="o">,</span> <span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">,</span><span class="n">BlockingQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span> <span class="n">workQueue</span><span class="o">)</span></code></pre></div>
 
-
 <ul>
-<li><p>corePoolSize：线程池中所保存的线程数，包括空闲线程。</p></li>
-<li><p>maximumPoolSize：池中允许的最大线程数。</p></li>
-<li><p>keepAliveTime：当线程数大于核心数时，该参数为所有的任务终止前，多余的空闲线程等待新任务的最长时间。</p></li>
-<li><p>unit：等待时间的单位。</p></li>
-<li><p>workQueue：任务执行前保存任务的队列，仅保存由execute方法提交的Runnable任务。</p></li>
+  <li>
+    <p>corePoolSize：线程池中所保存的线程数，包括空闲线程。</p>
+  </li>
+  <li>
+    <p>maximumPoolSize：池中允许的最大线程数。</p>
+  </li>
+  <li>
+    <p>keepAliveTime：当线程数大于核心数时，该参数为所有的任务终止前，多余的空闲线程等待新任务的最长时间。</p>
+  </li>
+  <li>
+    <p>unit：等待时间的单位。</p>
+  </li>
+  <li>
+    <p>workQueue：任务执行前保存任务的队列，仅保存由execute方法提交的Runnable任务。</p>
+  </li>
 </ul>
 
-
-<h3>一些新的构件</h3>
+<h3 id="section-2">一些新的构件</h3>
 
 <p><strong>CountDownLatch</strong></p>
 
@@ -324,7 +372,6 @@ Java 对于多线程的安全提供了专业的解决方式。</p>
  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">countDown</span><span class="o">();</span>
  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">await</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span></code></pre></div>
 
-
 <p>构造方法参数指定了计数的次数
 countDown方法，当前线程调用此方法，则计数减一
 awaint方法，调用此方法会一直阻塞当前线程，直到计时器的值为0</p>
@@ -335,16 +382,23 @@ awaint方法，调用此方法会一直阻塞当前线程，直到计时器的�
 这样应该就清楚一点了，对于CountDownLatch来说，重点是那个“一个线程”, 是它在等待， 而另外那N的线程在把“某个事情”做完之后可以继续等待，可以终止。而对于CyclicBarrier来说，重点是那N个线程，他们之间任何一个没有完成，所有的线程都必须等待。</p>
 
 <ol>
-<li><p>CyclicBarrier初始化时规定一个数目，然后计算调用了CyclicBarrier.await()进入等待的线程数。当线程数达到了这个数目时，所有进入等待状态的线程被唤醒并继续。</p></li>
-<li><p>CyclicBarrier就象它名字的意思一样，可看成是个障碍， 所有的线程必须到齐后才能一起通过这个障碍。</p></li>
-<li><p>CyclicBarrier初始时还可带一个Runnable的参数， 此Runnable任务在CyclicBarrier的数目达到后，所有其它线程被唤醒前被执行。</p></li>
+  <li>
+    <p>CyclicBarrier初始化时规定一个数目，然后计算调用了CyclicBarrier.await()进入等待的线程数。当线程数达到了这个数目时，所有进入等待状态的线程被唤醒并继续。</p>
+  </li>
+  <li>
+    <p>CyclicBarrier就象它名字的意思一样，可看成是个障碍， 所有的线程必须到齐后才能一起通过这个障碍。</p>
+  </li>
+  <li>
+    <p>CyclicBarrier初始时还可带一个Runnable的参数， 此Runnable任务在CyclicBarrier的数目达到后，所有其它线程被唤醒前被执行。</p>
+  </li>
 </ol>
-
 
 <p><em>CountDownLatch和CyclicBarrier的区别</em></p>
 
-<blockquote><p>CountDownLatch 是计数器, 线程完成一个就记一个, 就像 报数一样, 只不过是递减的。
-而CyclicBarrier更像一个水闸, 线程执行就想水流, 在水闸处都会堵住, 等到水满(线程到齐)了, 才开始泄流。</p></blockquote>
+<blockquote>
+  <p>CountDownLatch 是计数器, 线程完成一个就记一个, 就像 报数一样, 只不过是递减的。
+而CyclicBarrier更像一个水闸, 线程执行就想水流, 在水闸处都会堵住, 等到水满(线程到齐)了, 才开始泄流。</p>
+</blockquote>
 
 <p><strong>DelayQueue</strong></p>
 
@@ -368,6 +422,7 @@ Delayed扩展了Comparable接口，比较的基准为延时的时间值，Delaye
 
 <p><a href="http://zzhonghe.iteye.com/blog/826757">PriorityBlockingQueue资料一</a>
 <a href="http://www.blogjava.net/yuyee/archive/2010/11/01/336701.html">PriorityBlockingQueue资料二</a></p>
+
 
 </section>
 <section align="right">

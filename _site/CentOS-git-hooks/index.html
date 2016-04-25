@@ -58,90 +58,107 @@
 <section class="post">
 <p>本篇博客记录在CentOS服务器中部署Git仓库，并同步apache中的网站目录的过程</p>
 
-<h3>搭建Git服务器</h3>
-
+<h3 id="git">搭建Git服务器</h3>
 <hr />
-
 <ol>
-<li><p>安装git</p></li>
-<li><p>创建一个git用户:</p>
-
-<blockquote><p>sudo adduser git</p></blockquote></li>
-<li><p>创建证书登陆:
-收集所有需要登录的用户的公钥（id_rsa.pub），把所有公钥导入到~/.ssh/authorized_keys文件中，一行一个</p></li>
-<li><p>初始化git仓库:</p>
-
-<blockquote><p>sudo git init --bare test.git</p></blockquote></li>
+  <li>
+    <p>安装git</p>
+  </li>
+  <li>
+    <p>创建一个git用户:
+&gt; sudo adduser git</p>
+  </li>
+  <li>
+    <p>创建证书登陆:
+收集所有需要登录的用户的公钥（id_rsa.pub），把所有公钥导入到~/.ssh/authorized_keys文件中，一行一个</p>
+  </li>
+  <li>
+    <p>初始化git仓库:
+&gt; sudo git init –bare test.git</p>
+  </li>
 </ol>
 
-
-<blockquote><p>sudo chown -R git:git test.git</p></blockquote>
+<blockquote>
+  <p>sudo chown -R git:git test.git</p>
+</blockquote>
 
 <ol>
-<li>禁用git用户的Shell登陆:
+  <li>禁用git用户的Shell登陆:
 修改/etc/passwd中的
-
-<blockquote><p>git:x:1001:1001:,,,:/home/git:/bin/bash</p></blockquote></li>
+&gt; git:x:1001:1001:,,,:/home/git:/bin/bash</li>
 </ol>
-
 
 <p>改为：</p>
 
-<blockquote><p>git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</p></blockquote>
+<blockquote>
+  <p>git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</p>
+</blockquote>
 
 <ol>
-<li>构建Hook:
-
-<blockquote><p>cd test.git</p></blockquote></li>
+  <li>构建Hook:
+&gt; cd test.git</li>
 </ol>
 
-
-<blockquote><p>cat > hooks/post-receive</p></blockquote>
+<blockquote>
+  <p>cat &gt; hooks/post-receive</p>
+</blockquote>
 
 <p>#!/bin/bash</p>
 
 <p>GIT_WORK_TREE=/var/www/blog git checkout -f</p>
 
-<blockquote><p>chmod +x hooks/post-receive</p></blockquote>
+<blockquote>
+  <p>chmod +x hooks/post-receive</p>
+</blockquote>
 
-<h3>本地clone并推送</h3>
-
+<h3 id="clone">本地clone并推送</h3>
 <hr />
-
 <ol>
-<li><p>cd work</p></li>
-<li><p>git clone git@server_address:/root/test/test.git</p></li>
-<li><p>cd test</p></li>
-<li><p>touch README.md</p></li>
-<li><p>git add .</p></li>
-<li><p>git commit -m "initial commit"</p></li>
-<li><p>git push origin master</p></li>
+  <li>
+    <p>cd work</p>
+  </li>
+  <li>
+    <p>git clone git@server_address:/root/test/test.git</p>
+  </li>
+  <li>
+    <p>cd test</p>
+  </li>
+  <li>
+    <p>touch README.md</p>
+  </li>
+  <li>
+    <p>git add .</p>
+  </li>
+  <li>
+    <p>git commit -m “initial commit”</p>
+  </li>
+  <li>
+    <p>git push origin master</p>
+  </li>
 </ol>
 
-
-<h3>二级域名</h3>
-
+<h3 id="section">二级域名</h3>
 <hr />
-
 <ol>
-<li><p><a href="http://jingyan.baidu.com/article/b24f6c82db5ecc86bfe5dae7.html">万网设置</a></p></li>
-<li><p>Apache设置</p></li>
+  <li>
+    <p><a href="http://jingyan.baidu.com/article/b24f6c82db5ecc86bfe5dae7.html">万网设置</a></p>
+  </li>
+  <li>
+    <p>Apache设置</p>
+  </li>
 </ol>
-
 
 <div class="highlight"><pre><code class="language-xml" data-lang="xml">NamevirtualHost *:80
 
 <span class="nt">&lt;VirtualHost</span> <span class="err">*:80</span><span class="nt">&gt;</span>
-    ServerName a.com
-    DocumentRoot /var/www/site
+	ServerName a.com
+	DocumentRoot /var/www/site
 <span class="nt">&lt;/VirtualHost&gt;</span>
 
 <span class="nt">&lt;VirtualHost</span> <span class="err">*:80</span><span class="nt">&gt;</span>
-    ServerName bbs.a.com
-    DocumentRoot /var/www/bbs
+	ServerName bbs.a.com
+	DocumentRoot /var/www/bbs
 <span class="nt">&lt;/VirtualHost&gt;</span></code></pre></div>
-
-
 
 
 </section>

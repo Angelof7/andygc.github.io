@@ -58,7 +58,7 @@
 LinkedHashMap的实现不是同步的。如果多个线程同时访问LinkedHashMap，而其中至少一个线程从结构上修改了该映射，则它必须
 保持外部同步。</p>
 
-<h2>1.LinkedHashMap的存储结构</h2>
+<h2 id="linkedhashmap">1.LinkedHashMap的存储结构</h2>
 
 <p><img src="http://stackvoid.qiniudn.com/20140805-LinkedHashMapDataStructure01.png" alt="LinkedHashMap01" />
 LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMap中的Entry按照插入的先后顺序（accessOrder标志位默认为false）依次加入到以head为头结点的双向循环链表的尾部。</p>
@@ -68,7 +68,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
 
 <p>下面我们来分析LinkedHashMap的源代码。</p>
 
-<h2>2.LinkedHashMap成员变量</h2>
+<h2 id="linkedhashmap-1">2.LinkedHashMap成员变量</h2>
 
 <p>LinkedHashMap采用的hash算法和HashMap相同，但它重新定义了数组中保存的元素Entry，该Entry除了保存当前对象的引用外，还保
 存了其上一个元素before和下一个元素after的引用，从而在哈希表的基础上又构成了双向链接列表。</p>
@@ -93,8 +93,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="err">……</span>  <span class="c1">//Entry类涉及到的方法，下面会继续分析</span>
 <span class="o">}</span></code></pre></div>
 
-
-<h2>3.构造函数</h2>
+<h2 id="section">3.构造函数</h2>
 
 <p>LinkedList一共提供了五个构造方法。</p>
 
@@ -138,7 +137,6 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="k">this</span><span class="o">.</span><span class="na">accessOrder</span> <span class="o">=</span> <span class="n">accessOrder</span><span class="o">;</span>
 <span class="o">}</span></code></pre></div>
 
-
 <p>我们已经知道LinkedHashMap的Entry元素继承HashMap的Entry，提供了双向链表的功能。在HashMap的构造器中，最后会调用init()方法，进行相关的初始化，这个方法在HashMap的实现中是空方法(感叹模板模式的精妙！)，只是提供给子类实现相关的初始化调用。LinkedHashMap重写了init()方法，在调用父类的构造方法完成构造后，进一步实现了对其元素Entry的初始化操作。分析init()方法，的确是对header进行了初始化，并构造成一个双向循环链表（和LinkedList的存储结构是一样的）。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
@@ -146,27 +144,26 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="n">header</span><span class="o">.</span><span class="na">before</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="n">header</span><span class="o">;</span>
 <span class="o">}</span></code></pre></div>
 
+<h2 id="section-1">4.元素存储</h2>
 
-<h2>4.元素存储</h2>
-
-<p>   LinkedHashMap重写了父类HashMap的put方法调用的<strong>子方法void addEntry(int hash, K key, V value, int bucketIndex) 和void createEntry(int hash, K key, V value, int bucketIndex)</strong>，提供了自己特有的双向链接列表的实现。</p>
+<p>LinkedHashMap重写了父类HashMap的put方法调用的<strong>子方法void addEntry(int hash, K key, V value, int bucketIndex) 和void createEntry(int hash, K key, V value, int bucketIndex)</strong>，提供了自己特有的双向链接列表的实现。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//覆写HashMap中的addEntry方法，LinkedHashmap并没有覆写HashMap中的put方法，</span>
-    <span class="c1">//而是覆写了put方法所调用的addEntry方法和recordAccess方法，</span>
-    <span class="c1">//put方法在插入的key已存在的情况下，会调用recordAccess方法，</span>
-    <span class="c1">//在插入的key不存在的情况下，要调用addEntry插入新的Entry</span>
+	<span class="c1">//而是覆写了put方法所调用的addEntry方法和recordAccess方法，</span>
+	<span class="c1">//put方法在插入的key已存在的情况下，会调用recordAccess方法，</span>
+	<span class="c1">//在插入的key不存在的情况下，要调用addEntry插入新的Entry</span>
 <span class="kt">void</span> <span class="nf">addEntry</span><span class="o">(</span><span class="kt">int</span> <span class="n">hash</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span> <span class="n">bucketIndex</span><span class="o">)</span> <span class="o">{</span>
-    <span class="c1">//创建新的Entry，并插入到LinkedHashMap中</span>
+	<span class="c1">//创建新的Entry，并插入到LinkedHashMap中</span>
     <span class="n">createEntry</span><span class="o">(</span><span class="n">hash</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">bucketIndex</span><span class="o">);</span>
 
     <span class="c1">//双向链表的第一个有效节点（header后的那个节点）为近期最少使用的节点</span>
     <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">eldest</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="na">after</span><span class="o">;</span>
     <span class="c1">//如果有必要，则删除掉该近期最少使用的节点，</span>
-    <span class="c1">//这要看对removeEldestEntry的覆写,由于默认为false，因此默认是不做任何处理的。</span>
+	<span class="c1">//这要看对removeEldestEntry的覆写,由于默认为false，因此默认是不做任何处理的。</span>
     <span class="k">if</span> <span class="o">(</span><span class="n">removeEldestEntry</span><span class="o">(</span><span class="n">eldest</span><span class="o">))</span> <span class="o">{</span>
         <span class="n">removeEntryForKey</span><span class="o">(</span><span class="n">eldest</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
     <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-        <span class="c1">//超过阈值，扩容到原来的2倍</span>
+    	<span class="c1">//超过阈值，扩容到原来的2倍</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="o">)</span>
             <span class="n">resize</span><span class="o">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">table</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
     <span class="o">}</span>
@@ -178,8 +175,8 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="n">table</span><span class="o">[</span><span class="n">bucketIndex</span><span class="o">]</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
     <span class="c1">// 调用元素的addBrefore方法，将元素加入到哈希、双向链接列表。</span>
     <span class="c1">//每次插入Entry时，都将其移到双向链表的尾部，</span>
-    <span class="c1">//这便会按照Entry插入LinkedHashMap的先后顺序来迭代元素，</span>
-    <span class="c1">//同时，新put进来的Entry是最近访问的Entry，把其放在链表末尾，符合LRU算法的实现</span>
+	<span class="c1">//这便会按照Entry插入LinkedHashMap的先后顺序来迭代元素，</span>
+	<span class="c1">//同时，新put进来的Entry是最近访问的Entry，把其放在链表末尾，符合LRU算法的实现</span>
     <span class="n">e</span><span class="o">.</span><span class="na">addBefore</span><span class="o">(</span><span class="n">header</span><span class="o">);</span>
     <span class="n">size</span><span class="o">++;</span>
 <span class="o">}</span>
@@ -200,16 +197,15 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-
-<h2>5.元素读取</h2>
+<h2 id="section-2">5.元素读取</h2>
 
 <p>LinkedHashMap重写了父类HashMap的get方法。由于的链表的增加、删除操作是常量级的，性能不会带来较大损失。LinkedHashMap
 最牛逼的地方在于<strong>recordAccess()</strong>方法</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//覆写HashMap中的get方法，通过getEntry方法获取Entry对象。</span>
-    <span class="c1">//注意这里的recordAccess方法，</span>
-    <span class="c1">//如果链表中元素的排序规则是按照插入的先后顺序排序的话，该方法什么也不做，</span>
-    <span class="c1">//如果链表中元素的排序规则是按照访问的先后顺序排序的话，则将e移到链表的末尾处。</span>
+	<span class="c1">//注意这里的recordAccess方法，</span>
+	<span class="c1">//如果链表中元素的排序规则是按照插入的先后顺序排序的话，该方法什么也不做，</span>
+	<span class="c1">//如果链表中元素的排序规则是按照访问的先后顺序排序的话，则将e移到链表的末尾处。</span>
 <span class="kd">public</span> <span class="n">V</span> <span class="nf">get</span><span class="o">(</span><span class="n">Object</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
     <span class="c1">// 调用父类HashMap的getEntry()方法，取得要查找的元素。</span>
     <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;)</span><span class="n">getEntry</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
@@ -228,8 +224,8 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
 <span class="c1">//它们导致Entry最近使用，因此将其移到双向链表的末尾</span>
 <span class="kt">void</span> <span class="nf">recordAccess</span><span class="o">(</span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">m</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">lm</span> <span class="o">=</span> <span class="o">(</span><span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;)</span><span class="n">m</span><span class="o">;</span>
-    <span class="c1">//如果链表中元素按照访问顺序排序，则将当前访问的Entry移到双向循环链表的尾部，</span>
-    <span class="c1">//如果是按照插入的先后顺序排序，则不做任何事情。</span>
+	<span class="c1">//如果链表中元素按照访问顺序排序，则将当前访问的Entry移到双向循环链表的尾部，</span>
+	<span class="c1">//如果是按照插入的先后顺序排序，则不做任何事情。</span>
     <span class="k">if</span> <span class="o">(</span><span class="n">lm</span><span class="o">.</span><span class="na">accessOrder</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">lm</span><span class="o">.</span><span class="na">modCount</span><span class="o">++;</span>
         <span class="n">remove</span><span class="o">();</span><span class="c1">//移除当前访问的Entry</span>
@@ -237,11 +233,10 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
+<h2 id="section-3">6.元素删除</h2>
 
-<h2>6.元素删除</h2>
-
-<p>LinkedHashMap没有重写remove(Object key)方法，重写了被remove调用的recordRemoval方法，再一次感叹模板方法模式的精妙！<br/>
-HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移除之后（就已经完成工作了，所以HashMap里面recordRemoval是空的实现调用了此方法<br/>
+<p>LinkedHashMap没有重写remove(Object key)方法，重写了被remove调用的recordRemoval方法，再一次感叹模板方法模式的精妙！<br />
+HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移除之后（就已经完成工作了，所以HashMap里面recordRemoval是空的实现调用了此方法<br />
 但在LinkedHashMap里面，还需要移除header链表里面Entry的after和before关系。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 继承了HashMap.Entry  </span>
@@ -258,8 +253,7 @@ HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移�
     <span class="o">}</span>  
 <span class="o">}</span></code></pre></div>
 
-
-<h2>7.元素遍历</h2>
+<h2 id="section-4">7.元素遍历</h2>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//迭代器</span>
     <span class="kd">private</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">LinkedHashIterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
@@ -313,8 +307,7 @@ HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移�
         <span class="kd">public</span> <span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="nf">next</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="nf">nextEntry</span><span class="o">();</span> <span class="o">}</span>
     <span class="o">}</span></code></pre></div>
 
-
-<h2>8.基于LinkedHashMap实现LRU Cache</h2>
+<h2 id="linkedhashmaplru-cache">8.基于LinkedHashMap实现LRU Cache</h2>
 
 <p>用LinkedHashmap实现LRU算法，就要覆写方法removeEldestEntry。该方法默认返回false，我们一般在用LinkedHashMap实现LRU算法时，要覆写该方法，一般的实现是，当设定的内存（这里指节点个数）达到最大值时，返回true，这样put新的Entry（该Entry的key在哈希表中没有已经存在）时，就会调用removeEntryForKey方法，将最近最少使用的节点删除（head后面的那个节点，实际上是最近没有使用）。</p>
 
@@ -390,15 +383,19 @@ get方法通过调用recordAccess方法来实现，put方法在覆盖已有key�
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-
-<h2>9.总结</h2>
+<h2 id="section-5">9.总结</h2>
 
 <ol>
-<li><p>LinkedHashMap继承自HashMap，具有HashMap的大部分特性，比如支持null键和值，默认容量为16，装载因子为0.75，非线程安全等等；</p></li>
-<li><p>LinkedHashMap通过设置accessOrder控制遍历顺序是按照插入顺序还是按照访问顺序。当accessOrder为true时，可以利用其完成LRU缓存的功能；</p></li>
-<li><p>LinkedHashMap内部维护了一个双向循环链表，并且其迭代操作时通过链表完成的，而不是去遍历hash表。</p></li>
+  <li>
+    <p>LinkedHashMap继承自HashMap，具有HashMap的大部分特性，比如支持null键和值，默认容量为16，装载因子为0.75，非线程安全等等；</p>
+  </li>
+  <li>
+    <p>LinkedHashMap通过设置accessOrder控制遍历顺序是按照插入顺序还是按照访问顺序。当accessOrder为true时，可以利用其完成LRU缓存的功能；</p>
+  </li>
+  <li>
+    <p>LinkedHashMap内部维护了一个双向循环链表，并且其迭代操作时通过链表完成的，而不是去遍历hash表。</p>
+  </li>
 </ol>
-
 
 </section>
 <section align="right">

@@ -58,7 +58,7 @@
 
 <p><img src="/album/2014-12-13-stackoverflow-not-OK.png" alt="stackoverflow_down-01" /></p>
 
-<p>查了下原因，原来是stackoverflow网站指向 CloudFlare 这个牛逼的 CDN，但是国内此 CDN 被墙了，so...</p>
+<p>查了下原因，原来是stackoverflow网站指向 CloudFlare 这个牛逼的 CDN，但是国内此 CDN 被墙了，so…</p>
 
 <p>该怎么解决呢？网上搜到一个以备CDN故障时快速切换的指向资源，网址是 www.sstatic.net.</p>
 
@@ -75,27 +75,39 @@
 <pre><code>首先本地获取到 cdn.sstatic.net 的 IP 
 </code></pre>
 
-<blockquote><p>ping cdn.sstatic.net</p></blockquote>
+<blockquote>
+  <p>ping cdn.sstatic.net</p>
+</blockquote>
 
 <pre><code>获取到 IP 后，修改 Host 文件
 </code></pre>
 
-<blockquote><p>Linux:</p>
+<blockquote>
+  <p>Linux:</p>
+</blockquote>
 
-<p>/etc/hosts</p>
+<blockquote>
+  <p>/etc/hosts</p>
+</blockquote>
 
-<p>WINDOWS:</p>
+<blockquote>
+  <p>WINDOWS:</p>
+</blockquote>
 
-<p>C:\Windows\System32\drivers\etc\hosts</p></blockquote>
+<blockquote>
+  <p>C:\Windows\System32\drivers\etc\hosts</p>
+</blockquote>
 
 <pre><code>将你 ping 到的 IP 地址(x.x.x.x)加到 hosts 文件中即可。
 </code></pre>
 
-<blockquote><p>x.x.x.x     cdn.sstatic.net</p></blockquote>
+<blockquote>
+  <p>x.x.x.x     cdn.sstatic.net</p>
+</blockquote>
 
-<p>  第二种方法劣势就是 IP 地址有些时候不稳定，几个月后需要换一次。</p>
+<p>第二种方法劣势就是 IP 地址有些时候不稳定，几个月后需要换一次。</p>
 
-<p>  <strong>推荐使用第一种办法</strong>，毕竟类似问题很久才遇到一次。</p>
+<p><strong>推荐使用第一种办法</strong>，毕竟类似问题很久才遇到一次。</p>
 
 </section>
 <section align="right">

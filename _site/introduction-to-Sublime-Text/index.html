@@ -67,7 +67,6 @@
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span><span class="nn">os</span><span class="p">;</span><span class="n">pf</span><span class="o">=</span><span class="s">&#39;Package Control.sublime-package&#39;</span><span class="p">;</span><span class="n">ipp</span><span class="o">=</span><span class="n">sublime</span><span class="o">.</span><span class="n">installed_packages_path</span><span class="p">();</span><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">ipp</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ipp</span><span class="p">)</span> <span class="k">else</span> <span class="bp">None</span><span class="p">;</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ipp</span><span class="p">,</span><span class="n">pf</span><span class="p">),</span><span class="s">&#39;wb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://sublime.wbond.net/&#39;</span><span class="o">+</span><span class="n">pf</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span><span class="s">&#39;%20&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></code></pre></div>
 
-
 <p><em>2. 支持中文</em></p>
 
 <p>Ctrl+Shift+P打开命令行模式，在里面输入Install Package即可搜索需要的Package。一般使用“ConvertToUTF8”和“GBK Encoding Support”即可正常读取和写入CJK格式的文件了。</p>
@@ -75,24 +74,23 @@
 <p><em>3. 主题</em></p>
 
 <p>Sublime Text2也是有主题的，比较不错的主题是Soda，使用Package Control安装（自行安装请Google）。按Ctrl+Shift+P打开命令窗口，输入install，打开包安装器，输入Theme - Soda，点击后安装完成。
-安装完成后还需要配置，才能使用该主题，具体：菜单->Preferences->Global Setting-User，打开配置文件，配置文件使用的是Json格式，如果已经有别的配置了，别忘记加上逗号，大致上，就是需要加上一条配置，以使用该主题</p>
+安装完成后还需要配置，才能使用该主题，具体：菜单-&gt;Preferences-&gt;Global Setting-User，打开配置文件，配置文件使用的是Json格式，如果已经有别的配置了，别忘记加上逗号，大致上，就是需要加上一条配置，以使用该主题</p>
 
-<p>"theme": "Soda Dark.sublime-theme"</p>
+<p>“theme”: “Soda Dark.sublime-theme”</p>
 
 <p><em>4. 新代码配色方案</em></p>
 
-<p>点击Preferences->Browse Packages打开包安装目录，找到Color Scheme - Default文件夹，把下载来的新的配色安装扔进去即可。</p>
+<p>点击Preferences-&gt;Browse Packages打开包安装目录，找到Color Scheme - Default文件夹，把下载来的新的配色安装扔进去即可。</p>
 
 <p><em>5. 修改字体</em></p>
 
-<p>Preferences->File Setting-User，打开配置文件，看里面有没font_face配置项，有就直接改，没有就自己加上，可能的配置文件如下：</p>
+<p>Preferences-&gt;File Setting-User，打开配置文件，看里面有没font_face配置项，有就直接改，没有就自己加上，可能的配置文件如下：</p>
 
 <div class="highlight"><pre><code class="language-html" data-lang="html">{
     &quot;color_scheme&quot;: &quot;Packages/Color Scheme - Default/Black-Pearl2.tmTheme&quot;,
     &quot;font_face&quot;: &quot;微软雅黑&quot;,
     &quot;font_size&quot;: 10.0
 }</code></pre></div>
-
 
 <p><strong>有用的链接</strong></p>
 
@@ -103,6 +101,7 @@
 <p><a href="http://lucifr.com/2011/09/10/sublime-text-2-useful-shortcuts/">Sublime Text 2 实用快捷键[Mac OS X]</a></p>
 
 <p><a href="http://lucifr.com/2012/02/08/useful-entries-in-sublime-text-2-context-menu/">Sublime Text 2 右键菜单中的实用选项</a></p>
+
 
 </section>
 <section align="right">

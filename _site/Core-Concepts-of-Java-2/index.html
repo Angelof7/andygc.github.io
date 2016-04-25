@@ -56,7 +56,7 @@
 <section class="post">
 <p>本文是一些Java基本字符串、数组和I/O的总结。主要来自《Java编程思想》和互联网。</p>
 
-<h3>字符串</h3>
+<h3 id="section">字符串</h3>
 
 <p>String对象时不可变的，String类中每一个看起来修改String值的方法，实际上都是创建了了一个全新的String对象，以包含修改后的字符串内容，而最初的String对象则丝毫未动。</p>
 
@@ -72,36 +72,39 @@
 
 <p>该方法用于返回参数字符串s在指定字符串中首次出现的索引位置，当调用字符串的indexOf()方法时，会从当前字符串的开始位置搜索s的位置；如果没有检索到字符串s，该方法返回-1</p>
 
-<pre><code class="java"> String str ="We are students";
+<p><code>java
+ String str ="We are students";
  int size = str.indexOf("a"); // 变量size的值是3
-</code></pre>
-
-<p>lastIndexOf(String str)</p>
+</code>
+lastIndexOf(String str)</p>
 
 <p>该方法用于返回字符串最后一次出现的索引位置。当调用字符串的lastIndexOf()方法时，会从当前字符串的开始位置检索参数字符串str，并将最后一次出现str的索引位置返回。如果没有检索到字符串str，该方法返回-1.</p>
 
-<p>如果lastIndexOf方法中的参数是空字符串""，则返回的结果与length方法的返回结果相同。</p>
+<p>如果lastIndexOf方法中的参数是空字符串”“，则返回的结果与length方法的返回结果相同。</p>
 
 <p><strong>获取指定索引位置的字符</strong></p>
 
 <p>使用charAt()方法可将指定索引处的字符返回。</p>
 
-<pre><code class="java"> String str = "hello word";
+<p><code>java
+ String str = "hello word";
  char mychar =  str.charAt(5);  // mychar的结果是w
-</code></pre>
+</code></p>
 
 <p><strong>获取子字符串</strong></p>
 
 <p>通过String类的substring()方法可对字符串进行截取。这些方法的共同点就是都利用字符串的下标进行截取，且应明确字符串下标是从0开始的。在字符串中空格占用一个索引位置。</p>
 
-<pre><code class="java">substring(int beginIndex)
-</code></pre>
+<p><code>java
+substring(int beginIndex)
+</code></p>
 
 <p>该方法返回的是从指定的索引位置开始截取知道该字符串结尾的子串。</p>
 
-<pre><code class="java">String str = "Hello word";
+<p><code>java
+String str = "Hello word";
 String substr = str.substring(3); //获取字符串，此时substr值为lo word
-</code></pre>
+</code></p>
 
 <p>substring(int beginIndex,  int endIndex)</p>
 
@@ -109,9 +112,10 @@ String substr = str.substring(3); //获取字符串，此时substr值为lo word
 
 <p>endIndex：子字符串在整个字符串中的结束位置</p>
 
-<pre><code class="java"> String str = "Hello word";
+<p><code>java
+ String str = "Hello word";
 String substr = str.substring(0,3); //substr的值为hel
-</code></pre>
+</code></p>
 
 <p><strong>去除空格</strong></p>
 
@@ -127,9 +131,10 @@ String substr = str.substring(0,3); //substr的值为hel
 
 <p>如果要替换的字符oldChar在字符串中重复出现多次，replace()方法会将所有oldChar全部替换成newChar。需要注意的是，要替换的字符oldChar的大小写要与原字符串中字符的大小写保持一致。</p>
 
-<pre><code class="java">String str= "address";
+<p><code>java
+String str= "address";
 String newstr = str.replace("a", "A");// newstr的值为Address
-</code></pre>
+</code></p>
 
 <p><strong>判断字符串的开始与结尾</strong></p>
 
@@ -159,9 +164,10 @@ String newstr = str.replace("a", "A");// newstr的值为Address
 
 <p>字符串的toLowerCase()方法可将字符串中的所有字符从大写字母改写为小写字母，而tuUpperCase()方法可将字符串中的小写字母改写为大写字母。</p>
 
-<pre><code class="java">str.toLowerCase();
+<p><code>java
+str.toLowerCase();
 str.toUpperCase();
-</code></pre>
+</code></p>
 
 <p><strong>字符串分割</strong></p>
 
@@ -171,9 +177,17 @@ str.toUpperCase();
 
 <p>sign为分割字符串的分割符，也可以使用正则表达式。</p>
 
-<p>没有统一的对字符串进行分割的符号，如果想定义多个分割符，可使用符号“|”。例如，“,|=”表示分割符分别为“，”和“=”。</p>
+<table>
+  <tbody>
+    <tr>
+      <td>没有统一的对字符串进行分割的符号，如果想定义多个分割符，可使用符号“</td>
+      <td>”。例如，“,</td>
+      <td>=”表示分割符分别为“，”和“=”。</td>
+    </tr>
+  </tbody>
+</table>
 
-<p> str.split(String sign, in limit)；</p>
+<p>str.split(String sign, in limit)；</p>
 
 <p>该方法可根据给定的分割符对字符串进行拆分，并限定拆分的次数。</p>
 
@@ -185,8 +199,7 @@ str.toUpperCase();
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">%[</span><span class="n">argument_index$</span><span class="o">][</span><span class="n">flags</span><span class="o">][</span><span class="n">width</span><span class="o">][.</span><span class="na">precision</span><span class="o">]</span><span class="n">conversion</span></code></pre></div>
 
-
-<p>可选的 argument_index 是一个十进制整数，用于表明参数在参数列表中的位置。第一个参数由 "1$" 引用，第二个参数由 "2$" 引用，依此类推。</p>
+<p>可选的 argument_index 是一个十进制整数，用于表明参数在参数列表中的位置。第一个参数由 “1$” 引用，第二个参数由 “2$” 引用，依此类推。</p>
 
 <p>可选 flags是修改输出格式的字符集。有效标志集取决于转换类型。</p>
 
@@ -200,16 +213,15 @@ str.toUpperCase();
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">%[</span><span class="n">argument_index$</span><span class="o">][</span><span class="n">flags</span><span class="o">][</span><span class="n">width</span><span class="o">]</span><span class="n">conversion</span></code></pre></div>
 
-
 <p>可选的 argument_index、flags 和 width的定义同上。</p>
 
-<p>所需的 conversion 是一个由两字符组成的序列。第一个字符是 't' 或 'T'。第二个字符表明所使用的格式。这些字符类似于但不完全等同于那些由 GNU date 和 POSIX strftime(3c)定义的字符。</p>
+<p>所需的 conversion 是一个由两字符组成的序列。第一个字符是 ‘t’ 或 ‘T’。第二个字符表明所使用的格式。这些字符类似于但不完全等同于那些由 GNU date 和 POSIX strftime(3c)定义的字符。</p>
 
 <p><a href="http://www.cnblogs.com/Lowp/archive/2012/09/16/2687745.html">更详细见这篇文章</a>和<a href="http://lavasoft.blog.51cto.com/62575/179081">很多例子</a>.</p>
 
 <p><em>正则表达式</em>我会单独列出来学习总结。</p>
 
-<h3>数组</h3>
+<h3 id="section-1">数组</h3>
 
 <p>数组使用[]来访问元素，而List使用add()和get()方法。
 无论使用何种类型，数组对象用来保存指向其他对象的引用。</p>
@@ -222,17 +234,24 @@ str.toUpperCase();
 
 <p>数组浅复制和深复制。直接复制对象数组，仅仅是复制了对象的引用。</p>
 
-<h3>Java I/O</h3>
+<h3 id="java-io">Java I/O</h3>
 
 <p>Java 的 I/O 操作类在包 java.io 下，大概有将近 80 个类，但是这些类大概可以分成四组，分别是：</p>
 
 <ul>
-<li><p>基于字节操作的 I/O 接口：InputStream 和 OutputStream</p></li>
-<li><p>基于字符操作的 I/O 接口：Writer 和 Reader</p></li>
-<li><p>基于磁盘操作的 I/O 接口：File</p></li>
-<li><p>基于网络操作的 I/O 接口：Socket</p></li>
+  <li>
+    <p>基于字节操作的 I/O 接口：InputStream 和 OutputStream</p>
+  </li>
+  <li>
+    <p>基于字符操作的 I/O 接口：Writer 和 Reader</p>
+  </li>
+  <li>
+    <p>基于磁盘操作的 I/O 接口：File</p>
+  </li>
+  <li>
+    <p>基于网络操作的 I/O 接口：Socket</p>
+  </li>
 </ul>
-
 
 <p>前两组主要是根据传输数据的数据格式，后两组主要是根据传输数据的方式，虽然 Socket 类并不在 java.io 包下，但是我仍然把它们划分在一起，因为我个人认为 I/O 的核心问题要么是数据格式影响 I/O 操作，要么是传输方式影响 I/O 操作，也就是将什么样的数据写到什么地方的问题，I/O 只是人与机器或者机器与机器交互的手段，除了在它们能够完成这个交互功能外，我们关注的就是如何提高它的运行效率了，而数据格式和传输方式是影响效率最关键的因素了。我们后面的分析也是基于这两个因素来展开的。</p>
 
@@ -293,15 +312,16 @@ rw：读写，如果使用此模式，如果文件不存在，则会自动创建
 
 <p>程序既然可以向文件中写入内容，则就可以通过InputStream从文件中把内容读取进来，首先来看InputStream类的定义：</p>
 
-<pre><code class="java">public abstract class InputStream extends Object implements Closeable
-</code></pre>
-
-<p>与OutputStream类一样，InputStream本身也是一个抽象类，必须依靠其子类，如果现在是从文件中读取，就用FileInputStream来实现。</p>
+<p><code>java
+public abstract class InputStream extends Object implements Closeable
+</code>
+与OutputStream类一样，InputStream本身也是一个抽象类，必须依靠其子类，如果现在是从文件中读取，就用FileInputStream来实现。</p>
 
 <p>观察FileInputStream类的构造方法：</p>
 
-<pre><code class="java">public FileInputStream(File file)throws FileNotFoundException
-</code></pre>
+<p><code>java
+public FileInputStream(File file)throws FileNotFoundException
+</code></p>
 
 <p>例子<a href="http://www.cnblogs.com/lich/archive/2011/12/11/2283700.html">click</a></p>
 
@@ -311,13 +331,11 @@ rw：读写，如果使用此模式，如果文件不存在，则会自动创建
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Writer</span> <span class="kd">extends</span> <span class="n">Object</span> <span class="kd">implements</span> <span class="n">Appendable</span><span class="err">，</span><span class="n">Closeable</span><span class="err">，</span><span class="n">Flushable</span></code></pre></div>
 
-
 <p>此类本身也是一个抽象类，如果要使用此类，则肯定要使用其子类，此时如果是向文件中写入内容，所以应该使用FileWriter的子类。</p>
 
 <p>FileWriter类的构造方法定义如下：</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">FileWriter</span><span class="o">(</span><span class="n">File</span> <span class="n">file</span><span class="o">)</span><span class="kd">throws</span> <span class="n">IOException</span></code></pre></div>
-
 
 <p>字符流的操作比字节流操作好在一点，就是可以直接输出字符串了，不用再像之前那样进行转换操作了。</p>
 
@@ -333,7 +351,6 @@ rw：读写，如果使用此模式，如果文件不存在，则会自动创建
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">FileReader</span><span class="o">(</span><span class="n">File</span> <span class="n">file</span><span class="o">)</span><span class="kd">throws</span> <span class="n">FileNotFoundException</span></code></pre></div>
 
-
 <p><a href="http://www.cnblogs.com/lich/archive/2011/12/11/2283700.html">例子</a></p>
 
 <p><strong>总结</strong></p>
@@ -348,8 +365,9 @@ rw：读写，如果使用此模式，如果文件不存在，则会自动创建
 
 <p>说明两点，一个是操作数据的方式是可以组合使用的，如这样组合使用</p>
 
-<pre><code class="java">OutputStream out = new BufferedOutputStream(new ObjectOutputStream(new FileOutputStream("fileName"))；
-</code></pre>
+<p><code>java
+OutputStream out = new BufferedOutputStream(new ObjectOutputStream(new FileOutputStream("fileName"))；
+</code></p>
 
 <p>还有一点是流最终写到什么地方必须要指定，要么是写到磁盘要么是写到网络中，其实从上面的类图中我们发现，写网络实际上也是写文件，只不过写网络还有一步需要处理就是底层操作系统再将数据传送到其它地方而不是本地磁盘。关于网络 I/O 和磁盘 I/O 我们将在后面详细介绍。</p>
 
@@ -384,7 +402,6 @@ rw：读写，如果使用此模式，如果文件不存在，则会自动创建
             <span class="o">}</span> 
             <span class="n">str</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span> 
  <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{}</span></code></pre></div>
-
 
 <p>FileReader 类就是按照上面的工作方式读取文件的，FileReader 是继承了 InputStreamReader 类，实际上是读取文件流，然后通过 StreamDecoder 解码成 char，只不过这里的解码字符集是默认字符集。
 写入也是类似的过程如下图所示：</p>
@@ -423,11 +440,9 @@ rw：读写，如果使用此模式，如果文件不存在，则会自动创建
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ByteArrayInputStream</span> <span class="kd">extends</span> <span class="n">InputStream</span></code></pre></div>
 
-
 <p>构造方法：</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">ByteArrayInputStream</span><span class="o">(</span><span class="kt">byte</span><span class="o">[]</span> <span class="n">buf</span><span class="o">)</span></code></pre></div>
-
 
 <p>接受一个byte数组，实际上内存的输入就是在构造方法上将数据传入到内存中。</p>
 
@@ -435,13 +450,11 @@ rw：读写，如果使用此模式，如果文件不存在，则会自动创建
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">write</span><span class="o">(</span><span class="kt">int</span> <span class="n">b</span><span class="o">)</span></code></pre></div>
 
-
 <p><strong>管道流</strong></p>
 
 <p>管道流是JAVA中线程通讯的常用方式之一，可以进行两个线程间的通讯，分为管道输出流(PipedOutputStream)、管道输入流（PipedInputStream），如果想要进行管道输出，则必须要把输出流连在输入流之上，在PipedOutputStream类上有如下的一个方法用于连接管道：</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">connect</span><span class="o">(</span><span class="n">PipedInputStream</span> <span class="n">snk</span><span class="o">)</span><span class="kd">throws</span> <span class="n">IOException</span></code></pre></div>
-
 
 <p>基本流程如下（<a href="http://www.cnblogs.com/king1302217/p/3158842.html">Example</a>）：</p>
 
@@ -453,14 +466,13 @@ rw：读写，如果使用此模式，如果文件不存在，则会自动创建
 
 <p><a href="">管道流只能实现单向发送，如果要两个线程之间互通讯，则需要两个管道流</a></p>
 
-<p> 可以看到上面的<a href="http://www.cnblogs.com/king1302217/p/3158842.html">例子</a>中，线程producer通过管道流向线程consumer发送数据，如果线程consumer想给线程producer发送数据，则需要新建另一个管道流pos1和pis1，将pos1赋给consumer1，将pis1赋给producer，具体例子本文不再多说。</p>
+<p>可以看到上面的<a href="http://www.cnblogs.com/king1302217/p/3158842.html">例子</a>中，线程producer通过管道流向线程consumer发送数据，如果线程consumer想给线程producer发送数据，则需要新建另一个管道流pos1和pis1，将pos1赋给consumer1，将pis1赋给producer，具体例子本文不再多说。</p>
 
-<p> <strong>BufferedReader和Scanner</strong></p>
+<p><strong>BufferedReader和Scanner</strong></p>
 
 <p>如果想要接收任意长度的数据，而且避免乱码产生，就可以使用BufferedReader类</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BufferedReader</span> <span class="kd">extends</span> <span class="n">Reader</span></code></pre></div>
-
 
 <p>因为输入的数据有可能出现中文，所以，此处使用字符流完成。BufferedReader是从缓冲区之中读取内容，所有的输入的字节数据都将放在缓冲区之中。</p>
 
