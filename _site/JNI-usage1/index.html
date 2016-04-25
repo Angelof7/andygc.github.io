@@ -150,25 +150,30 @@
 <p>我们来编写一个JNITest的Java类。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">JNITest</span> <span class="o">{</span>
-	<span class="kd">public</span> <span class="kd">native</span> <span class="kt">int</span> <span class="nf">intFunc</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">);</span> <span class="c1">//参数类型为int</span>
-	<span class="kd">public</span> <span class="kd">native</span> <span class="kt">boolean</span> <span class="nf">booleanFunc</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">bool</span><span class="o">);</span>  <span class="c1">//参数类型为boolean</span>
-	<span class="kd">public</span> <span class="kd">native</span> <span class="n">String</span> <span class="nf">stringFunc</span><span class="o">(</span><span class="n">String</span> <span class="n">text</span><span class="o">);</span>  <span class="c1">//参数类型为String</span>
-	<span class="kd">public</span> <span class="kd">native</span> <span class="kt">int</span> <span class="nf">intArrayFunc</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">intArray</span><span class="o">);</span>  <span class="c1">//参数类型为int</span>
+	<span class="kd">public</span> <span class="kd">native</span> <span class="kt">int</span> <span class="n">intFunc</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">);</span> <span class="c1">//参数类型为int
+</span>
+	<span class="kd">public</span> <span class="kd">native</span> <span class="kt">boolean</span> <span class="n">booleanFunc</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">bool</span><span class="o">);</span>  <span class="c1">//参数类型为boolean
+</span>
+	<span class="kd">public</span> <span class="kd">native</span> <span class="n">String</span> <span class="n">stringFunc</span><span class="o">(</span><span class="n">String</span> <span class="n">text</span><span class="o">);</span>  <span class="c1">//参数类型为String
+</span>
+	<span class="kd">public</span> <span class="kd">native</span> <span class="kt">int</span> <span class="n">intArrayFunc</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">intArray</span><span class="o">);</span>  <span class="c1">//参数类型为int
+</span>
 
-	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span> <span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-		<span class="c1">//加载了动态类库，在windows下加载.dll，在Linux下加载.so，决不可加上后缀，要保证JNITest在path路径中</span>
-		<span class="n">System</span><span class="o">.</span><span class="na">loadLibrary</span><span class="o">(</span><span class="s">&quot;JNITest&quot;</span><span class="o">);</span> 
-		<span class="n">JNITest</span> <span class="n">jnitest</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">JNITest</span><span class="o">();</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span> <span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">//加载了动态类库，在windows下加载.dll，在Linux下加载.so，决不可加上后缀，要保证JNITest在path路径中
+</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">loadLibrary</span><span class="o">(</span><span class="s">"JNITest"</span><span class="o">);</span> 
+		<span class="n">JNITest</span> <span class="n">jnitest</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JNITest</span><span class="o">();</span>
 		
 		<span class="kt">int</span> <span class="n">square</span> <span class="o">=</span> <span class="n">jnitest</span><span class="o">.</span><span class="na">intFunc</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
 		<span class="kt">boolean</span> <span class="n">boolv</span> <span class="o">=</span> <span class="n">jnitest</span><span class="o">.</span><span class="na">booleanFunc</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-		<span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">jnitest</span><span class="o">.</span><span class="na">stringFunc</span><span class="o">(</span><span class="s">&quot;Hello JNI&quot;</span><span class="o">);</span>
+		<span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">jnitest</span><span class="o">.</span><span class="na">stringFunc</span><span class="o">(</span><span class="s">"Hello JNI"</span><span class="o">);</span>
 		<span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">jnitest</span><span class="o">.</span><span class="na">intArrayFunc</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">,</span><span class="mi">6</span><span class="o">,</span><span class="mi">7</span><span class="o">,</span><span class="mi">8</span><span class="o">,</span><span class="mi">9</span><span class="o">,</span><span class="mi">0</span><span class="o">});</span>
 
-		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;intFunc: &quot;</span> <span class="o">+</span> <span class="n">square</span><span class="o">);</span>
-		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;booleanFunc: &quot;</span> <span class="o">+</span> <span class="n">boolv</span><span class="o">);</span>
-		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;stringFunc: &quot;</span> <span class="o">+</span> <span class="n">text</span><span class="o">);</span>
-		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;intArrayFunc: &quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="o">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"intFunc: "</span> <span class="o">+</span> <span class="n">square</span><span class="o">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"booleanFunc: "</span> <span class="o">+</span> <span class="n">boolv</span><span class="o">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"stringFunc: "</span> <span class="o">+</span> <span class="n">text</span><span class="o">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"intArrayFunc: "</span> <span class="o">+</span> <span class="n">sum</span><span class="o">);</span>
 	<span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
@@ -184,50 +189,50 @@
 <p>可以看到目录下自动生成了一个头文件JNITest.h</p>
 
 <div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cm">/* DO NOT EDIT THIS FILE - it is machine generated */</span>
-<span class="cp">#include &lt;jni.h&gt;</span>
-<span class="cm">/* Header for class JNITest */</span>
+<span class="cp">#include &lt;jni.h&gt;
+</span><span class="cm">/* Header for class JNITest */</span>
 
-<span class="cp">#ifndef _Included_JNITest</span>
-<span class="cp">#define _Included_JNITest</span>
-<span class="cp">#ifdef __cplusplus</span>
-<span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
-<span class="cp">#endif</span>
-<span class="cm">/*</span>
-<span class="cm"> * Class:     JNITest</span>
-<span class="cm"> * Method:    intFunc</span>
-<span class="cm"> * Signature: (I)I</span>
-<span class="cm"> */</span>
+<span class="cp">#ifndef _Included_JNITest
+#define _Included_JNITest
+#ifdef __cplusplus
+</span><span class="k">extern</span> <span class="s">"C"</span> <span class="p">{</span>
+<span class="cp">#endif
+</span><span class="cm">/*
+ * Class:     JNITest
+ * Method:    intFunc
+ * Signature: (I)I
+ */</span>
 <span class="n">JNIEXPORT</span> <span class="n">jint</span> <span class="n">JNICALL</span> <span class="n">Java_JNITest_intFunc</span>
   <span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="p">,</span> <span class="n">jobject</span><span class="p">,</span> <span class="n">jint</span><span class="p">);</span>
 
-<span class="cm">/*</span>
-<span class="cm"> * Class:     JNITest</span>
-<span class="cm"> * Method:    booleanFunc</span>
-<span class="cm"> * Signature: (Z)Z</span>
-<span class="cm"> */</span>
-<span class="n">JNIEXPORT</span> <span class="n">jboolean</span> <span class="n">JNICALL</span> <span class="nf">Java_JNITest_booleanFunc</span>
+<span class="cm">/*
+ * Class:     JNITest
+ * Method:    booleanFunc
+ * Signature: (Z)Z
+ */</span>
+<span class="n">JNIEXPORT</span> <span class="n">jboolean</span> <span class="n">JNICALL</span> <span class="n">Java_JNITest_booleanFunc</span>
   <span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="p">,</span> <span class="n">jobject</span><span class="p">,</span> <span class="n">jboolean</span><span class="p">);</span>
 
-<span class="cm">/*</span>
-<span class="cm"> * Class:     JNITest</span>
-<span class="cm"> * Method:    stringFunc</span>
-<span class="cm"> * Signature: (Ljava/lang/String;)Ljava/lang/String;</span>
-<span class="cm"> */</span>
-<span class="n">JNIEXPORT</span> <span class="n">jstring</span> <span class="n">JNICALL</span> <span class="nf">Java_JNITest_stringFunc</span>
+<span class="cm">/*
+ * Class:     JNITest
+ * Method:    stringFunc
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
+ */</span>
+<span class="n">JNIEXPORT</span> <span class="n">jstring</span> <span class="n">JNICALL</span> <span class="n">Java_JNITest_stringFunc</span>
   <span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="p">,</span> <span class="n">jobject</span><span class="p">,</span> <span class="n">jstring</span><span class="p">);</span>
 
-<span class="cm">/*</span>
-<span class="cm"> * Class:     JNITest</span>
-<span class="cm"> * Method:    intArrayFunc</span>
-<span class="cm"> * Signature: ([I)I</span>
-<span class="cm"> */</span>
-<span class="n">JNIEXPORT</span> <span class="n">jint</span> <span class="n">JNICALL</span> <span class="nf">Java_JNITest_intArrayFunc</span>
+<span class="cm">/*
+ * Class:     JNITest
+ * Method:    intArrayFunc
+ * Signature: ([I)I
+ */</span>
+<span class="n">JNIEXPORT</span> <span class="n">jint</span> <span class="n">JNICALL</span> <span class="n">Java_JNITest_intArrayFunc</span>
   <span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="p">,</span> <span class="n">jobject</span><span class="p">,</span> <span class="n">jintArray</span><span class="p">);</span>
 
-<span class="cp">#ifdef __cplusplus</span>
-<span class="p">}</span>
-<span class="cp">#endif</span>
-<span class="cp">#endif</span></code></pre></div>
+<span class="cp">#ifdef __cplusplus
+</span><span class="p">}</span>
+<span class="cp">#endif
+#endif</span></code></pre></div>
 
 <p>可以看到有4个函数声明，命名方式为 Java_完整类名_方法名，完整类名包括包名，假设我的demo.JNITest是完整类名，对应的就是demo_JNITest(本文不是)。
 注释中有个方法签名（Signature），通过一个表格来介绍Signature。</p>
@@ -314,12 +319,12 @@
 
 <p>可以使用C/C++语言实现，下面是使用C语言实现的版本（其实C/C++）实现起来差不多。</p>
 
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &quot;JNITest.h&quot;</span>
-<span class="cp">#include &lt;string.h&gt;</span>
-<span class="cm">/* JNIEnv*：是每个函数都有的参数，代表的是Java环境, 通过这个环境可以调用Java里面的方法;</span>
-<span class="cm"> *jobject参数: 调用C语言方法的对象, this对象表示当前的对象, jobject 指向在此 Java 代码中实例化的 Java 对象 LocalFunction 的一个句柄，相当于 this 指针即调用JNI方法所在的类;</span>
-<span class="cm"> *</span>
-<span class="cm">*/</span>
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include "JNITest.h"
+#include &lt;string.h&gt;
+</span><span class="cm">/* JNIEnv*：是每个函数都有的参数，代表的是Java环境, 通过这个环境可以调用Java里面的方法;
+ *jobject参数: 调用C语言方法的对象, this对象表示当前的对象, jobject 指向在此 Java 代码中实例化的 Java 对象 LocalFunction 的一个句柄，相当于 this 指针即调用JNI方法所在的类;
+ *
+*/</span>
 <span class="n">JNIEXPORT</span> <span class="n">jint</span> <span class="n">JNICALL</span> <span class="nf">Java_JNITEST_intFunc</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">obj</span><span class="p">,</span> <span class="n">jint</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
 
 	<span class="k">return</span> <span class="n">num</span> <span class="o">*</span> <span class="n">num</span><span class="p">;</span>
@@ -331,12 +336,12 @@
 <span class="p">}</span>
 
 <span class="n">JNIEXPORT</span> <span class="n">jstring</span> <span class="n">JNICALL</span> <span class="nf">Java_JNITEST_stringFunc</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">obj</span><span class="p">,</span> <span class="n">jstring</span> <span class="n">string</span><span class="p">)</span> <span class="p">{</span>
-	<span class="c1">//GetStringUTFChars()这个方法，是Java和C/C++之间转换字符串，Java本身应的是双字节字符，而C使用的是单字节字符，故需要转换</span>
-	<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="c1">//GetStringUTFChars()这个方法，是Java和C/C++之间转换字符串，Java本身应的是双字节字符，而C使用的是单字节字符，故需要转换
+</span>	<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">str</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 	<span class="kt">char</span> <span class="n">cap</span><span class="p">[</span><span class="mi">128</span><span class="p">];</span>
 	<span class="n">strcpy</span><span class="p">(</span><span class="n">cap</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
-	<span class="c1">//ReleaseStringUTFChars()是用来释放对象的, 在Java中有虚拟机进行垃圾回收, 但是在C语言中, 这些对象必须手动回收. 否则可能造成内存泄漏.</span>
-	<span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">ReleaseStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="c1">//ReleaseStringUTFChars()是用来释放对象的, 在Java中有虚拟机进行垃圾回收, 但是在C语言中, 这些对象必须手动回收. 否则可能造成内存泄漏.
+</span>	<span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">ReleaseStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 	<span class="k">return</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewStringUTF</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">strupr</span><span class="p">(</span><span class="n">cap</span><span class="p">));</span>
 <span class="p">}</span>
 

@@ -111,37 +111,38 @@
     <span class="n">Value3</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
        <span class="n">c</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
     <span class="o">}</span>
-    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">inc</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="n">inc</span><span class="o">()</span> <span class="o">{</span>
        <span class="n">c</span><span class="o">++;</span>
     <span class="o">}</span>
 <span class="o">}</span>
  
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Count</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">prt</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">prt</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
     <span class="o">}</span>
  
-    <span class="n">Value3</span> <span class="n">v</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Value3</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+    <span class="n">Value3</span> <span class="n">v</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Value3</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
     <span class="kd">static</span> <span class="n">Value3</span> <span class="n">v1</span><span class="o">,</span> <span class="n">v2</span><span class="o">;</span>
-    <span class="kd">static</span> <span class="o">{</span><span class="c1">//此即为static块</span>
-       <span class="n">prt</span><span class="o">(</span><span class="s">&quot;v1.c=&quot;</span> <span class="o">+</span> <span class="n">v1</span><span class="o">.</span><span class="na">c</span> <span class="o">+</span> <span class="s">&quot;  v2.c=&quot;</span> <span class="o">+</span> <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
-       <span class="n">v1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Value3</span><span class="o">(</span><span class="mi">27</span><span class="o">);</span>
-       <span class="n">prt</span><span class="o">(</span><span class="s">&quot;v1.c=&quot;</span> <span class="o">+</span> <span class="n">v1</span><span class="o">.</span><span class="na">c</span> <span class="o">+</span> <span class="s">&quot;  v2.c=&quot;</span> <span class="o">+</span> <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
-       <span class="n">v2</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Value3</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
-       <span class="n">prt</span><span class="o">(</span><span class="s">&quot;v1.c=&quot;</span> <span class="o">+</span> <span class="n">v1</span><span class="o">.</span><span class="na">c</span> <span class="o">+</span> <span class="s">&quot;  v2.c=&quot;</span> <span class="o">+</span> <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
+    <span class="kd">static</span> <span class="o">{</span><span class="c1">//此即为static块
+</span>
+       <span class="n">prt</span><span class="o">(</span><span class="s">"v1.c="</span> <span class="o">+</span> <span class="n">v1</span><span class="o">.</span><span class="na">c</span> <span class="o">+</span> <span class="s">"  v2.c="</span> <span class="o">+</span> <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
+       <span class="n">v1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Value3</span><span class="o">(</span><span class="mi">27</span><span class="o">);</span>
+       <span class="n">prt</span><span class="o">(</span><span class="s">"v1.c="</span> <span class="o">+</span> <span class="n">v1</span><span class="o">.</span><span class="na">c</span> <span class="o">+</span> <span class="s">"  v2.c="</span> <span class="o">+</span> <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
+       <span class="n">v2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Value3</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+       <span class="n">prt</span><span class="o">(</span><span class="s">"v1.c="</span> <span class="o">+</span> <span class="n">v1</span><span class="o">.</span><span class="na">c</span> <span class="o">+</span> <span class="s">"  v2.c="</span> <span class="o">+</span> <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
     <span class="o">}</span>
  
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-       <span class="n">Count</span> <span class="n">ct</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Count</span><span class="o">();</span>
-       <span class="n">prt</span><span class="o">(</span><span class="s">&quot;ct.c=&quot;</span> <span class="o">+</span> <span class="n">ct</span><span class="o">.</span><span class="na">v</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
-       <span class="n">prt</span><span class="o">(</span><span class="s">&quot;v1.c=&quot;</span> <span class="o">+</span> <span class="n">v1</span><span class="o">.</span><span class="na">c</span> <span class="o">+</span> <span class="s">&quot;  v2.c=&quot;</span> <span class="o">+</span> <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+       <span class="n">Count</span> <span class="n">ct</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Count</span><span class="o">();</span>
+       <span class="n">prt</span><span class="o">(</span><span class="s">"ct.c="</span> <span class="o">+</span> <span class="n">ct</span><span class="o">.</span><span class="na">v</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
+       <span class="n">prt</span><span class="o">(</span><span class="s">"v1.c="</span> <span class="o">+</span> <span class="n">v1</span><span class="o">.</span><span class="na">c</span> <span class="o">+</span> <span class="s">"  v2.c="</span> <span class="o">+</span> <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
        <span class="n">v1</span><span class="o">.</span><span class="na">inc</span><span class="o">();</span>
-       <span class="n">prt</span><span class="o">(</span><span class="s">&quot;v1.c=&quot;</span> <span class="o">+</span> <span class="n">v1</span><span class="o">.</span><span class="na">c</span> <span class="o">+</span> <span class="s">&quot;  v2.c=&quot;</span> <span class="o">+</span> <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
-       <span class="n">prt</span><span class="o">(</span><span class="s">&quot;ct.c=&quot;</span> <span class="o">+</span> <span class="n">ct</span><span class="o">.</span><span class="na">v</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
+       <span class="n">prt</span><span class="o">(</span><span class="s">"v1.c="</span> <span class="o">+</span> <span class="n">v1</span><span class="o">.</span><span class="na">c</span> <span class="o">+</span> <span class="s">"  v2.c="</span> <span class="o">+</span> <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
+       <span class="n">prt</span><span class="o">(</span><span class="s">"ct.c="</span> <span class="o">+</span> <span class="n">ct</span><span class="o">.</span><span class="na">v</span><span class="o">.</span><span class="na">c</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
  
-<span class="n">结果为</span><span class="err">：</span><span class="n">v1</span><span class="o">.</span><span class="na">c</span><span class="o">=</span><span class="mi">0</span>  <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">=</span><span class="mi">0</span>
+<span class="err">结果为：</span><span class="n">v1</span><span class="o">.</span><span class="na">c</span><span class="o">=</span><span class="mi">0</span>  <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">=</span><span class="mi">0</span>
 <span class="n">v1</span><span class="o">.</span><span class="na">c</span><span class="o">=</span><span class="mi">27</span>  <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">=</span><span class="mi">27</span>
 <span class="n">v1</span><span class="o">.</span><span class="na">c</span><span class="o">=</span><span class="mi">15</span>  <span class="n">v2</span><span class="o">.</span><span class="na">c</span><span class="o">=</span><span class="mi">15</span>
 <span class="n">ct</span><span class="o">.</span><span class="na">c</span><span class="o">=</span><span class="mi">10</span>

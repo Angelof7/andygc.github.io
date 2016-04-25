@@ -68,13 +68,13 @@
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CyclicBarrierTest</span> <span class="o">{</span>
 
-        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">InterruptedException</span> <span class="o">{</span>
-            <span class="n">CyclicBarrier</span> <span class="n">barrier</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">CyclicBarrier</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+            <span class="n">CyclicBarrier</span> <span class="n">barrier</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CyclicBarrier</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
 
             <span class="n">ExecutorService</span> <span class="n">executor</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newFixedThreadPool</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
-            <span class="n">executor</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="k">new</span> <span class="nf">Runner</span><span class="o">(</span><span class="n">barrier</span><span class="o">,</span> <span class="s">&quot;1号选手&quot;</span><span class="o">)));</span>
-            <span class="n">executor</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="k">new</span> <span class="nf">Runner</span><span class="o">(</span><span class="n">barrier</span><span class="o">,</span> <span class="s">&quot;2号选手&quot;</span><span class="o">)));</span>
-            <span class="n">executor</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="k">new</span> <span class="nf">Runner</span><span class="o">(</span><span class="n">barrier</span><span class="o">,</span> <span class="s">&quot;3号选手&quot;</span><span class="o">)));</span>
+            <span class="n">executor</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runner</span><span class="o">(</span><span class="n">barrier</span><span class="o">,</span> <span class="s">"1号选手"</span><span class="o">)));</span>
+            <span class="n">executor</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runner</span><span class="o">(</span><span class="n">barrier</span><span class="o">,</span> <span class="s">"2号选手"</span><span class="o">)));</span>
+            <span class="n">executor</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runner</span><span class="o">(</span><span class="n">barrier</span><span class="o">,</span> <span class="s">"3号选手"</span><span class="o">)));</span>
 
             <span class="n">executor</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
         <span class="o">}</span>
@@ -86,17 +86,17 @@
 
         <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
 
-        <span class="kd">public</span> <span class="nf">Runner</span><span class="o">(</span><span class="n">CyclicBarrier</span> <span class="n">barrier</span><span class="o">,</span> <span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="n">Runner</span><span class="o">(</span><span class="n">CyclicBarrier</span> <span class="n">barrier</span><span class="o">,</span> <span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
             <span class="kd">super</span><span class="o">();</span>
             <span class="k">this</span><span class="o">.</span><span class="na">barrier</span> <span class="o">=</span> <span class="n">barrier</span><span class="o">;</span>
             <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
         <span class="o">}</span>
     
     <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="n">run</span><span class="o">()</span> <span class="o">{</span>
             <span class="k">try</span> <span class="o">{</span>
-                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="o">(</span><span class="k">new</span> <span class="nf">Random</span><span class="o">()).</span><span class="na">nextInt</span><span class="o">(</span><span class="mi">8</span><span class="o">));</span>
-                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; 准备好了...&quot;</span><span class="o">);</span>
+                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="o">(</span><span class="k">new</span> <span class="n">Random</span><span class="o">()).</span><span class="na">nextInt</span><span class="o">(</span><span class="mi">8</span><span class="o">));</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">" 准备好了..."</span><span class="o">);</span>
                 <span class="c1">// barrier的await方法，在所有参与者都已经在此 barrier 上调用 await 方法之前，将一直等待。</span>
                 <span class="n">barrier</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
             <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
@@ -104,7 +104,7 @@
             <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">BrokenBarrierException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
                 <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
             <span class="o">}</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; 起跑！&quot;</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">" 起跑！"</span><span class="o">);</span>
         <span class="o">}</span>
     <span class="o">}</span></code></pre></div>
 

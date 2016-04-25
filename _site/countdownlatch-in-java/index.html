@@ -93,7 +93,7 @@
         <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">_serviceUp</span><span class="o">;</span>
  
         <span class="c1">//Get latch object in constructor so that after completing the task, thread can countDown() the latch</span>
-        <span class="kd">public</span> <span class="nf">BaseHealthChecker</span><span class="o">(</span><span class="n">String</span> <span class="n">serviceName</span><span class="o">,</span> <span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">)</span>
+        <span class="kd">public</span> <span class="n">BaseHealthChecker</span><span class="o">(</span><span class="n">String</span> <span class="n">serviceName</span><span class="o">,</span> <span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">)</span>
         <span class="o">{</span>
             <span class="kd">super</span><span class="o">();</span>
             <span class="k">this</span><span class="o">.</span><span class="na">_latch</span> <span class="o">=</span> <span class="n">latch</span><span class="o">;</span>
@@ -102,7 +102,7 @@
         <span class="o">}</span>
  
         <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="n">run</span><span class="o">()</span> <span class="o">{</span>
             <span class="k">try</span> <span class="o">{</span>
                 <span class="n">verifyService</span><span class="o">();</span>
                 <span class="n">_serviceUp</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
@@ -116,29 +116,29 @@
             <span class="o">}</span>
         <span class="o">}</span>
  
-        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getServiceName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="n">getServiceName</span><span class="o">()</span> <span class="o">{</span>
             <span class="k">return</span> <span class="n">_serviceName</span><span class="o">;</span>
         <span class="o">}</span>
  
-        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isServiceUp</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">isServiceUp</span><span class="o">()</span> <span class="o">{</span>
             <span class="k">return</span> <span class="n">_serviceUp</span><span class="o">;</span>
         <span class="o">}</span>
         <span class="c1">//This methos needs to be implemented by all specific service checker</span>
-        <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">verifyService</span><span class="o">();</span>
+        <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="n">verifyService</span><span class="o">();</span>
     <span class="o">}</span></code></pre></div>
 
 <p><strong>NetworkHealthChecker.java</strong>：这个类继承了BaseHealthChecker，实现了verifyService()方法。DatabaseHealthChecker.java和CacheHealthChecker.java除了服务名和休眠时间外，与NetworkHealthChecker.java是一样的。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NetworkHealthChecker</span> <span class="kd">extends</span> <span class="n">BaseHealthChecker</span>
     <span class="o">{</span>
-        <span class="kd">public</span> <span class="nf">NetworkHealthChecker</span> <span class="o">(</span><span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">)</span>  <span class="o">{</span>
-            <span class="kd">super</span><span class="o">(</span><span class="s">&quot;Network Service&quot;</span><span class="o">,</span> <span class="n">latch</span><span class="o">);</span>
+        <span class="kd">public</span> <span class="n">NetworkHealthChecker</span> <span class="o">(</span><span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">)</span>  <span class="o">{</span>
+            <span class="kd">super</span><span class="o">(</span><span class="s">"Network Service"</span><span class="o">,</span> <span class="n">latch</span><span class="o">);</span>
         <span class="o">}</span>
  
         <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">verifyService</span><span class="o">()</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="n">verifyService</span><span class="o">()</span>
         <span class="o">{</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Checking &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="na">getServiceName</span><span class="o">());</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Checking "</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="na">getServiceName</span><span class="o">());</span>
             <span class="k">try</span>
             <span class="o">{</span>
                 <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">7000</span><span class="o">);</span>
@@ -147,7 +147,7 @@
             <span class="o">{</span>
                 <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
             <span class="o">}</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getServiceName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; is UP&quot;</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getServiceName</span><span class="o">()</span> <span class="o">+</span> <span class="s">" is UP"</span><span class="o">);</span>
         <span class="o">}</span>
     <span class="o">}</span></code></pre></div>
 
@@ -161,27 +161,27 @@
     <span class="c1">//This latch will be used to wait on</span>
     <span class="kd">private</span> <span class="kd">static</span> <span class="n">CountDownLatch</span> <span class="n">_latch</span><span class="o">;</span>
  
-    <span class="kd">private</span> <span class="nf">ApplicationStartupUtil</span><span class="o">()</span>
+    <span class="kd">private</span> <span class="n">ApplicationStartupUtil</span><span class="o">()</span>
     <span class="o">{</span>
     <span class="o">}</span>
  
-    <span class="kd">private</span> <span class="kd">final</span> <span class="kd">static</span> <span class="n">ApplicationStartupUtil</span> <span class="n">INSTANCE</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ApplicationStartupUtil</span><span class="o">();</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="kd">static</span> <span class="n">ApplicationStartupUtil</span> <span class="n">INSTANCE</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApplicationStartupUtil</span><span class="o">();</span>
  
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">ApplicationStartupUtil</span> <span class="nf">getInstance</span><span class="o">()</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">ApplicationStartupUtil</span> <span class="n">getInstance</span><span class="o">()</span>
     <span class="o">{</span>
         <span class="k">return</span> <span class="n">INSTANCE</span><span class="o">;</span>
     <span class="o">}</span>
  
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">checkExternalServices</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="n">checkExternalServices</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span>
     <span class="o">{</span>
         <span class="c1">//Initialize the latch with number of service checkers</span>
-        <span class="n">_latch</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">CountDownLatch</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+        <span class="n">_latch</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CountDownLatch</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
  
         <span class="c1">//All add checker in lists</span>
         <span class="n">_services</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">BaseHealthChecker</span><span class="o">&gt;();</span>
-        <span class="n">_services</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nf">NetworkHealthChecker</span><span class="o">(</span><span class="n">_latch</span><span class="o">));</span>
-        <span class="n">_services</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nf">CacheHealthChecker</span><span class="o">(</span><span class="n">_latch</span><span class="o">));</span>
-        <span class="n">_services</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nf">DatabaseHealthChecker</span><span class="o">(</span><span class="n">_latch</span><span class="o">));</span>
+        <span class="n">_services</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">NetworkHealthChecker</span><span class="o">(</span><span class="n">_latch</span><span class="o">));</span>
+        <span class="n">_services</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">CacheHealthChecker</span><span class="o">(</span><span class="n">_latch</span><span class="o">));</span>
+        <span class="n">_services</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">DatabaseHealthChecker</span><span class="o">(</span><span class="n">_latch</span><span class="o">));</span>
  
         <span class="c1">//Start service checkers using executor framework</span>
         <span class="n">Executor</span> <span class="n">executor</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newFixedThreadPool</span><span class="o">(</span><span class="n">_services</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
@@ -209,7 +209,7 @@
 <p>现在你可以写测试代码去检测一下闭锁的功能了。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
     <span class="o">{</span>
             <span class="kt">boolean</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
             <span class="k">try</span> <span class="o">{</span>
@@ -217,7 +217,7 @@
             <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
                 <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
             <span class="o">}</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;External services validation completed !! Result was :: &quot;</span><span class="o">+</span> <span class="n">result</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"External services validation completed !! Result was :: "</span><span class="o">+</span> <span class="n">result</span><span class="o">);</span>
         <span class="o">}</span>
     <span class="o">}</span>
 

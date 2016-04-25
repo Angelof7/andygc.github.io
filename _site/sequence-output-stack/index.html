@@ -82,8 +82,8 @@
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
         <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">number</span><span class="o">;</span>
 
-    	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-    		<span class="n">Scanner</span> <span class="n">cin</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+    	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    		<span class="n">Scanner</span> <span class="n">cin</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
     		<span class="kt">int</span> <span class="n">T</span> <span class="o">=</span> <span class="n">cin</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
     		<span class="kt">int</span><span class="o">[]</span> <span class="n">A</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">T</span><span class="o">];</span>
     		<span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
@@ -97,7 +97,7 @@
     		<span class="n">cin</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
     	<span class="o">}</span>
     
-    	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">func</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">stack</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">count</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+    	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">func</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">stack</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">count</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
     		<span class="c1">// 1代表进栈；0代表出栈</span>
     		<span class="k">if</span> <span class="o">(</span><span class="n">count</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
     			<span class="n">stack</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
@@ -124,7 +124,7 @@
     				<span class="k">if</span> <span class="o">(</span><span class="n">out</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
     					<span class="n">stk</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">j</span><span class="o">++]);</span>
     				<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-    					<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">stk</span><span class="o">.</span><span class="na">pop</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; &quot;</span><span class="o">);</span>
+    					<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">stk</span><span class="o">.</span><span class="na">pop</span><span class="o">()</span> <span class="o">+</span> <span class="s">" "</span><span class="o">);</span>
     				<span class="o">}</span>
     			<span class="o">}</span>
     			<span class="n">number</span><span class="o">++;</span>

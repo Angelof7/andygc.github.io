@@ -99,7 +99,7 @@ Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所�
   <li>archetype</li>
 </ol>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>mvn archetype:generate 
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="gp">$ </span>mvn archetype:generate 
 -DgroupId<span class="o">=</span>com.mycompany.helloworld 
 -DartifactId<span class="o">=</span>helloworld 
 -Dpackage<span class="o">=</span>com.mycompany.helloworld 
@@ -109,17 +109,17 @@ Maven 使用惯例优于配置的原则 。它要求在没有定制之前，所�
   <li>构建</li>
 </ol>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>mvn clean compile   
-<span class="nv">$ </span>mvn clean <span class="nb">test</span>   
-<span class="nv">$ </span>mvn clean package  
-<span class="nv">$ </span>mvn clean install</code></pre></div>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="gp">$ </span>mvn clean compile   
+<span class="gp">$ </span>mvn clean <span class="nb">test</span>   
+<span class="gp">$ </span>mvn clean package  
+<span class="gp">$ </span>mvn clean install</code></pre></div>
 
 <ol>
   <li>POM</li>
 </ol>
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-     <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+     <span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span><span class="nt">&gt;</span>
      <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span> 
 
      <span class="nt">&lt;groupId&gt;</span>com.mycompany.helloworld<span class="nt">&lt;/groupId&gt;</span> 

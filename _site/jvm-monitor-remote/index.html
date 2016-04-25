@@ -58,11 +58,11 @@
 <hr />
 <p>在tomcat中的bin/catalina.sh中添加:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">&quot;$JAVA_OPTS  </span>
-<span class="s2"> -Djava.rmi.server.hostname=nts3.photo.163.org  </span>
-<span class="s2"> -Dcom.sun.management.jmxremote.port=8950  </span>
-<span class="s2"> -Dcom.sun.management.jmxremote.authenticate=false  </span>
-<span class="s2"> -Dcom.sun.management.jmxremote.ssl=false&quot;</span></code></pre></div>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">"</span><span class="nv">$JAVA_OPTS</span><span class="s2">  
+ -Djava.rmi.server.hostname=nts3.photo.163.org  
+ -Dcom.sun.management.jmxremote.port=8950  
+ -Dcom.sun.management.jmxremote.authenticate=false  
+ -Dcom.sun.management.jmxremote.ssl=false"</span></code></pre></div>
 
 <h3 id="jconsole">JConsole</h3>
 <hr />

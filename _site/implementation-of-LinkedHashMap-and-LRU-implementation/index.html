@@ -84,10 +84,10 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="kd">private</span> <span class="kd">final</span> <span class="kt">boolean</span> <span class="n">accessOrder</span><span class="o">;</span>
 
 
- <span class="cm">/** </span>
-<span class="cm"> * LinkedHashMap的Entry元素。 </span>
-<span class="cm"> * 继承HashMap的Entry元素，又保存了其上一个元素before和下一个元素after的引用。 </span>
-<span class="cm"> */</span>  
+ <span class="cm">/** 
+ * LinkedHashMap的Entry元素。 
+ * 继承HashMap的Entry元素，又保存了其上一个元素before和下一个元素after的引用。 
+ */</span>  
 <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">HashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="o">{</span>  
     <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">before</span><span class="o">,</span> <span class="n">after</span><span class="o">;</span>  
     <span class="err">……</span>  <span class="c1">//Entry类涉及到的方法，下面会继续分析</span>
@@ -100,7 +100,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 构造方法1，构造一个指定初始容量和加载因子的、按照插入顺序的LinkedList</span>
 <span class="c1">//加载因子取默认的0.75f  </span>
 
-<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="o">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">,</span> <span class="kt">float</span> <span class="n">loadFactor</span><span class="o">)</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="p">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">,</span> <span class="kt">float</span> <span class="n">loadFactor</span><span class="o">)</span> <span class="o">{</span>
     <span class="kd">super</span><span class="o">(</span><span class="n">initialCapacity</span><span class="o">,</span> <span class="n">loadFactor</span><span class="o">);</span>
     <span class="n">accessOrder</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 <span class="o">}</span>
@@ -108,7 +108,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
 <span class="c1">// 构造方法2，构造一个指定初始容量的LinkedHashMap，取得键值对的顺序是插入顺序</span>
 <span class="c1">//加载因子取默认的0.75f  </span>
 
-<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="o">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">)</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="p">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">)</span> <span class="o">{</span>
     <span class="kd">super</span><span class="o">(</span><span class="n">initialCapacity</span><span class="o">);</span>
     <span class="n">accessOrder</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 <span class="o">}</span>
@@ -116,7 +116,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
 <span class="c1">// 构造方法3，用默认的初始化容量和加载因子创建一个LinkedHashMap，取得键值对的顺序是插入顺序</span>
 <span class="c1">//加载因子取默认的0.75f  </span>
 
-<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="o">()</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="p">(</span><span class="o">)</span> <span class="o">{</span>
     <span class="kd">super</span><span class="o">();</span>
     <span class="n">accessOrder</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 <span class="o">}</span>
@@ -124,13 +124,13 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
 <span class="c1">// 构造方法4，通过传入的map创建一个LinkedHashMap，容量为默认容量（16）和</span>
 <span class="c1">//(map.zise()/DEFAULT_LOAD_FACTORY)+1的较大者，加载因子为默认值0.75</span>
 
-<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">K</span><span class="o">,</span> <span class="o">?</span> <span class="kd">extends</span> <span class="n">V</span><span class="o">&gt;</span> <span class="n">m</span><span class="o">)</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="p">(</span><span class="n">Map</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">K</span><span class="o">,</span> <span class="o">?</span> <span class="kd">extends</span> <span class="n">V</span><span class="o">&gt;</span> <span class="n">m</span><span class="o">)</span> <span class="o">{</span>
     <span class="kd">super</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
     <span class="n">accessOrder</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 <span class="o">}</span>
 
 <span class="c1">// 构造方法5，根据指定容量、加载因子和指定链表中的元素排序的规则  创建一个LinkedHashMap</span>
-<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="o">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">,</span>
+<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="p">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">,</span>
              <span class="kt">float</span> <span class="n">loadFactor</span><span class="o">,</span>
                          <span class="kt">boolean</span> <span class="n">accessOrder</span><span class="o">)</span> <span class="o">{</span>
     <span class="kd">super</span><span class="o">(</span><span class="n">initialCapacity</span><span class="o">,</span> <span class="n">loadFactor</span><span class="o">);</span>
@@ -139,7 +139,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
 
 <p>我们已经知道LinkedHashMap的Entry元素继承HashMap的Entry，提供了双向链表的功能。在HashMap的构造器中，最后会调用init()方法，进行相关的初始化，这个方法在HashMap的实现中是空方法(感叹模板模式的精妙！)，只是提供给子类实现相关的初始化调用。LinkedHashMap重写了init()方法，在调用父类的构造方法完成构造后，进一步实现了对其元素Entry的初始化操作。分析init()方法，的确是对header进行了初始化，并构造成一个双向循环链表（和LinkedList的存储结构是一样的）。</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">init</span><span class="p">(</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">header</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;(-</span><span class="mi">1</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
     <span class="n">header</span><span class="o">.</span><span class="na">before</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="n">header</span><span class="o">;</span>
 <span class="o">}</span></code></pre></div>
@@ -152,7 +152,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
 	<span class="c1">//而是覆写了put方法所调用的addEntry方法和recordAccess方法，</span>
 	<span class="c1">//put方法在插入的key已存在的情况下，会调用recordAccess方法，</span>
 	<span class="c1">//在插入的key不存在的情况下，要调用addEntry插入新的Entry</span>
-<span class="kt">void</span> <span class="nf">addEntry</span><span class="o">(</span><span class="kt">int</span> <span class="n">hash</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span> <span class="n">bucketIndex</span><span class="o">)</span> <span class="o">{</span>
+<span class="kt">void</span> <span class="nf">addEntry</span><span class="p">(</span><span class="kt">int</span> <span class="n">hash</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span> <span class="n">bucketIndex</span><span class="o">)</span> <span class="o">{</span>
 	<span class="c1">//创建新的Entry，并插入到LinkedHashMap中</span>
     <span class="n">createEntry</span><span class="o">(</span><span class="n">hash</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">bucketIndex</span><span class="o">);</span>
 
@@ -169,7 +169,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="o">}</span>
 <span class="o">}</span>
 
-<span class="kt">void</span> <span class="nf">createEntry</span><span class="o">(</span><span class="kt">int</span> <span class="n">hash</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span> <span class="n">bucketIndex</span><span class="o">)</span> <span class="o">{</span>
+<span class="kt">void</span> <span class="nf">createEntry</span><span class="p">(</span><span class="kt">int</span> <span class="n">hash</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span> <span class="n">bucketIndex</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">HashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">old</span> <span class="o">=</span> <span class="n">table</span><span class="o">[</span><span class="n">bucketIndex</span><span class="o">];</span>
     <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;(</span><span class="n">hash</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">old</span><span class="o">);</span>
     <span class="n">table</span><span class="o">[</span><span class="n">bucketIndex</span><span class="o">]</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
@@ -181,7 +181,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
     <span class="n">size</span><span class="o">++;</span>
 <span class="o">}</span>
 <span class="c1">//双向循环立链表中，将当前的Entry插入到existingEntry的前面</span>
-<span class="kd">private</span> <span class="kt">void</span> <span class="nf">addBefore</span><span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">existingEntry</span><span class="o">)</span> <span class="o">{</span>
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">addBefore</span><span class="p">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">existingEntry</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">after</span>  <span class="o">=</span> <span class="n">existingEntry</span><span class="o">;</span>
     <span class="n">before</span> <span class="o">=</span> <span class="n">existingEntry</span><span class="o">.</span><span class="na">before</span><span class="o">;</span>
     <span class="n">before</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
@@ -192,7 +192,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
 <span class="c1">//要覆写该方法，一般的实现是，当设定的内存（这里指节点个数）达到最大值时，返回true，</span>
 <span class="c1">//这样put新的Entry（该Entry的key在哈希表中没有已经存在）时，</span>
 <span class="c1">//就会调用removeEntryForKey方法，将最近最少使用的节点删除（head后面的那个节点，实际上是最近没有使用）。</span>
-    <span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">removeEldestEntry</span><span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">eldest</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">protected</span> <span class="kt">boolean</span> <span class="n">removeEldestEntry</span><span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">eldest</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
@@ -206,7 +206,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
 	<span class="c1">//注意这里的recordAccess方法，</span>
 	<span class="c1">//如果链表中元素的排序规则是按照插入的先后顺序排序的话，该方法什么也不做，</span>
 	<span class="c1">//如果链表中元素的排序规则是按照访问的先后顺序排序的话，则将e移到链表的末尾处。</span>
-<span class="kd">public</span> <span class="n">V</span> <span class="nf">get</span><span class="o">(</span><span class="n">Object</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="n">V</span> <span class="nf">get</span><span class="p">(</span><span class="n">Object</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
     <span class="c1">// 调用父类HashMap的getEntry()方法，取得要查找的元素。</span>
     <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;)</span><span class="n">getEntry</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
     <span class="k">if</span> <span class="o">(</span><span class="n">e</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
@@ -222,7 +222,7 @@ LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMa
 <span class="c1">//accessOrder为true时，get方法会调用recordAccess方法</span>
 <span class="c1">//put方法在覆盖key-value对时也会调用recordAccess方法</span>
 <span class="c1">//它们导致Entry最近使用，因此将其移到双向链表的末尾</span>
-<span class="kt">void</span> <span class="nf">recordAccess</span><span class="o">(</span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">m</span><span class="o">)</span> <span class="o">{</span>
+<span class="kt">void</span> <span class="nf">recordAccess</span><span class="p">(</span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">m</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">lm</span> <span class="o">=</span> <span class="o">(</span><span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;)</span><span class="n">m</span><span class="o">;</span>
 	<span class="c1">//如果链表中元素按照访问顺序排序，则将当前访问的Entry移到双向循环链表的尾部，</span>
 	<span class="c1">//如果是按照插入的先后顺序排序，则不做任何事情。</span>
@@ -242,12 +242,12 @@ HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移�
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 继承了HashMap.Entry  </span>
 <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">HashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="o">{</span>  
  
-    <span class="kt">void</span> <span class="nf">recordRemoval</span><span class="o">(</span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="n">m</span><span class="o">)</span> <span class="o">{</span>  
+    <span class="kt">void</span> <span class="n">recordRemoval</span><span class="o">(</span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="n">m</span><span class="o">)</span> <span class="o">{</span>  
         <span class="n">remove</span><span class="o">();</span>  
     <span class="o">}</span>  
       
     <span class="c1">//让当前Entry从header链表中消失  </span>
-    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">()</span> <span class="o">{</span>  
+    <span class="kd">private</span> <span class="kt">void</span> <span class="n">remove</span><span class="o">()</span> <span class="o">{</span>  
         <span class="n">before</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="n">after</span><span class="o">;</span>  
         <span class="n">after</span><span class="o">.</span><span class="na">before</span> <span class="o">=</span> <span class="n">before</span><span class="o">;</span>  
     <span class="o">}</span>  
@@ -260,33 +260,33 @@ HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移�
         <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">nextEntry</span>    <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="na">after</span><span class="o">;</span>
         <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">lastReturned</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
-        <span class="cm">/**</span>
-<span class="cm">         * The modCount value that the iterator believes that the backing</span>
-<span class="cm">         * List should have.  If this expectation is violated, the iterator</span>
-<span class="cm">         * has detected concurrent modification.</span>
-<span class="cm">         */</span>
+        <span class="cm">/**
+         * The modCount value that the iterator believes that the backing
+         * List should have.  If this expectation is violated, the iterator
+         * has detected concurrent modification.
+         */</span>
         <span class="kt">int</span> <span class="n">expectedModCount</span> <span class="o">=</span> <span class="n">modCount</span><span class="o">;</span>
 
-        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">hasNext</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">hasNext</span><span class="o">()</span> <span class="o">{</span>
             <span class="k">return</span> <span class="n">nextEntry</span> <span class="o">!=</span> <span class="n">header</span><span class="o">;</span>
         <span class="o">}</span>
 
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="n">remove</span><span class="o">()</span> <span class="o">{</span>
             <span class="k">if</span> <span class="o">(</span><span class="n">lastReturned</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">();</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalStateException</span><span class="o">();</span>
             <span class="k">if</span> <span class="o">(</span><span class="n">modCount</span> <span class="o">!=</span> <span class="n">expectedModCount</span><span class="o">)</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">ConcurrentModificationException</span><span class="o">();</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">ConcurrentModificationException</span><span class="o">();</span>
 
             <span class="n">LinkedHashMap</span><span class="o">.</span><span class="na">this</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">lastReturned</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
             <span class="n">lastReturned</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
             <span class="n">expectedModCount</span> <span class="o">=</span> <span class="n">modCount</span><span class="o">;</span>
         <span class="o">}</span>
         <span class="c1">//从head的下一个节点开始迭代</span>
-        <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="nf">nextEntry</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">nextEntry</span><span class="o">()</span> <span class="o">{</span>
             <span class="k">if</span> <span class="o">(</span><span class="n">modCount</span> <span class="o">!=</span> <span class="n">expectedModCount</span><span class="o">)</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">ConcurrentModificationException</span><span class="o">();</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">ConcurrentModificationException</span><span class="o">();</span>
             <span class="k">if</span> <span class="o">(</span><span class="n">nextEntry</span> <span class="o">==</span> <span class="n">header</span><span class="o">)</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">NoSuchElementException</span><span class="o">();</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">NoSuchElementException</span><span class="o">();</span>
 
             <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">lastReturned</span> <span class="o">=</span> <span class="n">nextEntry</span><span class="o">;</span>
             <span class="n">nextEntry</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">after</span><span class="o">;</span>
@@ -296,15 +296,15 @@ HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移�
     <span class="c1">//key迭代器</span>
     <span class="c1">//看出这三个类都很简单，只有一个next()方法，next()方法也只是去调用LinkedHashIterator类中相应的方法</span>
     <span class="kd">private</span> <span class="kd">class</span> <span class="nc">KeyIterator</span> <span class="kd">extends</span> <span class="n">LinkedHashIterator</span><span class="o">&lt;</span><span class="n">K</span><span class="o">&gt;</span> <span class="o">{</span>
-        <span class="kd">public</span> <span class="n">K</span> <span class="nf">next</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="nf">nextEntry</span><span class="o">().</span><span class="na">getKey</span><span class="o">();</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="n">K</span> <span class="n">next</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">nextEntry</span><span class="o">().</span><span class="na">getKey</span><span class="o">();</span> <span class="o">}</span>
     <span class="o">}</span>
     <span class="c1">//value迭代器</span>
     <span class="kd">private</span> <span class="kd">class</span> <span class="nc">ValueIterator</span> <span class="kd">extends</span> <span class="n">LinkedHashIterator</span><span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span> <span class="o">{</span>
-        <span class="kd">public</span> <span class="n">V</span> <span class="nf">next</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="nf">nextEntry</span><span class="o">().</span><span class="na">value</span><span class="o">;</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="n">V</span> <span class="n">next</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">nextEntry</span><span class="o">().</span><span class="na">value</span><span class="o">;</span> <span class="o">}</span>
     <span class="o">}</span>
     <span class="c1">//Entry迭代器</span>
     <span class="kd">private</span> <span class="kd">class</span> <span class="nc">EntryIterator</span> <span class="kd">extends</span> <span class="n">LinkedHashIterator</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
-        <span class="kd">public</span> <span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="nf">next</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="nf">nextEntry</span><span class="o">();</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">nextEntry</span><span class="o">();</span> <span class="o">}</span>
     <span class="o">}</span></code></pre></div>
 
 <h2 id="linkedhashmaplru-cache">8.基于LinkedHashMap实现LRU Cache</h2>
@@ -316,29 +316,29 @@ HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移�
 get方法通过调用recordAccess方法来实现，put方法在覆盖已有key的情况下，也是通过调用recordAccess方法来实现，在插入新的Entry时，则是通过createEntry中的addBefore方法来实现），这样便把最近使用了的Entry放入到了双向链表的后面，多次操作后，
 双向链表前面的Entry便是最近没有使用的，这样当节点个数满的时候，删除的最前面的Entry(head后面的那个Entry)便是最近最少使用的Entry。</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/*LRU是Least Recently Used 近期最少使用算法。</span>
-<span class="cm"> *通过HashLiekedMap实现LRU的算法的关键是，如果map里面的元素个数大于了缓存最大容量，则删除链表头元素</span>
-<span class="cm"> */</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/*LRU是Least Recently Used 近期最少使用算法。
+ *通过HashLiekedMap实现LRU的算法的关键是，如果map里面的元素个数大于了缓存最大容量，则删除链表头元素
+ */</span>
 
-<span class="cm">/*public LinkedHashMap(int initialCapacity,float loadFactor,boolean accessOrder)</span>
-<span class="cm"> *LRU参数参数：</span>
-<span class="cm"> *initialCapacity - 初始容量。</span>
-<span class="cm"> *loadFactor - 加载因子（需要是按该因子扩充容量）。</span>
-<span class="cm"> *accessOrder - 排序模式( true) - 对于访问顺序（get一个元素后，这个元素被加到最后，使用了LRU  最近最少被使用的调度算法），对于插入顺序，则为 false,可以不断加入元素。</span>
-<span class="cm"> */</span>
+<span class="cm">/*public LinkedHashMap(int initialCapacity,float loadFactor,boolean accessOrder)
+ *LRU参数参数：
+ *initialCapacity - 初始容量。
+ *loadFactor - 加载因子（需要是按该因子扩充容量）。
+ *accessOrder - 排序模式( true) - 对于访问顺序（get一个元素后，这个元素被加到最后，使用了LRU  最近最少被使用的调度算法），对于插入顺序，则为 false,可以不断加入元素。
+ */</span>
 
- <span class="cm">/*相关思路介绍：</span>
-<span class="cm">  * 当有一个新的元素加入到链表里面时，程序会调用LinkedHahMap类中Entry的addEntry方法，</span>
-<span class="cm">  *而该方法又会 会调用removeEldestEntry方法，这里就是实现LRU元素过期机制的地方，</span>
-<span class="cm">  * 默认的情况下removeEldestEntry方法只返回false，表示可以一直表链表里面增加元素，在这个里  *修改一下就好了。 </span>
-<span class="cm">  *</span>
-<span class="cm">  */</span>
+ <span class="cm">/*相关思路介绍：
+  * 当有一个新的元素加入到链表里面时，程序会调用LinkedHahMap类中Entry的addEntry方法，
+  *而该方法又会 会调用removeEldestEntry方法，这里就是实现LRU元素过期机制的地方，
+  * 默认的情况下removeEldestEntry方法只返回false，表示可以一直表链表里面增加元素，在这个里  *修改一下就好了。 
+  *
+  */</span>
  
-<span class="cm">/*</span>
-<span class="cm">测试数据：</span>
-<span class="cm">11</span>
-<span class="cm">7 0 7 1 0 1 2 1 2 6</span>
-<span class="cm">*/</span>
+<span class="cm">/*
+测试数据：
+11
+7 0 7 1 0 1 2 1 2 6
+*/</span>
 
 <span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">LRULinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;{</span>     
@@ -349,33 +349,33 @@ get方法通过调用recordAccess方法来实现，put方法在覆盖已有key�
         <span class="k">this</span><span class="o">.</span><span class="na">capacity</span><span class="o">=</span><span class="n">capacity</span><span class="o">;</span>             <span class="c1">//传递指定的最大内存容量</span>
     <span class="o">}</span>
     <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">removeEldestEntry</span><span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="n">eldest</span><span class="o">){</span>     
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">removeEldestEntry</span><span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="n">eldest</span><span class="o">){</span>     
         <span class="c1">//，每加入一个元素，就判断是size是否超过了已定的容量</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;此时的size大小=&quot;</span><span class="o">+</span><span class="n">size</span><span class="o">());</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"此时的size大小="</span><span class="o">+</span><span class="n">size</span><span class="o">());</span>
         <span class="k">if</span><span class="o">((</span><span class="n">size</span><span class="o">()&gt;</span><span class="n">capacity</span><span class="o">))</span>
         <span class="o">{</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;超出已定的内存容量，把链表顶端元素移除：&quot;</span><span class="o">+</span><span class="n">eldest</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"超出已定的内存容量，把链表顶端元素移除："</span><span class="o">+</span><span class="n">eldest</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
         <span class="o">}</span>
-        <span class="k">return</span> <span class="nf">size</span><span class="o">()&gt;</span><span class="n">capacity</span><span class="o">;</span>        
+        <span class="k">return</span> <span class="n">size</span><span class="o">()&gt;</span><span class="n">capacity</span><span class="o">;</span>        
     <span class="o">}</span>
     
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span><span class="c1">//方便实例，直接将异常抛出</span>
-        <span class="n">Scanner</span> <span class="n">cin</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span><span class="c1">//方便实例，直接将异常抛出</span>
+        <span class="n">Scanner</span> <span class="n">cin</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
         
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;请输入总共内存页面数： &quot;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"请输入总共内存页面数： "</span><span class="o">);</span>
         <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">cin</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
         <span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">map</span><span class="o">=</span><span class="k">new</span> <span class="n">LRULinkedHashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;(</span><span class="n">n</span><span class="o">);</span>
         
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;请输入按顺序输入要访问内存的总共页面数： &quot;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"请输入按顺序输入要访问内存的总共页面数： "</span><span class="o">);</span>
         <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">cin</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
         
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;请输入按顺序输入访问内存的页面序列： &quot;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"请输入按顺序输入访问内存的页面序列： "</span><span class="o">);</span>
         <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">y</span><span class="o">;</span><span class="n">i</span><span class="o">++)</span>
         <span class="o">{</span>
             <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">cin</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
             <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">x</span><span class="o">,</span>  <span class="n">x</span><span class="o">);</span>  
         <span class="o">}</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;此时内存中包含的页面数是有:&quot;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"此时内存中包含的页面数是有:"</span><span class="o">);</span>
         <span class="c1">//遍历此时内存中的页面并输出</span>
         <span class="k">for</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="nl">entry:</span> <span class="n">map</span><span class="o">.</span><span class="na">entrySet</span><span class="o">()){</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>

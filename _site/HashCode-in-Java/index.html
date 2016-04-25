@@ -87,10 +87,11 @@ Java中采用哈希算法(也叫散列算法)来解决这个问题，将对象(�
     <span class="kt">int</span>        <span class="n">employeeId</span><span class="o">;</span>
     <span class="n">String</span>     <span class="n">name</span><span class="o">;</span>
  
-    <span class="c1">// other methods would be in here </span>
+    <span class="c1">// other methods would be in here 
+</span>
 
     <span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">obj</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">boolean</span> <span class="n">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">obj</span><span class="o">)</span>
 	<span class="o">{</span>
 		<span class="k">if</span><span class="o">(</span><span class="n">obj</span><span class="o">==</span><span class="k">this</span><span class="o">)</span>
 			<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
@@ -101,7 +102,7 @@ Java中采用哈希算法(也叫散列算法)来解决这个问题，将对象(�
 	<span class="o">}</span>
 
     <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="n">hashCode</span><span class="o">()</span> <span class="o">{</span>
         <span class="kt">int</span> <span class="n">hash</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
         <span class="n">hash</span> <span class="o">=</span> <span class="n">hash</span> <span class="o">*</span> <span class="mi">17</span> <span class="o">+</span> <span class="n">employeeId</span><span class="o">;</span>
         <span class="n">hash</span> <span class="o">=</span> <span class="n">hash</span> <span class="o">*</span> <span class="mi">31</span> <span class="o">+</span> <span class="n">name</span><span class="o">.</span><span class="na">hashCode</span><span class="o">();</span>
@@ -115,7 +116,7 @@ Java中采用哈希算法(也叫散列算法)来解决这个问题，将对象(�
 
 <p>Java代码</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="p">(</span><span class="o">)</span> <span class="o">{</span>
 	<span class="kt">int</span> <span class="n">h</span> <span class="o">=</span> <span class="n">hash</span><span class="o">;</span>
 	<span class="k">if</span> <span class="o">(</span><span class="n">h</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
 	    <span class="kt">int</span> <span class="n">off</span> <span class="o">=</span> <span class="n">offset</span><span class="o">;</span>
@@ -144,16 +145,16 @@ Java中采用哈希算法(也叫散列算法)来解决这个问题，将对象(�
 
 <p>Object类中hashCode()是一个Native方法。<a href="http://stackvoid.com/cn/2014/05/JNI-usage1/">Native方法如何调用?</a></p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">native</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">();</span></code></pre></div>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">native</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="p">(</span><span class="o">);</span></code></pre></div>
 
 <p>Object类的Native方法类可在<a href="http://hg.openjdk.java.net/jdk7/jdk7/jdk/file/9b8c96f96a0f/src/share/native/java/lang/Object.c">这里</a>找到。 深入分析请看<a href="http://stackvoid.com/cn/2014/06/default-Object-hashCode-implements/">另外一篇博客</a></p>
 
 <div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">JNINativeMethod</span> <span class="n">methods</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="p">{</span><span class="s">&quot;hashCode&quot;</span><span class="p">,</span>    <span class="s">&quot;()I&quot;</span><span class="p">,</span>                    <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_IHashCode</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">&quot;wait&quot;</span><span class="p">,</span>        <span class="s">&quot;(J)V&quot;</span><span class="p">,</span>                   <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_MonitorWait</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">&quot;notify&quot;</span><span class="p">,</span>      <span class="s">&quot;()V&quot;</span><span class="p">,</span>                    <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_MonitorNotify</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">&quot;notifyAll&quot;</span><span class="p">,</span>   <span class="s">&quot;()V&quot;</span><span class="p">,</span>                    <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_MonitorNotifyAll</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">&quot;clone&quot;</span><span class="p">,</span>       <span class="s">&quot;()Ljava/lang/Object;&quot;</span><span class="p">,</span>   <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_Clone</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"hashCode"</span><span class="p">,</span>    <span class="s">"()I"</span><span class="p">,</span>                    <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_IHashCode</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"wait"</span><span class="p">,</span>        <span class="s">"(J)V"</span><span class="p">,</span>                   <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_MonitorWait</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"notify"</span><span class="p">,</span>      <span class="s">"()V"</span><span class="p">,</span>                    <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_MonitorNotify</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"notifyAll"</span><span class="p">,</span>   <span class="s">"()V"</span><span class="p">,</span>                    <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_MonitorNotifyAll</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"clone"</span><span class="p">,</span>       <span class="s">"()Ljava/lang/Object;"</span><span class="p">,</span>   <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">JVM_Clone</span><span class="p">},</span>
 <span class="p">};</span></code></pre></div>
 
 <p>源代码包括getClass()(See line58)等, hashCode()(See line43)被定义为一个指向JVM_IHashCode指针。</p>

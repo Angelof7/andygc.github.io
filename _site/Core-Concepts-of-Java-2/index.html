@@ -197,7 +197,7 @@ str.toUpperCase();
 
 <p>在插入数据时，如果想要控制空格与对齐，你需要更精细复杂的格式修饰符，以下是其抽象语法：</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">%[</span><span class="n">argument_index$</span><span class="o">][</span><span class="n">flags</span><span class="o">][</span><span class="n">width</span><span class="o">][.</span><span class="na">precision</span><span class="o">]</span><span class="n">conversion</span></code></pre></div>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">%[</span><span class="n">argument_index</span><span class="err">$</span><span class="o">][</span><span class="n">flags</span><span class="o">][</span><span class="n">width</span><span class="o">][.</span><span class="na">precision</span><span class="o">]</span><span class="n">conversion</span></code></pre></div>
 
 <p>可选的 argument_index 是一个十进制整数，用于表明参数在参数列表中的位置。第一个参数由 “1$” 引用，第二个参数由 “2$” 引用，依此类推。</p>
 
@@ -211,7 +211,7 @@ str.toUpperCase();
 
 <p>用来表示日期和时间类型的格式说明符的语法如下：</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">%[</span><span class="n">argument_index$</span><span class="o">][</span><span class="n">flags</span><span class="o">][</span><span class="n">width</span><span class="o">]</span><span class="n">conversion</span></code></pre></div>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">%[</span><span class="n">argument_index</span><span class="err">$</span><span class="o">][</span><span class="n">flags</span><span class="o">][</span><span class="n">width</span><span class="o">]</span><span class="n">conversion</span></code></pre></div>
 
 <p>可选的 argument_index、flags 和 width的定义同上。</p>
 
@@ -335,7 +335,7 @@ public FileInputStream(File file)throws FileNotFoundException
 
 <p>FileWriter类的构造方法定义如下：</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">FileWriter</span><span class="o">(</span><span class="n">File</span> <span class="n">file</span><span class="o">)</span><span class="kd">throws</span> <span class="n">IOException</span></code></pre></div>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">FileWriter</span><span class="p">(</span><span class="n">File</span> <span class="n">file</span><span class="o">)</span><span class="kd">throws</span> <span class="n">IOException</span></code></pre></div>
 
 <p>字符流的操作比字节流操作好在一点，就是可以直接输出字符串了，不用再像之前那样进行转换操作了。</p>
 
@@ -349,7 +349,7 @@ public FileInputStream(File file)throws FileNotFoundException
 
 <p>FileReader的构造方法定义如下：</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">FileReader</span><span class="o">(</span><span class="n">File</span> <span class="n">file</span><span class="o">)</span><span class="kd">throws</span> <span class="n">FileNotFoundException</span></code></pre></div>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">FileReader</span><span class="p">(</span><span class="n">File</span> <span class="n">file</span><span class="o">)</span><span class="kd">throws</span> <span class="n">FileNotFoundException</span></code></pre></div>
 
 <p><a href="http://www.cnblogs.com/lich/archive/2011/12/11/2283700.html">例子</a></p>
 
@@ -394,9 +394,9 @@ OutputStream out = new BufferedOutputStream(new ObjectOutputStream(new FileOutpu
 <p>InputStreamReader 类是字节到字符的转化桥梁，InputStream 到 Reader 的过程要指定编码字符集，否则将采用操作系统默认字符集，很可能会出现乱码问题。StreamDecoder 正是完成字节到字符的解码的实现类。也就是当你用如下方式读取一个文件时：</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">try</span> <span class="o">{</span> 
-            <span class="n">StringBuffer</span> <span class="n">str</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">StringBuffer</span><span class="o">();</span> 
+            <span class="n">StringBuffer</span> <span class="n">str</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span> 
             <span class="kt">char</span><span class="o">[]</span> <span class="n">buf</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="o">[</span><span class="mi">1024</span><span class="o">];</span> 
-            <span class="n">FileReader</span> <span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FileReader</span><span class="o">(</span><span class="s">&quot;file&quot;</span><span class="o">);</span> 
+            <span class="n">FileReader</span> <span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileReader</span><span class="o">(</span><span class="s">"file"</span><span class="o">);</span> 
             <span class="k">while</span><span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buf</span><span class="o">)&gt;</span><span class="mi">0</span><span class="o">){</span> 
                 <span class="n">str</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">buf</span><span class="o">);</span> 
             <span class="o">}</span> 
@@ -442,19 +442,19 @@ OutputStream out = new BufferedOutputStream(new ObjectOutputStream(new FileOutpu
 
 <p>构造方法：</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">ByteArrayInputStream</span><span class="o">(</span><span class="kt">byte</span><span class="o">[]</span> <span class="n">buf</span><span class="o">)</span></code></pre></div>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">ByteArrayInputStream</span><span class="p">(</span><span class="kt">byte</span><span class="o">[]</span> <span class="n">buf</span><span class="o">)</span></code></pre></div>
 
 <p>接受一个byte数组，实际上内存的输入就是在构造方法上将数据传入到内存中。</p>
 
 <p>ByteArrayOutputStream：输出就是从内存中<a href="">写出</a>数据：</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">write</span><span class="o">(</span><span class="kt">int</span> <span class="n">b</span><span class="o">)</span></code></pre></div>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">write</span><span class="p">(</span><span class="kt">int</span> <span class="n">b</span><span class="o">)</span></code></pre></div>
 
 <p><strong>管道流</strong></p>
 
 <p>管道流是JAVA中线程通讯的常用方式之一，可以进行两个线程间的通讯，分为管道输出流(PipedOutputStream)、管道输入流（PipedInputStream），如果想要进行管道输出，则必须要把输出流连在输入流之上，在PipedOutputStream类上有如下的一个方法用于连接管道：</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">connect</span><span class="o">(</span><span class="n">PipedInputStream</span> <span class="n">snk</span><span class="o">)</span><span class="kd">throws</span> <span class="n">IOException</span></code></pre></div>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">connect</span><span class="p">(</span><span class="n">PipedInputStream</span> <span class="n">snk</span><span class="o">)</span><span class="kd">throws</span> <span class="n">IOException</span></code></pre></div>
 
 <p>基本流程如下（<a href="http://www.cnblogs.com/king1302217/p/3158842.html">Example</a>）：</p>
 

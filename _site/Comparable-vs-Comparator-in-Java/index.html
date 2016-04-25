@@ -72,40 +72,40 @@
 	<span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
 	<span class="kd">private</span> <span class="n">String</span> <span class="n">brand</span><span class="o">;</span>
 	
-	<span class="kd">public</span> <span class="nf">HDTV</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">,</span> <span class="n">String</span> <span class="n">brand</span><span class="o">){</span>
+	<span class="kd">public</span> <span class="n">HDTV</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">,</span> <span class="n">String</span> <span class="n">brand</span><span class="o">){</span>
 		<span class="k">this</span><span class="o">.</span><span class="na">size</span> <span class="o">=</span> <span class="n">size</span><span class="o">;</span>
 		<span class="k">this</span><span class="o">.</span><span class="na">brand</span> <span class="o">=</span> <span class="n">brand</span><span class="o">;</span>
 	<span class="o">}</span>
-	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getSize</span><span class="o">(){</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="n">getSize</span><span class="o">(){</span>
 		<span class="k">return</span> <span class="n">size</span><span class="o">;</span>
 	<span class="o">}</span>
-	<span class="kd">public</span> <span class="n">String</span> <span class="nf">getBrand</span><span class="o">(){</span>
+	<span class="kd">public</span> <span class="n">String</span> <span class="n">getBrand</span><span class="o">(){</span>
 		<span class="k">return</span> <span class="n">brand</span><span class="o">;</span>
 	<span class="o">}</span>
 	
 	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">compareTo</span><span class="o">(</span><span class="n">HDTV</span> <span class="n">tv</span><span class="o">){</span>
-	<span class="cm">/*为了程序健壮，记住不要使用 </span>
-<span class="cm">	**return this.getSize() - tv.getSize()</span>
-<span class="cm">	** 减法可能可能会溢出，尽管发生概率很小</span>
-<span class="cm">	**或使用 return (i2 &lt; i1 ? -1 : (i2 == i1 ? 0 :1))这种表示方法</span>
-<span class="cm">	*/</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="n">compareTo</span><span class="o">(</span><span class="n">HDTV</span> <span class="n">tv</span><span class="o">){</span>
+	<span class="cm">/*为了程序健壮，记住不要使用 
+	**return this.getSize() - tv.getSize()
+	** 减法可能可能会溢出，尽管发生概率很小
+	**或使用 return (i2 &lt; i1 ? -1 : (i2 == i1 ? 0 :1))这种表示方法
+	*/</span>
 		<span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getSize</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">tv</span><span class="o">.</span><span class="na">getSize</span><span class="o">())</span>
 				<span class="k">return</span> <span class="mi">1</span><span class="o">;</span>
-		<span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getSize</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">tv</span><span class="o">.</span><span class="na">getSize</span><span class="o">())</span>
+		<span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getSize</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">tv</span><span class="o">.</span><span class="na">getSize</span><span class="o">())</span>
 				<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
 		<span class="k">else</span> 
 				<span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
 	<span class="o">}</span>
 	<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
-	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">HDTV</span> <span class="n">tv1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HDTV</span><span class="o">(</span><span class="mi">55</span><span class="o">,</span> <span class="s">&quot;Samsung&quot;</span><span class="o">);</span>
-		<span class="n">HDTV</span> <span class="n">tv2</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HDTV</span><span class="o">(</span><span class="mi">60</span><span class="o">,</span> <span class="s">&quot;Sony&quot;</span><span class="o">);</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">HDTV</span> <span class="n">tv1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HDTV</span><span class="o">(</span><span class="mi">55</span><span class="o">,</span> <span class="s">"Samsung"</span><span class="o">);</span>
+		<span class="n">HDTV</span> <span class="n">tv2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HDTV</span><span class="o">(</span><span class="mi">60</span><span class="o">,</span> <span class="s">"Sony"</span><span class="o">);</span>
  
 		<span class="k">if</span> <span class="o">(</span><span class="n">tv1</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">tv2</span><span class="o">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tv1</span><span class="o">.</span><span class="na">getBrand</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; is better.&quot;</span><span class="o">);</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tv1</span><span class="o">.</span><span class="na">getBrand</span><span class="o">()</span> <span class="o">+</span> <span class="s">" is better."</span><span class="o">);</span>
 		<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tv2</span><span class="o">.</span><span class="na">getBrand</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; is better.&quot;</span><span class="o">);</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tv2</span><span class="o">.</span><span class="na">getBrand</span><span class="o">()</span> <span class="o">+</span> <span class="s">" is better."</span><span class="o">);</span>
 		<span class="o">}</span>
 	<span class="o">}</span>
 <span class="o">}</span></code></pre></div>
@@ -128,37 +128,37 @@
 	<span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
 	<span class="kd">private</span> <span class="n">String</span> <span class="n">brand</span><span class="o">;</span>
  
-	<span class="kd">public</span> <span class="nf">HDTV</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">,</span> <span class="n">String</span> <span class="n">brand</span><span class="o">)</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="n">HDTV</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">,</span> <span class="n">String</span> <span class="n">brand</span><span class="o">)</span> <span class="o">{</span>
 		<span class="k">this</span><span class="o">.</span><span class="na">size</span> <span class="o">=</span> <span class="n">size</span><span class="o">;</span>
 		<span class="k">this</span><span class="o">.</span><span class="na">brand</span> <span class="o">=</span> <span class="n">brand</span><span class="o">;</span>
 	<span class="o">}</span>
  
-	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getSize</span><span class="o">()</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="n">getSize</span><span class="o">()</span> <span class="o">{</span>
 		<span class="k">return</span> <span class="n">size</span><span class="o">;</span>
 	<span class="o">}</span>
  
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSize</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="n">setSize</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
 		<span class="k">this</span><span class="o">.</span><span class="na">size</span> <span class="o">=</span> <span class="n">size</span><span class="o">;</span>
 	<span class="o">}</span>
  
-	<span class="kd">public</span> <span class="n">String</span> <span class="nf">getBrand</span><span class="o">()</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="n">String</span> <span class="n">getBrand</span><span class="o">()</span> <span class="o">{</span>
 		<span class="k">return</span> <span class="n">brand</span><span class="o">;</span>
 	<span class="o">}</span>
  
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setBrand</span><span class="o">(</span><span class="n">String</span> <span class="n">brand</span><span class="o">)</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="n">setBrand</span><span class="o">(</span><span class="n">String</span> <span class="n">brand</span><span class="o">)</span> <span class="o">{</span>
 		<span class="k">this</span><span class="o">.</span><span class="na">brand</span> <span class="o">=</span> <span class="n">brand</span><span class="o">;</span>
 	<span class="o">}</span>
 <span class="o">}</span>
  
 <span class="kd">class</span> <span class="nc">SizeComparator</span> <span class="kd">implements</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">HDTV</span><span class="o">&gt;</span> <span class="o">{</span>
 	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="n">HDTV</span> <span class="n">tv1</span><span class="o">,</span> <span class="n">HDTV</span> <span class="n">tv2</span><span class="o">)</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="n">compare</span><span class="o">(</span><span class="n">HDTV</span> <span class="n">tv1</span><span class="o">,</span> <span class="n">HDTV</span> <span class="n">tv2</span><span class="o">)</span> <span class="o">{</span>
 		<span class="kt">int</span> <span class="n">tv1Size</span> <span class="o">=</span> <span class="n">tv1</span><span class="o">.</span><span class="na">getSize</span><span class="o">();</span>
 		<span class="kt">int</span> <span class="n">tv2Size</span> <span class="o">=</span> <span class="n">tv2</span><span class="o">.</span><span class="na">getSize</span><span class="o">();</span>
  
 		<span class="k">if</span> <span class="o">(</span><span class="n">tv1Size</span> <span class="o">&gt;</span> <span class="n">tv2Size</span><span class="o">)</span> <span class="o">{</span>
 			<span class="k">return</span> <span class="mi">1</span><span class="o">;</span>
-		<span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">tv1Size</span> <span class="o">&lt;</span> <span class="n">tv2Size</span><span class="o">)</span> <span class="o">{</span>
+		<span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">tv1Size</span> <span class="o">&lt;</span> <span class="n">tv2Size</span><span class="o">)</span> <span class="o">{</span>
 			<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
 		<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
 			<span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
@@ -167,17 +167,17 @@
 <span class="o">}</span>
  
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
-	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-		<span class="n">HDTV</span> <span class="n">tv1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HDTV</span><span class="o">(</span><span class="mi">55</span><span class="o">,</span> <span class="s">&quot;Samsung&quot;</span><span class="o">);</span>
-		<span class="n">HDTV</span> <span class="n">tv2</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HDTV</span><span class="o">(</span><span class="mi">60</span><span class="o">,</span> <span class="s">&quot;Sony&quot;</span><span class="o">);</span>
-		<span class="n">HDTV</span> <span class="n">tv3</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HDTV</span><span class="o">(</span><span class="mi">42</span><span class="o">,</span> <span class="s">&quot;Panasonic&quot;</span><span class="o">);</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">HDTV</span> <span class="n">tv1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HDTV</span><span class="o">(</span><span class="mi">55</span><span class="o">,</span> <span class="s">"Samsung"</span><span class="o">);</span>
+		<span class="n">HDTV</span> <span class="n">tv2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HDTV</span><span class="o">(</span><span class="mi">60</span><span class="o">,</span> <span class="s">"Sony"</span><span class="o">);</span>
+		<span class="n">HDTV</span> <span class="n">tv3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HDTV</span><span class="o">(</span><span class="mi">42</span><span class="o">,</span> <span class="s">"Panasonic"</span><span class="o">);</span>
  
 		<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">HDTV</span><span class="o">&gt;</span> <span class="n">al</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">HDTV</span><span class="o">&gt;();</span>
 		<span class="n">al</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tv1</span><span class="o">);</span>
 		<span class="n">al</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tv2</span><span class="o">);</span>
 		<span class="n">al</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tv3</span><span class="o">);</span>
  
-		<span class="n">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">al</span><span class="o">,</span> <span class="k">new</span> <span class="nf">SizeComparator</span><span class="o">());</span>
+		<span class="n">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">al</span><span class="o">,</span> <span class="k">new</span> <span class="n">SizeComparator</span><span class="o">());</span>
 		<span class="k">for</span> <span class="o">(</span><span class="n">HDTV</span> <span class="n">a</span> <span class="o">:</span> <span class="n">al</span><span class="o">)</span> <span class="o">{</span>
 			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getBrand</span><span class="o">());</span>
 		<span class="o">}</span>

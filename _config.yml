@@ -9,7 +9,7 @@ duoshuo: andygc
 cnzz: 1255174608
 weibo: 2106155130
 github: angelof7
-highlighter: pygments
+highlighter: rouge
 safe: true
 paginate: 20
 gems: [jekyll-paginate]

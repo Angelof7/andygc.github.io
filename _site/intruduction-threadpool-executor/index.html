@@ -64,7 +64,7 @@
 
 <p>本文代码基于JDK1.7, 首先看一下ThreadPoolExecutor最复杂最重要的一个构造方法：</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">ThreadPoolExecutor</span><span class="o">(</span><span class="kt">int</span> <span class="n">corePoolSize</span><span class="o">,</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">ThreadPoolExecutor</span><span class="p">(</span><span class="kt">int</span> <span class="n">corePoolSize</span><span class="o">,</span>
                               <span class="kt">int</span> <span class="n">maximumPoolSize</span><span class="o">,</span>
                               <span class="kt">long</span> <span class="n">keepAliveTime</span><span class="o">,</span>
                               <span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">,</span>
@@ -75,9 +75,9 @@
             <span class="n">maximumPoolSize</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span>
             <span class="n">maximumPoolSize</span> <span class="o">&lt;</span> <span class="n">corePoolSize</span> <span class="o">||</span>
             <span class="n">keepAliveTime</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">();</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalArgumentException</span><span class="o">();</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">workQueue</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">threadFactory</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">handler</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nf">NullPointerException</span><span class="o">();</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">NullPointerException</span><span class="o">();</span>
         <span class="k">this</span><span class="o">.</span><span class="na">corePoolSize</span> <span class="o">=</span> <span class="n">corePoolSize</span><span class="o">;</span>
         <span class="k">this</span><span class="o">.</span><span class="na">maximumPoolSize</span> <span class="o">=</span> <span class="n">maximumPoolSize</span><span class="o">;</span>
         <span class="k">this</span><span class="o">.</span><span class="na">workQueue</span> <span class="o">=</span> <span class="n">workQueue</span><span class="o">;</span>

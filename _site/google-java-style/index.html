@@ -222,8 +222,8 @@ return '\ufeff' + content; // byte order mark             | Good，对于非打�
 
 <p>示例：</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">return</span> <span class="k">new</span> <span class="nf">MyClass</span><span class="o">()</span> <span class="o">{</span>
-  <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">method</span><span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">return</span> <span class="k">new</span> <span class="nf">MyClass</span><span class="p">(</span><span class="o">)</span> <span class="o">{</span>
+  <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="n">method</span><span class="o">()</span> <span class="o">{</span>
     <span class="k">if</span> <span class="o">(</span><span class="n">condition</span><span class="o">())</span> <span class="o">{</span>
       <span class="k">try</span> <span class="o">{</span>
         <span class="n">something</span><span class="o">();</span>
@@ -243,7 +243,7 @@ return '\ufeff' + content; // byte order mark             | Good，对于非打�
 
 <p>示例：</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">doNothing</span><span class="o">()</span> <span class="o">{}</span></code></pre></div>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">doNothing</span><span class="p">(</span><span class="o">)</span> <span class="o">{}</span></code></pre></div>
 
 <h3 id="section-17">4.2 块缩进：2个空格</h3>
 
@@ -464,11 +464,11 @@ return '\ufeff' + content; // byte order mark             | Good，对于非打�
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
 <span class="nd">@Nullable</span>
-<span class="kd">public</span> <span class="n">String</span> <span class="nf">getNameIfPresent</span><span class="o">()</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span></code></pre></div>
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">getNameIfPresent</span><span class="p">(</span><span class="o">)</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span></code></pre></div>
 
 <p><strong>例外</strong>：单个的注解可以和签名的第一行出现在同一行。例如：</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span></code></pre></div>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">int</span> <span class="n">hashCode</span><span class="o">()</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span></code></pre></div>
 
 <p>应用于字段的注解紧随文档块出现，应用于字段的多个注解允许与字段出现在同一行。例如：</p>
 
@@ -483,9 +483,9 @@ return '\ufeff' + content; // byte order mark             | Good，对于非打�
 <p>块注释与其周围的代码在同一缩进级别。它们可以是<code>/* ... */</code>风格，也可以是<code>// ...</code>风格。对于多行的<code>/* ... */</code>注释，后续行必须从<code>*</code>开始，
 并且与前一行的<code>*</code>对齐。以下示例注释都是OK的。</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/*</span>
-<span class="cm"> * This is          // And so           /* Or you can</span>
-<span class="cm"> * okay.            // is this.          * even do this. */</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/*
+ * This is          // And so           /* Or you can
+ * okay.            // is this.          * even do this. */</span>
  <span class="o">*/</span></code></pre></div>
 
 <p>注释不要封闭在由星号或其它字符绘制的框架里。</p>
@@ -543,18 +543,18 @@ return '\ufeff' + content; // byte order mark             | Good，对于非打�
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// Constants</span>
 <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">NUMBER</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>
-<span class="kd">static</span> <span class="kd">final</span> <span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NAMES</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&quot;Ed&quot;</span><span class="o">,</span> <span class="s">&quot;Ann&quot;</span><span class="o">);</span>
-<span class="kd">static</span> <span class="kd">final</span> <span class="n">Joiner</span> <span class="n">COMMA_JOINER</span> <span class="o">=</span> <span class="n">Joiner</span><span class="o">.</span><span class="na">on</span><span class="o">(</span><span class="sc">&#39;,&#39;</span><span class="o">);</span>  <span class="c1">// because Joiner is immutable</span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NAMES</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"Ed"</span><span class="o">,</span> <span class="s">"Ann"</span><span class="o">);</span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="n">Joiner</span> <span class="n">COMMA_JOINER</span> <span class="o">=</span> <span class="n">Joiner</span><span class="o">.</span><span class="na">on</span><span class="o">(</span><span class="sc">','</span><span class="o">);</span>  <span class="c1">// because Joiner is immutable</span>
 <span class="kd">static</span> <span class="kd">final</span> <span class="n">SomeMutableType</span><span class="o">[]</span> <span class="n">EMPTY_ARRAY</span> <span class="o">=</span> <span class="o">{};</span>
 <span class="kd">enum</span> <span class="n">SomeEnum</span> <span class="o">{</span> <span class="n">ENUM_CONSTANT</span> <span class="o">}</span>
 
 <span class="c1">// Not constants</span>
-<span class="kd">static</span> <span class="n">String</span> <span class="n">nonFinal</span> <span class="o">=</span> <span class="s">&quot;non-final&quot;</span><span class="o">;</span>
-<span class="kd">final</span> <span class="n">String</span> <span class="n">nonStatic</span> <span class="o">=</span> <span class="s">&quot;non-static&quot;</span><span class="o">;</span>
+<span class="kd">static</span> <span class="n">String</span> <span class="n">nonFinal</span> <span class="o">=</span> <span class="s">"non-final"</span><span class="o">;</span>
+<span class="kd">final</span> <span class="n">String</span> <span class="n">nonStatic</span> <span class="o">=</span> <span class="s">"non-static"</span><span class="o">;</span>
 <span class="kd">static</span> <span class="kd">final</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">mutableCollection</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
 <span class="kd">static</span> <span class="kd">final</span> <span class="n">ImmutableSet</span><span class="o">&lt;</span><span class="n">SomeMutableType</span><span class="o">&gt;</span> <span class="n">mutableElements</span> <span class="o">=</span> <span class="n">ImmutableSet</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">mutable</span><span class="o">);</span>
 <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">MyClass</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
-<span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">nonEmptyArray</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;these&quot;</span><span class="o">,</span> <span class="s">&quot;can&quot;</span><span class="o">,</span> <span class="s">&quot;change&quot;</span><span class="o">};</span></code></pre></div>
+<span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">nonEmptyArray</span> <span class="o">=</span> <span class="o">{</span><span class="s">"these"</span><span class="o">,</span> <span class="s">"can"</span><span class="o">,</span> <span class="s">"change"</span><span class="o">};</span></code></pre></div>
 
 <p>这些名字通常是名词或名词短语。</p>
 
@@ -645,11 +645,11 @@ return '\ufeff' + content; // byte order mark             | Good，对于非打�
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">try</span> <span class="o">{</span>
   <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">response</span><span class="o">);</span>
-  <span class="k">return</span> <span class="nf">handleNumericResponse</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+  <span class="k">return</span> <span class="n">handleNumericResponse</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
 <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NumberFormatException</span> <span class="n">ok</span><span class="o">)</span> <span class="o">{</span>
-  <span class="c1">// it&#39;s not numeric; that&#39;s fine, just continue</span>
+  <span class="c1">// it's not numeric; that's fine, just continue</span>
 <span class="o">}</span>
-<span class="k">return</span> <span class="nf">handleTextResponse</span><span class="o">(</span><span class="n">response</span><span class="o">);</span></code></pre></div>
+<span class="k">return</span> <span class="nf">handleTextResponse</span><span class="p">(</span><span class="n">response</span><span class="o">);</span></code></pre></div>
 
 <p><strong>例外</strong>：在测试中，如果一个捕获的异常被命名为<code>expected</code>，则它可以被不加注释地忽略。下面是一种非常常见的情形，用以确保所测试的方法会抛出一个期望中的异常，
 因此在这里就没有必要加注释。</p>
@@ -688,11 +688,11 @@ return '\ufeff' + content; // byte order mark             | Good，对于非打�
 
 <p>Javadoc块的基本格式如下所示：</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
-<span class="cm"> * Multiple lines of Javadoc text are written here,</span>
-<span class="cm"> * wrapped normally...</span>
-<span class="cm"> */</span>
-<span class="kd">public</span> <span class="kt">int</span> <span class="nf">method</span><span class="o">(</span><span class="n">String</span> <span class="n">p1</span><span class="o">)</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span></code></pre></div>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**
+ * Multiple lines of Javadoc text are written here,
+ * wrapped normally...
+ */</span>
+<span class="kd">public</span> <span class="kt">int</span> <span class="nf">method</span><span class="p">(</span><span class="n">String</span> <span class="n">p1</span><span class="o">)</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span></code></pre></div>
 
 <p>或者是以下单行形式：</p>
 

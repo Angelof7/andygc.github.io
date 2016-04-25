@@ -76,8 +76,8 @@
      <span class="n">value</span> <span class="o">=</span> <span class="n">addrBits</span> <span class="o">^</span> <span class="p">(</span><span class="n">addrBits</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">^</span> <span class="n">GVars</span><span class="p">.</span><span class="n">stwRandom</span> <span class="p">;</span>
   <span class="p">}</span> <span class="k">else</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">hashCode</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-     <span class="n">value</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">;</span>            <span class="c1">// for sensitivity testing</span>
-  <span class="p">}</span> <span class="k">else</span>
+     <span class="n">value</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">;</span>            <span class="c1">// for sensitivity testing
+</span>  <span class="p">}</span> <span class="k">else</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">hashCode</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
      <span class="n">value</span> <span class="o">=</span> <span class="o">++</span><span class="n">GVars</span><span class="p">.</span><span class="n">hcSequence</span> <span class="p">;</span>
   <span class="p">}</span> <span class="k">else</span>
@@ -97,8 +97,8 @@
 
   <span class="n">value</span> <span class="o">&amp;=</span> <span class="n">markOopDesc</span><span class="o">::</span><span class="n">hash_mask</span><span class="p">;</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="n">value</span> <span class="o">=</span> <span class="mh">0xBAD</span> <span class="p">;</span>
-  <span class="n">assert</span> <span class="p">(</span><span class="n">value</span> <span class="o">!=</span> <span class="n">markOopDesc</span><span class="o">::</span><span class="n">no_hash</span><span class="p">,</span> <span class="s">&quot;invariant&quot;</span><span class="p">)</span> <span class="p">;</span>
-  <span class="n">TEVENT</span> <span class="p">(</span><span class="nl">hashCode</span><span class="p">:</span> <span class="n">GENERATE</span><span class="p">)</span> <span class="p">;</span>
+  <span class="n">assert</span> <span class="p">(</span><span class="n">value</span> <span class="o">!=</span> <span class="n">markOopDesc</span><span class="o">::</span><span class="n">no_hash</span><span class="p">,</span> <span class="s">"invariant"</span><span class="p">)</span> <span class="p">;</span>
+  <span class="n">TEVENT</span> <span class="p">(</span><span class="n">hashCode</span><span class="o">:</span> <span class="n">GENERATE</span><span class="p">)</span> <span class="p">;</span>
   <span class="k">return</span> <span class="n">value</span><span class="p">;</span>
 <span class="p">}</span></code></pre></div>
 
@@ -115,7 +115,7 @@
 
 <p>另外一种是hash()函数。其先获取该对象的Mark Word，然后对Mark Word对象的的地址做位移和逻辑与操作，以结果作为hash值。</p>
 
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">intptr_t</span> <span class="nf">hash</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">intptr_t</span> <span class="n">hash</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">mask_bits</span><span class="p">(</span><span class="n">value</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">hash_shift</span><span class="p">,</span> <span class="n">hash_mask</span><span class="p">);</span>
 <span class="p">}</span>
 
