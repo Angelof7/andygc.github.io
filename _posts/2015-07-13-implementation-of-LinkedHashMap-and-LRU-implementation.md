@@ -9,7 +9,7 @@ LinkedHashMap可认为是哈希表和链接列表综合实现，并允许使用n
 LinkedHashMap的实现不是同步的。如果多个线程同时访问LinkedHashMap，而其中至少一个线程从结构上修改了该映射，则它必须
 保持外部同步。
 
-##1.LinkedHashMap的存储结构
+## 1.LinkedHashMap的存储结构
 
 ![LinkedHashMap01](http://stackvoid.qiniudn.com/20140805-LinkedHashMapDataStructure01.png)
 LinkedHashMap中加入了一个head头结点，将所有插入到该LinkedHashMap中的Entry按照插入的先后顺序（accessOrder标志位默认为false）依次加入到以head为头结点的双向循环链表的尾部。
@@ -19,7 +19,7 @@ LinkedHashMap实际上就是HashMap和LinkedList两个集合类的存储结构�
 
 下面我们来分析LinkedHashMap的源代码。
 
-##2.LinkedHashMap成员变量
+## 2.LinkedHashMap成员变量
 
 LinkedHashMap采用的hash算法和HashMap相同，但它重新定义了数组中保存的元素Entry，该Entry除了保存当前对象的引用外，还保
 存了其上一个元素before和下一个元素after的引用，从而在哈希表的基础上又构成了双向链接列表。
@@ -49,7 +49,7 @@ private static class Entry<K,V> extends HashMap.Entry<K,V> {
 {%endhighlight%}
 
 
-##3.构造函数
+## 3.构造函数
 
 LinkedList一共提供了五个构造方法。
 
@@ -106,7 +106,7 @@ void init() {
 
 {%endhighlight%}
 
-##4.元素存储
+## 4.元素存储
 
    LinkedHashMap重写了父类HashMap的put方法调用的**子方法void addEntry(int hash, K key, V value, int bucketIndex) 和void createEntry(int hash, K key, V value, int bucketIndex)**，提供了自己特有的双向链接列表的实现。
 
@@ -162,7 +162,7 @@ private void addBefore(Entry<K,V> existingEntry) {
 
 {%endhighlight%}
 
-##5.元素读取
+## 5.元素读取
 
 LinkedHashMap重写了父类HashMap的get方法。由于的链表的增加、删除操作是常量级的，性能不会带来较大损失。LinkedHashMap
 最牛逼的地方在于**recordAccess()**方法
@@ -201,7 +201,7 @@ void recordAccess(HashMap<K,V> m) {
 
 {%endhighlight%}
 
-##6.元素删除
+## 6.元素删除
 
 LinkedHashMap没有重写remove(Object key)方法，重写了被remove调用的recordRemoval方法，再一次感叹模板方法模式的精妙！  
 HahsMap remove(Object key)把数据从横向数组 * 竖向next链表里面移除之后（就已经完成工作了，所以HashMap里面recordRemoval是空的实现调用了此方法  
@@ -225,7 +225,7 @@ private static class Entry<K, V> extends HashMap.Entry<K, V> {
     
 {%endhighlight%}
 
-##7.元素遍历
+## 7.元素遍历
 
 
 {%highlight java%}
@@ -283,7 +283,7 @@ private static class Entry<K, V> extends HashMap.Entry<K, V> {
 
 {%endhighlight%}
 
-##8.基于LinkedHashMap实现LRU Cache
+## 8.基于LinkedHashMap实现LRU Cache
 
 用LinkedHashmap实现LRU算法，就要覆写方法removeEldestEntry。该方法默认返回false，我们一般在用LinkedHashMap实现LRU算法时，要覆写该方法，一般的实现是，当设定的内存（这里指节点个数）达到最大值时，返回true，这样put新的Entry（该Entry的key在哈希表中没有已经存在）时，就会调用removeEntryForKey方法，将最近最少使用的节点删除（head后面的那个节点，实际上是最近没有使用）。
 
@@ -362,7 +362,7 @@ public class LRULinkedHashMap<K,V> extends LinkedHashMap<K,V>{
 
 {%endhighlight%}
 
-##9.总结
+## 9.总结
 
 1. LinkedHashMap继承自HashMap，具有HashMap的大部分特性，比如支持null键和值，默认容量为16，装载因子为0.75，非线程安全等等；
 

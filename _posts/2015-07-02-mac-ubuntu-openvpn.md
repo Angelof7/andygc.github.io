@@ -5,12 +5,12 @@ categories: [server]
 tags: [vpn]
 ---
 
-##Mac
+## Mac
 ---------------
 **tunnelblick**
 
 
-##Ubuntu
+## Ubuntu
 ---------------
 1. >\# sudo apt-get install openvpn
 

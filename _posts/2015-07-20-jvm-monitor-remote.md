@@ -5,7 +5,7 @@ categories: [server]
 tags: [JVM]
 ---
 
-###远程服务器配置:
+### 远程服务器配置:
 -----------------
 在tomcat中的bin/catalina.sh中添加:  
 {% highlight sh %}
@@ -16,15 +16,15 @@ JAVA_OPTS="$JAVA_OPTS
  -Dcom.sun.management.jmxremote.ssl=false"  
 {% endhighlight %}
 
-###JConsole
+### JConsole
 -----------------
 ![jconsole.png][1]
 
-###VisualVM
+### VisualVM
 -----------------
 ![jvisualvm.png][2]
 
-###参考
+### 参考
 [Monitoring and Management Using JMX](http://docs.oracle.com/javase/1.5.0/docs/guide/management/agent.html)
 
   [1]: /album/2015/jconsole.png
