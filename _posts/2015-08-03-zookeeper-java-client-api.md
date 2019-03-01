@@ -5,17 +5,17 @@ categories: [distributed]
 tags: [ZooKeeper]
 ---
 
-###Apache ZooKeeper:
+### Apache ZooKeeper:
 -----------------
 ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服务，是Google的Chubby一个开源的实现，是Hadoop和Hbase的重要组件。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、名字服务、分布式同步、组服务等。
 ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。
 ZooKeeper包含一个简单的原语集, 提供Java和C的接口。
 
-###ZooKeeper 的安装:
+### ZooKeeper 的安装:
 -----------------
 [ZooKeeper下载安装](http://zookeeper.apache.org)  
 
-###Java Client 的使用:
+### Java Client 的使用:
 ---------------------
 Watcher 在 ZooKeeper 是一个核心功能,Watcher 可以监控目录节点的数据变化以及子目录的变化,一旦这些状态发生变化,服务器就会通知所有设置在这个目录节点上的 Watcher,从而每个客户端都很快知道它所关注的目录节点的状态发生变化,而做出相应的反应.
 可以设置观察的操作：exists,getChildren,getData
